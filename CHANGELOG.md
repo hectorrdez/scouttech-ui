@@ -3,6 +3,17 @@
 All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [0.1.2] - 2026-10-19
+
+### Added
+- `Button` and `ButtonLink` variant `danger-soft` (`bg-ui-danger-soft`, `text-ui-danger`, bordered; hover and active use `ui-danger-hover`). Solid `danger` is unchanged.
+- Token `--color-ui-warning` (amber, default `#b45309`), mapped in the demo themes for light and dark.
+- `Input` and `Select` `mandatory` prop: amber left bar on the control (also with error). It is a visual marker only and does not set `required` or `aria-required`.
+- `Input` and `Select` `mandatoryLabel` prop: screen-reader suffix for the label (default `" (obligatorio)"`).
+- Public control class helpers `controlClassName` and `controlBorderClassName`, exported from the root barrel and the `scouttech-ui/Field` subpath.
+- Demo: danger-soft in every grid, and mandatory Input and Select examples (with error and with `required`).
+- E2E: danger-soft text contrast at rest and on hover, and mandatory bar contrast, on the 3 themes × light/dark.
+
 ## [0.1.1] - 2026-10-18
 
 ### Added

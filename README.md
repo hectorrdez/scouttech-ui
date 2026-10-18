@@ -9,7 +9,7 @@ Stack: React 19, TypeScript 6, Tailwind CSS 4, React Router 7 and lucide-react (
 ## Install
 
 ```bash
-npm i github:hectorrdez/scouttech-ui#v0.1.1
+npm i github:hectorrdez/scouttech-ui#v0.1.2
 ```
 
 The `prepare` script builds `dist/` when npm installs the git dependency.
@@ -41,6 +41,7 @@ your own tokens:
   --color-ui-on-primary: var(--color-on-primary);
   --color-ui-surface: #ffffff;
   --color-ui-on-surface: #13323b;
+  --color-ui-warning: #b45309;
   /* ...the rest of the table below */
 }
 
@@ -72,12 +73,41 @@ Components only use the `ui-*` names. They never use raw hex values, opacity mod
 | `--color-ui-on-danger` | `text-ui-on-danger` | Text on danger |
 | `--color-ui-danger-hover` | `hover:bg-ui-danger-hover` | Danger hover |
 | `--color-ui-danger-soft` | `bg-ui-danger-soft` | Field background in error |
+| `--color-ui-warning` | `border-l-ui-warning` | Mandatory marker bar on Input and Select (≥ 3:1 on `ui-surface`) |
 | `--color-ui-disabled` | `bg-ui-disabled` | Disabled and loading controls |
 | `--color-ui-on-disabled` | `text-ui-on-disabled` | Text on disabled controls |
 | `--radius-ui-control` | `rounded-ui-control` | Corners of controls (0.5rem) |
 | `--shadow-ui-control` | `shadow-ui-control` | Elevation of primary and danger buttons |
 
 Typography is inherited from the app.
+
+### Mandatory fields
+
+`mandatory` on `Input` or `Select` draws an amber bar on the left of the control (`border-l-ui-warning`, 3px). It is a
+visual marker only: it does not set `required` or `aria-required`, so use `required` as well when the field must be
+validated natively. The label gets a `sr-only` suffix, `" (obligatorio)"` by default, so screen readers announce it too.
+Override the suffix with `mandatoryLabel`:
+
+```tsx
+<Input label="Nombre del grupo" mandatory />
+<Select label="Rama" mandatory mandatoryLabel=" (requerido)">…</Select>
+<Input label="Correo" mandatory required />
+```
+
+### Public class helpers
+
+For app-specific controls (for example a Textarea) that should look like `Input` and `Select`, use the shared
+field classes. They are public API:
+
+```tsx
+import { controlClassName, controlBorderClassName } from "scouttech-ui";
+// or: import { controlClassName, controlBorderClassName } from "scouttech-ui/Field";
+
+<textarea className={`${controlClassName} ${controlBorderClassName} min-h-24 py-2`} />;
+```
+
+`controlClassName` holds the size, radius, colours and focus ring. `controlBorderClassName` holds the default border.
+Use `controlErrorClassName` for the error state if you need it from `scouttech-ui/Field` too.
 
 ## Theme
 
@@ -117,11 +147,11 @@ node -e 'import("scouttech-ui/theme").then(m=>console.log(m.themeInitScript("sco
 
 | Export | Props | Notes |
 | --- | --- | --- |
-| `Button` | `variant` (`primary` \| `secondary` \| `outline` \| `ghost` \| `danger`), `size` (`sm` \| `md`), `loading`, `icon`, plus `<button>` props | `type="button"` by default. `loading` shows a spinner, sets `aria-busy` and blocks clicks. Disabled and loading use `ui-disabled`. |
+| `Button` | `variant` (`primary` \| `secondary` \| `outline` \| `ghost` \| `danger` \| `danger-soft`), `size` (`sm` \| `md`), `loading`, `icon`, plus `<button>` props | `type="button"` by default. `loading` shows a spinner, sets `aria-busy` and blocks clicks. Disabled and loading use `ui-disabled`. |
 | `ButtonLink` | `to`, `variant`, `size`, `icon`, `external`, `target`, plus router `Link` props | The `<Link>` itself is styled. `external` renders a plain `<a>` with `rel="noopener noreferrer"`. `to` is passed through unchanged. |
 | `ButtonToogle` (alias `ButtonToggle`) | `value: boolean`, `onChange?(value)`, `cantInteract?`, plus `<button>` props | `role="switch"`, `aria-checked`. `cantInteract` locks the value and sets `aria-disabled`. |
-| `Input` | `label`, `hint`, `error`, `required`, `icon`, `fieldClassName`, plus `<input>` props | `id` from `useId()` if not given. `aria-invalid` on error. `aria-describedby` lists the rendered hint and error. |
-| `Select` | `label`, `hint`, `error`, `required`, `fieldClassName`, plus `<select>` props | Same field behaviour as `Input`. |
+| `Input` | `label`, `hint`, `error`, `required`, `mandatory`, `mandatoryLabel`, `icon`, `fieldClassName`, plus `<input>` props | `id` from `useId()` if not given. `aria-invalid` on error. `aria-describedby` lists the rendered hint and error. |
+| `Select` | `label`, `hint`, `error`, `required`, `mandatory`, `mandatoryLabel`, `fieldClassName`, plus `<select>` props | Same field behaviour as `Input`. |
 | `FieldError` | `id?` | `role="alert"`, `text-ui-danger`. |
 | `ThemeToggle` | `className`, `labels?: { group?, light?, dark?, system? }` | `radiogroup` with three `radio` buttons and `aria-checked`. Spanish defaults. |
 | `ThemeProvider` | `storageKey`, `defaultMode`, `children` | See Theme. |
@@ -129,7 +159,7 @@ node -e 'import("scouttech-ui/theme").then(m=>console.log(m.themeInitScript("sco
 | `themeInitScript` | `storageKey?`, `defaultMode?` | Returns the inline script body (string). |
 
 Subpaths `scouttech-ui/Button`, `scouttech-ui/ButtonLink`, `scouttech-ui/ButtonToogle`, `scouttech-ui/Input`,
-`scouttech-ui/Select`, `scouttech-ui/ThemeToggle` and `scouttech-ui/theme` are also exported. The root barrel
+`scouttech-ui/Select`, `scouttech-ui/Field`, `scouttech-ui/ThemeToggle` and `scouttech-ui/theme` are also exported. The root barrel
 re-exports everything, and each component file also has a default export. Types (`ButtonProps`, `ButtonVariant`,
 `ButtonSize`, `InputProps`, `SelectProps`, `ThemeMode`, `ResolvedTheme`, and others) are exported from the root.
 

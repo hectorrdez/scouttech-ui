@@ -41,6 +41,37 @@ describe("Select", () => {
     expect(screen.getByRole("alert")).toHaveAttribute("id", "s-error");
   });
 
+  it("mandatory adds the warning bar, is not required and has no aria-required", () => {
+    render(
+      <Select label="Rama" mandatory>
+        <option value="a">A</option>
+      </Select>,
+    );
+    const select = screen.getByLabelText("Rama (obligatorio)");
+    expect(select).toHaveClass("border-l-ui-warning", "border-l-[3px]");
+    expect(select).not.toBeRequired();
+    expect(select).not.toHaveAttribute("aria-required");
+  });
+
+  it("mandatoryLabel customises the screen-reader suffix", () => {
+    render(
+      <Select label="Rama" mandatory mandatoryLabel=" (requerido)">
+        <option value="a">A</option>
+      </Select>,
+    );
+    expect(screen.getByLabelText("Rama (requerido)")).toBeInTheDocument();
+  });
+
+  it("mandatory keeps the danger border and the warning bar when there is an error", () => {
+    render(
+      <Select label="Rama" mandatory error="Elige una rama">
+        <option value="">Sin elegir</option>
+      </Select>,
+    );
+    const select = screen.getByLabelText("Rama (obligatorio)");
+    expect(select).toHaveClass("border-ui-danger", "border-l-ui-warning");
+  });
+
   it("omits aria-describedby when there is nothing to describe", () => {
     render(<Example />);
     expect(screen.getByLabelText("Curso")).not.toHaveAttribute("aria-describedby");

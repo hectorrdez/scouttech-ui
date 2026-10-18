@@ -16,6 +16,17 @@ describe("ButtonLink", () => {
     expect(link).not.toHaveAttribute("rel");
   });
 
+  it("danger-soft link uses the soft danger surface", () => {
+    render(
+      <MemoryRouter>
+        <ButtonLink to="/borrar" variant="danger-soft">
+          Borrar
+        </ButtonLink>
+      </MemoryRouter>,
+    );
+    expect(screen.getByRole("link", { name: "Borrar" })).toHaveClass("bg-ui-danger-soft");
+  });
+
   it("external links render a plain anchor with noopener noreferrer", () => {
     render(
       <ButtonLink to="https://example.com" external target="_blank">

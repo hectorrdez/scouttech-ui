@@ -5,3 +5,4 @@
 id|slug|state|role|commit|commit_url
 001|tokens-and-controls|ENDED|frontend|a430868|https://github.com/hectorrdez/scouttech-ui/commit/a430868
 002|demo-scouttech-theme|ENDED|frontend|46ab04c|https://github.com/hectorrdez/scouttech-ui/commit/46ab04c
+003|danger-soft-mandatory-exports|ENDED|frontend||

@@ -226,3 +226,86 @@ test.describe("focus outline contrast on the demo", () => {
     });
   }
 });
+
+type Helpers = {
+  parseColor: (s: string) => number[];
+  effectiveBackground: (el: Element) => number[];
+  contrast: (fg: number[], bg: number[]) => number;
+  snippet: (el: Element) => string;
+};
+
+test.describe("danger-soft hover contrast on the demo", () => {
+  for (const { palette, theme } of combos) {
+    test(`${palette} ${theme}: danger-soft text >= 4.5:1 at rest and on hover`, async ({ page }) => {
+      await open(page, palette, theme);
+
+      const buttons = page.locator('main :is(button,a)[class*="bg-ui-danger-soft"]:not([disabled])');
+      const count = await buttons.count();
+      expect(count, "danger-soft controls checked").toBeGreaterThan(0);
+
+      const measure = (el: Element) => {
+        const h = (window as unknown as { __h: Helpers }).__h;
+        const ratio = h.contrast(
+          h.parseColor(getComputedStyle(el).color),
+          h.effectiveBackground(el),
+        );
+        return { ratio, snippet: h.snippet(el) };
+      };
+
+      const failures: string[] = [];
+      for (let i = 0; i < count; i++) {
+        const el = buttons.nth(i);
+
+        const rest = await el.evaluate(measure);
+        if (rest.ratio < 4.5) failures.push(`rest ${rest.ratio.toFixed(2)} < 4.5 :: ${rest.snippet}`);
+
+        await el.hover();
+        // transition-colors animates the background and text colour: wait for it to settle.
+        await el.evaluate(async (node) => {
+          await Promise.all(node.getAnimations().map((a) => a.finished.catch(() => undefined)));
+        });
+        const hover = await el.evaluate(measure);
+        if (hover.ratio < 4.5) failures.push(`hover ${hover.ratio.toFixed(2)} < 4.5 :: ${hover.snippet}`);
+
+        await page.mouse.move(0, 0);
+      }
+
+      expect(failures).toEqual([]);
+    });
+  }
+});
+
+test.describe("mandatory bar contrast on the demo", () => {
+  for (const { palette, theme } of combos) {
+    test(`${palette} ${theme}: mandatory bar >= 3px and >= 3:1 against its surface`, async ({ page }) => {
+      await open(page, palette, theme);
+
+      const bars = page.locator('main [class*="border-l-ui-warning"]');
+      const count = await bars.count();
+      expect(count, "mandatory controls checked").toBeGreaterThan(0);
+
+      const failures: string[] = [];
+      for (let i = 0; i < count; i++) {
+        const result = await bars.nth(i).evaluate((node) => {
+          const h = (window as unknown as { __h: Helpers }).__h;
+          const style = getComputedStyle(node);
+          const color = h.parseColor(style.borderLeftColor);
+          const bg = h.effectiveBackground(node.parentElement ?? node);
+          return {
+            width: parseFloat(style.borderLeftWidth),
+            ratio: h.contrast(color, bg),
+            snippet: h.snippet(node),
+          };
+        });
+        if (!(result.width >= 3)) {
+          failures.push(`bar width ${result.width}px < 3px :: ${result.snippet}`);
+        }
+        if (result.ratio < 3) {
+          failures.push(`bar ratio ${result.ratio.toFixed(2)} < 3 :: ${result.snippet}`);
+        }
+      }
+
+      expect(failures).toEqual([]);
+    });
+  }
+});

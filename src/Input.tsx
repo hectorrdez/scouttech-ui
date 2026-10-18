@@ -4,6 +4,7 @@ import Field, {
   controlBorderClassName,
   controlClassName,
   controlErrorClassName,
+  controlMandatoryClassName,
   fieldDescribedBy,
 } from "./Field.js";
 
@@ -15,6 +16,10 @@ export type InputProps = Omit<ComponentProps<"input">, "size"> & {
   icon?: ReactNode;
   /** Applied to the wrapping field, not to the <input>. */
   fieldClassName?: string;
+  /** Visual marker only (amber bar on the control). Does not set `required` or `aria-required`. */
+  mandatory?: boolean;
+  /** Screen-reader suffix for the label, read after it when `mandatory` is set. Default " (obligatorio)". */
+  mandatoryLabel?: ReactNode;
 };
 
 export function Input({
@@ -23,6 +28,8 @@ export function Input({
   error,
   icon,
   required,
+  mandatory,
+  mandatoryLabel,
   className,
   fieldClassName,
   id,
@@ -39,6 +46,8 @@ export function Input({
       hint={hint}
       error={error}
       required={required}
+      mandatory={mandatory}
+      mandatoryLabel={mandatoryLabel}
       className={fieldClassName}
     >
       <div className="relative">
@@ -58,6 +67,7 @@ export function Input({
           className={cx(
             controlClassName,
             error ? controlErrorClassName : controlBorderClassName,
+            mandatory ? controlMandatoryClassName : false,
             icon ? "pl-10" : false,
             className,
           )}

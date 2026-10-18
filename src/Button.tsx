@@ -2,7 +2,7 @@ import { Loader2 } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { cx } from "./cx.js";
 
-export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger";
+export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger" | "danger-soft";
 export type ButtonSize = "sm" | "md";
 
 export type ButtonProps = ComponentProps<"button"> & {
@@ -29,6 +29,8 @@ const variantClassNames: Record<ButtonVariant, string> = {
   ghost:
     "bg-transparent text-ui-on-surface hover:bg-ui-surface-hover active:bg-ui-surface-active",
   danger: "bg-ui-danger text-ui-on-danger hover:bg-ui-danger-hover shadow-ui-control",
+  "danger-soft":
+    "bg-ui-danger-soft text-ui-danger border border-ui-danger hover:bg-ui-danger-hover hover:text-ui-on-danger active:bg-ui-danger-hover active:text-ui-on-danger",
 };
 
 const sizeClassNames: Record<ButtonSize, string> = {

@@ -26,6 +26,8 @@ export const controlClassName =
 
 export const controlBorderClassName = "border border-ui-outline";
 export const controlErrorClassName = "border border-ui-danger bg-ui-danger-soft";
+/** Visual marker for a mandatory field: amber left bar. Does not set `required`. */
+export const controlMandatoryClassName = "border-l-[3px] border-l-ui-warning";
 
 export function FieldError({ id, children }: { id?: string; children: ReactNode }) {
   return (
@@ -41,6 +43,10 @@ type FieldProps = {
   hint?: ReactNode;
   error?: ReactNode;
   required?: boolean;
+  /** Visual marker only. Adds a screen-reader suffix to the label. */
+  mandatory?: boolean;
+  /** Screen-reader suffix for the label when `mandatory` is set. */
+  mandatoryLabel?: ReactNode;
   className?: string;
   children: ReactNode;
 };
@@ -52,6 +58,8 @@ export default function Field({
   hint,
   error,
   required = false,
+  mandatory = false,
+  mandatoryLabel = " (obligatorio)",
   className,
   children,
 }: FieldProps) {
@@ -65,6 +73,7 @@ export default function Field({
               *
             </span>
           ) : null}
+          {mandatory ? <span className="sr-only">{mandatoryLabel}</span> : null}
         </label>
       ) : null}
       {children}

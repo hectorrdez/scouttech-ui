@@ -49,7 +49,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-const variants: ButtonVariant[] = ["primary", "secondary", "outline", "ghost", "danger"];
+const variants: ButtonVariant[] = ["primary", "secondary", "outline", "ghost", "danger", "danger-soft"];
 const sizes: ButtonSize[] = ["sm", "md"];
 
 function ThemeState() {
@@ -104,7 +104,7 @@ function Demo() {
       </p>
 
       <Section title="Button">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {variants.map((variant) =>
             sizes.map((size) => (
               <Button key={`${variant}-${size}`} variant={variant} size={size}>
@@ -121,8 +121,11 @@ function Demo() {
           <Button variant="danger" icon={<Trash2 size={16} aria-hidden="true" />} size="sm">
             Eliminar
           </Button>
+          <Button variant="danger-soft" icon={<Trash2 size={16} aria-hidden="true" />}>
+            Eliminar suave
+          </Button>
         </div>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-6">
           {variants.map((variant) => (
             <Button key={`${variant}-loading`} variant={variant} size="sm" loading>
               Cargando {variant}
@@ -215,6 +218,9 @@ function Demo() {
             error="Demasiado corta"
             defaultValue="abc"
           />
+          <Input label="Nombre del grupo" mandatory />
+          <Input label="Obligatorio con error" mandatory error="Completa este campo" />
+          <Input label="Obligatorio y required" mandatory required />
           <Input
             label="Icono deshabilitado"
             disabled
@@ -247,6 +253,13 @@ function Demo() {
             <option value="1">Uno</option>
           </Select>
           <Select label="Con pista y error" hint="Elige al menos una." error="Falta la selección">
+            <option value="">Sin elegir</option>
+          </Select>
+          <Select label="Rama obligatoria" mandatory>
+            <option value="lobatos">Lobatos</option>
+            <option value="scouts">Scouts</option>
+          </Select>
+          <Select label="Rama obligatoria con error" mandatory error="Elige una rama">
             <option value="">Sin elegir</option>
           </Select>
         </div>

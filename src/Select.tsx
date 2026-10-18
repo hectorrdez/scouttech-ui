@@ -5,6 +5,7 @@ import Field, {
   controlBorderClassName,
   controlClassName,
   controlErrorClassName,
+  controlMandatoryClassName,
   fieldDescribedBy,
 } from "./Field.js";
 
@@ -14,6 +15,10 @@ export type SelectProps = ComponentProps<"select"> & {
   error?: ReactNode;
   /** Applied to the wrapping field, not to the <select>. */
   fieldClassName?: string;
+  /** Visual marker only (amber bar on the control). Does not set `required` or `aria-required`. */
+  mandatory?: boolean;
+  /** Screen-reader suffix for the label, read after it when `mandatory` is set. Default " (obligatorio)". */
+  mandatoryLabel?: ReactNode;
 };
 
 export function Select({
@@ -21,6 +26,8 @@ export function Select({
   hint,
   error,
   required,
+  mandatory,
+  mandatoryLabel,
   className,
   fieldClassName,
   id,
@@ -38,6 +45,8 @@ export function Select({
       hint={hint}
       error={error}
       required={required}
+      mandatory={mandatory}
+      mandatoryLabel={mandatoryLabel}
       className={fieldClassName}
     >
       <div className="relative">
@@ -50,6 +59,7 @@ export function Select({
             controlClassName,
             "appearance-none pr-10",
             error ? controlErrorClassName : controlBorderClassName,
+            mandatory ? controlMandatoryClassName : false,
             className,
           )}
           {...args}
