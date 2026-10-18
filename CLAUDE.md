@@ -285,3 +285,7 @@ This repo is a **library**, not a deployed app: no Dokploy, no PRE/PRO environme
 - Semver. Every release = bump `package.json` `version` + `CHANGELOG.md` entry + annotated tag `vX.Y.Z`. Push and tag only with explicit user confirmation.
 - Consumer apps never patch a local copy: a change an app needs becomes a new feature here and a new `v0.x.y` tag.
 - Kanban: `pre` stage = committed on `main` (tests green); `pro` stage = pushed + tag pushed; `done` = user confirms an app consumes the tag.
+
+## Library rules
+
+- Every new or changed exported component must be added to `demo/App.tsx` with all its variants, sizes and states (disabled, loading, hint/error, focus). Run it locally with `npm run demo` (no deploy).

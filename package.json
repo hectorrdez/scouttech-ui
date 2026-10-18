@@ -56,6 +56,7 @@
     "lint": "oxlint",
     "test": "vitest run",
     "dev": "vite --config demo/vite.config.ts",
+    "demo": "vite --config demo/vite.config.ts",
     "demo:build": "vite build --config demo/vite.config.ts"
   },
   "peerDependencies": {
