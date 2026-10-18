@@ -3,6 +3,12 @@
 All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-10-18
+
+### Added
+- Demo: `scouttech` test theme (light and dark) mapped from scouttech-frontend's `--st-*` values; the theme selector offers 3 options.
+- E2E contrast and focus checks run on the 3 test themes × light/dark.
+
 ## [0.1.0] - 2026-10-18
 
 ### Added

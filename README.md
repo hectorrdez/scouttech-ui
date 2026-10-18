@@ -9,7 +9,7 @@ Stack: React 19, TypeScript 6, Tailwind CSS 4, React Router 7 and lucide-react (
 ## Install
 
 ```bash
-npm i github:hectorrdez/scouttech-ui#v0.1.0
+npm i github:hectorrdez/scouttech-ui#v0.1.1
 ```
 
 The `prepare` script builds `dist/` when npm installs the git dependency.
@@ -151,7 +151,7 @@ re-exports everything, and each component file also has a default export. Types 
 
 ```bash
 npm install
-npm run dev          # demo at http://127.0.0.1:5180 (test themes scoutgroup / scoutlog, light / dark)
+npm run dev          # demo at http://127.0.0.1:5180 (test themes scoutgroup / scoutlog / scouttech, light / dark)
 npm run build        # tsc -> dist/
 npm run typecheck    # library + demo + tests
 npm run lint         # oxlint

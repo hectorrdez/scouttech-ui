@@ -18,15 +18,22 @@ import {
 
 const PALETTE_KEY = "scouttech-ui-demo-palette";
 const THEME_KEY = "scouttech-ui-demo-theme";
-type Palette = "scoutgroup" | "scoutlog";
-const palettes: Palette[] = ["scoutgroup", "scoutlog"];
+type Palette = "scoutgroup" | "scoutlog" | "scouttech";
+const palettes: Palette[] = ["scoutgroup", "scoutlog", "scouttech"];
+const paletteNames: Record<Palette, string> = {
+  scoutgroup: "ScoutGroup",
+  scoutlog: "ScoutLog",
+  scouttech: "ScoutTech",
+};
+const isPalette = (value: string | null): value is Palette =>
+  palettes.includes(value as Palette);
 
 function readInitialPalette(): Palette {
   try {
     const fromUrl = new URLSearchParams(window.location.search).get("demo");
-    if (fromUrl === "scoutgroup" || fromUrl === "scoutlog") return fromUrl;
+    if (isPalette(fromUrl)) return fromUrl;
     const stored = localStorage.getItem(PALETTE_KEY);
-    if (stored === "scoutgroup" || stored === "scoutlog") return stored;
+    if (isPalette(stored)) return stored;
   } catch {
     // Storage blocked: fall back to the default palette.
   }
@@ -83,7 +90,7 @@ function Demo() {
             >
               {palettes.map((name) => (
                 <option key={name} value={name}>
-                  {name === "scoutgroup" ? "ScoutGroup" : "ScoutLog"}
+                  {paletteNames[name]}
                 </option>
               ))}
             </Select>
