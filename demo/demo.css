@@ -1,0 +1,95 @@
+@import "tailwindcss";
+@import "../tokens.css";
+@source "../src";
+@source "./";
+
+/* Test themes: scoutgroup and scoutlog, light and dark, mapped onto ui-* tokens. */
+
+html[data-demo="scoutgroup"] {
+  --color-ui-primary: #1E4C56;
+  --color-ui-on-primary: #ffffff;
+  --color-ui-primary-hover: #25606C;
+  --color-ui-primary-active: #153840;
+  --color-ui-surface: #ffffff;
+  --color-ui-surface-hover: #eef4f4;
+  --color-ui-surface-active: #dbe5e6;
+  --color-ui-on-surface: #13323b;
+  --color-ui-on-surface-muted: #5a6e74;
+  --color-ui-outline: #c2d1d3;
+  --color-ui-outline-strong: #5a6e74;
+  --color-ui-focus: #2b7c86;
+  --color-ui-danger: #b91c1c;
+  --color-ui-on-danger: #ffffff;
+  --color-ui-danger-hover: #991b1b;
+  --color-ui-danger-soft: #fef2f2;
+  --color-ui-disabled: #eef4f4;
+  --color-ui-on-disabled: #5a6e74;
+}
+
+html[data-demo="scoutgroup"][data-theme="dark"] {
+  --color-ui-primary: #4FA7A9;
+  --color-ui-on-primary: #042426;
+  --color-ui-primary-hover: #7CC3C4;
+  --color-ui-primary-active: #459C9E;
+  --color-ui-surface: #0f1f23;
+  --color-ui-surface-hover: #13262b;
+  --color-ui-surface-active: #1a3238;
+  --color-ui-on-surface: #dde9ea;
+  --color-ui-on-surface-muted: #93a8ac;
+  --color-ui-outline: #355960;
+  --color-ui-outline-strong: #93a8ac;
+  --color-ui-focus: #7cc3c4;
+  --color-ui-danger: #f87171;
+  --color-ui-on-danger: #450a0a;
+  --color-ui-danger-hover: #fca5a5;
+  --color-ui-danger-soft: #2a1215;
+  --color-ui-disabled: #13262b;
+  --color-ui-on-disabled: #93a8ac;
+}
+
+html[data-demo="scoutlog"] {
+  --color-ui-primary: #015200;
+  --color-ui-on-primary: #ffffff;
+  --color-ui-primary-hover: #1f6e14;
+  --color-ui-primary-active: #0f4a06;
+  --color-ui-surface: #ffffff;
+  --color-ui-surface-hover: #f1f5ed;
+  --color-ui-surface-active: #e0e4dc;
+  --color-ui-on-surface: #181d17;
+  --color-ui-on-surface-muted: #424940;
+  --color-ui-outline: #c2c9bd;
+  --color-ui-outline-strong: #72796f;
+  --color-ui-focus: #015200;
+  --color-ui-danger: #ba1a1a;
+  --color-ui-on-danger: #ffffff;
+  --color-ui-danger-hover: #93000a;
+  --color-ui-danger-soft: #ffdad6;
+  --color-ui-disabled: #e0e4dc;
+  --color-ui-on-disabled: #424940;
+}
+
+html[data-demo="scoutlog"][data-theme="dark"] {
+  --color-ui-primary: #5ea94f;
+  --color-ui-on-primary: #0a2a05;
+  --color-ui-primary-hover: #9ad68b;
+  --color-ui-primary-active: #4e9440;
+  --color-ui-surface: #121a12;
+  --color-ui-surface-hover: #1b241b;
+  --color-ui-surface-active: #252e25;
+  --color-ui-on-surface: #e2ecdf;
+  --color-ui-on-surface-muted: #bfcab9;
+  --color-ui-outline: #3f493d;
+  --color-ui-outline-strong: #8a9585;
+  --color-ui-focus: #9ad68b;
+  --color-ui-danger: #ffb4ab;
+  --color-ui-on-danger: #690005;
+  --color-ui-danger-hover: #ffdad6;
+  --color-ui-danger-soft: #93000a;
+  --color-ui-disabled: #252e25;
+  --color-ui-on-disabled: #bfcab9;
+}
+
+body {
+  @apply bg-ui-surface text-ui-on-surface;
+  min-height: 100vh;
+}

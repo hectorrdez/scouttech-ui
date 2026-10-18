@@ -1,0 +1,22 @@
+{
+  "_doc": "Cross-CLI agent relay config. When enabled, a session that stops mid-feature is picked up by another agent — following per-phase `route` chains and cloud<->local `fallback`. See CLAUDE.md > 'Agent relay' for the full schema and the local-backend examples. Run `relay-detect.cjs`, then /init-app's interview fills this in and flips `enabled`.",
+  "enabled": false,
+  "autostart": false,
+  "launcher": "auto",
+  "poll_seconds": 30,
+  "budget_minutes": 40,
+  "on_all_exhausted": "wait",
+  "reset_wait_minutes": 60,
+
+  "mode": "cloud",
+  "backends": {},
+
+  "agents": {
+    "claude-code": { "cmd": "claude", "fresh": ["{prompt}"], "backend": "cloud" },
+    "codex": { "cmd": "codex", "fresh": ["exec", "{prompt}"], "backend": "cloud" }
+  },
+
+  "rotation": ["claude-code", "codex"],
+  "route": {},
+  "fallback": {}
+}

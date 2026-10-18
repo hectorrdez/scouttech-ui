@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>scouttech-ui demo</title>
+    <!-- Static copy of themeInitScript("scouttech-ui-demo-theme") plus the demo palette. -->
+    <script>
+      (function () {
+        try {
+          var stored = null;
+          try { stored = localStorage.getItem("scouttech-ui-demo-theme"); } catch (e) {}
+          var mode = stored === "light" || stored === "dark" || stored === "system" ? stored : "system";
+          var prefersDark = false;
+          try { prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches; } catch (e) {}
+          var resolved = mode === "system" ? (prefersDark ? "dark" : "light") : mode;
+          document.documentElement.dataset.theme = resolved;
+          document.documentElement.style.colorScheme = resolved;
+          var palette = null;
+          try { palette = new URLSearchParams(window.location.search).get("demo") || localStorage.getItem("scouttech-ui-demo-palette"); } catch (e) {}
+          document.documentElement.dataset.demo = palette === "scoutlog" ? "scoutlog" : "scoutgroup";
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-ui-surface text-ui-on-surface">
+    <div id="root"></div>
+    <script type="module" src="./main.tsx"></script>
+  </body>
+</html>

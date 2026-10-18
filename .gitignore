@@ -1,0 +1,25 @@
+node_modules
+dist
+dist-demo
+*.log
+*.tgz
+.DS_Store
+.vscode/*
+.idea
+
+# Harness runtime files
+.claude/handoff.md
+.claude/relay.pid
+.claude/relay.state
+.claude/relay.log
+.claude/relay.prompt.txt
+.claude/relay.launch.*
+
+# RTK agent tooling
+.agents/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

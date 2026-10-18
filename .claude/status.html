@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feature Status</title>
+<style>
+  :root{
+    color-scheme:dark;
+    --bg:#0b0d10;
+    --bg-soft:#0f1318;
+    --card:#12161c;
+    --border:#1f2937;
+    --border-soft:#182029;
+    --text:#e5e7eb;
+    --muted:#6b7280;
+    --muted-soft:#4b5563;
+    --accent:#facc15;
+    --pending:#6b7280;
+    --process:#fbbf24;
+    --process-bg:#78350f;
+    --testing:#93c5fd;
+    --testing-bg:#1e3a8a;
+    --ended:#4ade80;
+    --ended-bg:#14532d;
+    --error:#f87171;
+  }
+  *{box-sizing:border-box;}
+  body{
+    background:radial-gradient(1200px 600px at 10% -10%, #131820 0%, var(--bg) 55%);
+    color:var(--text);
+    font-family:"JetBrains Mono","Cascadia Code",ui-monospace,Consolas,monospace;
+    padding:2.5rem;
+    min-height:100vh;
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+
+  header{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem;}
+  h1{font-size:1rem;color:var(--muted);font-weight:normal;margin:0;letter-spacing:0.01em;}
+  h1 b{color:var(--text);font-weight:600;}
+  .live{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--muted-soft);text-transform:uppercase;letter-spacing:0.08em;}
+  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--ended);box-shadow:0 0 0 0 rgba(74,222,128,0.6);animation:pulse 2s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(74,222,128,0.55);}
+    70%{box-shadow:0 0 0 6px rgba(74,222,128,0);}
+    100%{box-shadow:0 0 0 0 rgba(74,222,128,0);}
+  }
+
+  #search{
+    width:100%;background:var(--card);border:1px solid var(--border-soft);border-radius:8px;
+    color:var(--text);font-family:inherit;font-size:0.82rem;padding:0.5rem 0.75rem;
+    margin-bottom:0.9rem;outline:none;
+  }
+  #search::placeholder{color:var(--muted-soft);}
+  #search:focus{border-color:var(--accent);}
+
+  .stats{display:flex;gap:0.6rem;margin-bottom:1.25rem;flex-wrap:wrap;}
+  .stat{
+    display:flex;align-items:center;gap:0.5rem;
+    background:var(--card);border:1px solid var(--border-soft);border-radius:8px;
+    padding:0.5rem 0.85rem;font-size:0.78rem;color:var(--muted);
+  }
+  .stat b{color:var(--text);font-size:0.9rem;font-weight:600;}
+  .stat.clickable{cursor:pointer;user-select:none;transition:border-color 0.15s ease,background 0.15s ease;}
+  .stat.clickable:hover{border-color:var(--muted);}
+  .stat.stat-active{border-color:var(--accent);background:rgba(250,204,21,0.08);}
+  .stat .dot{width:6px;height:6px;border-radius:50%;}
+  .dot.PENDING{background:var(--pending);}
+  .dot.IN_PROCESS{background:var(--process);}
+  .dot.TESTING{background:var(--testing);}
+  .dot.ENDED{background:var(--ended);}
+  .dot.ACTIVE{background:var(--ended);}
+  .dot.BULK{background:var(--testing);}
+  .dot.EMPTY,.dot.SKELETON{background:var(--pending);}
+  .dot.SCRIPT_BROKEN{background:var(--error);}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+  .table-scroll{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;font-size:0.9rem;min-width:520px;}
+  th,td{text-align:left;padding:0.7rem 1rem;border-bottom:1px solid var(--border-soft);}
+  thead th{
+    color:var(--muted);font-weight:normal;text-transform:uppercase;font-size:0.7rem;
+    letter-spacing:0.08em;background:var(--bg-soft);position:sticky;top:0;
+  }
+  tbody tr{cursor:pointer;transition:background 0.15s ease;border-left:2px solid transparent;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:rgba(255,255,255,0.012);}
+  tbody tr:hover{background:#111827;}
+  tr.active{background:#1e293b;border-left-color:var(--accent);}
+  tr.active:hover{background:#233046;}
+  tr.active td:first-child{color:var(--accent);font-weight:600;}
+  tr.selected{outline:1px solid var(--accent);outline-offset:-1px;}
+  td:first-child{color:var(--muted);}
+
+  .state{display:inline-flex;align-items:center;gap:0.4rem;padding:0.2rem 0.6rem;border-radius:999px;font-size:0.72rem;letter-spacing:0.03em;}
+  .state::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .state.PENDING{color:var(--pending);background:rgba(107,114,128,0.1);}
+  .state.IN_PROCESS{color:var(--process);background:rgba(120,53,15,0.45);}
+  .state.TESTING{color:var(--testing);background:rgba(30,58,138,0.45);}
+  .state.ENDED{color:var(--ended);background:rgba(20,83,45,0.35);}
+  .state.ACTIVE{color:var(--ended);background:rgba(20,83,45,0.35);}
+  .state.BULK{color:var(--testing);background:rgba(30,58,138,0.45);}
+  .state.EMPTY,.state.SKELETON{color:var(--pending);background:rgba(107,114,128,0.1);}
+  .state.SCRIPT_BROKEN{color:var(--error);background:rgba(248,113,113,0.12);}
+
+  h2.section{font-size:0.85rem;color:var(--muted);font-weight:normal;letter-spacing:0.01em;margin:2rem 0 1rem;}
+
+  #meta{color:var(--muted-soft);font-size:0.75rem;margin-top:1rem;}
+  #err{
+    color:var(--error);margin-top:1rem;font-size:0.85rem;
+    background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.25);
+    border-radius:8px;padding:0.6rem 0.9rem;display:none;
+  }
+  #err:not(:empty){display:block;}
+
+  .main-row{display:block;}
+  .main-row.split{display:flex;align-items:flex-start;gap:1.25rem;}
+  .main-row.split #featuresCol{width:300px;flex:0 0 300px;}
+  .main-row.split #panel{flex:1;min-width:0;margin-top:0;}
+
+  #panel{
+    display:none;margin-top:1.25rem;border:1px solid var(--border);border-radius:10px;
+    padding:1.1rem 1.25rem;background:var(--bg-soft);
+    box-shadow:0 8px 24px -12px rgba(0,0,0,0.5);
+    animation:rise 0.15s ease;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+  .panel-file{color:var(--muted-soft);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;}
+  #panelHeading{color:var(--accent);font-size:1rem;margin:0 0 0.8rem;font-weight:600;}
+  .panel-meta{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.1rem;}
+  .panel-chip{
+    font-size:0.68rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);
+    background:var(--card);border:1px solid var(--border-soft);border-radius:6px;padding:0.22rem 0.55rem;
+  }
+  .panel-chip b{color:var(--text);text-transform:none;letter-spacing:0;margin-left:0.35rem;font-weight:600;font-size:0.75rem;}
+  #panelBody{max-height:55vh;overflow-y:auto;padding-right:0.25rem;}
+  #panelBody h3{
+    color:var(--muted);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;
+    margin:1.1rem 0 0.5rem;border-bottom:1px solid var(--border-soft);padding-bottom:0.35rem;
+  }
+  #panelBody h3:first-child{margin-top:0;}
+  #panelBody p{font-size:0.85rem;line-height:1.6;color:#d1d5db;margin:0 0 0.75rem;}
+  #panelBody ul{margin:0 0 0.9rem;padding-left:1.1rem;}
+  #panelBody li{font-size:0.85rem;line-height:1.6;color:#d1d5db;margin-bottom:0.35rem;}
+  #panelBody li::marker{color:var(--muted-soft);}
+  #panelBody code{
+    background:rgba(255,255,255,0.06);border:1px solid var(--border-soft);border-radius:4px;
+    padding:0.05rem 0.35rem;font-size:0.8em;color:#93c5fd;
+  }
+  #panelBody .empty{color:var(--muted);font-style:italic;}
+  #panelClose{
+    float:right;cursor:pointer;color:var(--muted);background:none;border:1px solid var(--border-soft);
+    border-radius:6px;font-family:inherit;font-size:0.75rem;padding:0.25rem 0.6rem;transition:all 0.15s ease;
+  }
+  #panelClose:hover{color:var(--text);border-color:var(--muted);}
+
+  #tbl thead th{cursor:pointer;user-select:none;}
+  #tbl thead th:hover{color:var(--text);}
+  .sort-arrow{display:inline-block;width:0.7em;margin-left:0.2rem;color:var(--accent);font-size:0.75em;}
+
+  .commit-hash{font-size:0.8rem;color:var(--muted);}
+  .commit-link{color:var(--testing);text-decoration:none;border-bottom:1px dotted currentColor;}
+  .commit-link:hover{color:var(--accent);}
+  .commit-empty{color:var(--muted-soft);}
+  .panel-chip a{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor;}
+  .panel-chip a:hover{color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><b>.claude/history.md</b> — feature status</h1>
+    <span class="live"><span class="live-dot"></span>live · 5s</span>
+  </header>
+
+  <div id="err"></div>
+
+  <div class="main-row" id="mainRow">
+    <div id="featuresCol">
+      <input type="text" id="search" placeholder="search features…" oninput="filterRows()">
+      <div class="stats" id="stats"></div>
+
+      <div class="card">
+        <div class="table-scroll">
+          <table id="tbl">
+            <thead><tr>
+              <th data-col="id" onclick="sortBy('id')">id<span class="sort-arrow"></span></th>
+              <th data-col="slug" onclick="sortBy('slug')">slug<span class="sort-arrow"></span></th>
+              <th data-col="state" onclick="sortBy('state')">state<span class="sort-arrow"></span></th>
+              <th data-col="role" onclick="sortBy('role')">role<span class="sort-arrow"></span></th>
+              <th data-col="commit" onclick="sortBy('commit')">commit<span class="sort-arrow"></span></th>
+            </tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="meta"></div>
+    </div>
+
+    <div id="panel">
+      <button id="panelClose" onclick="closePanel()">close ✕</button>
+      <div class="panel-file" id="panelTitle"></div>
+      <h2 id="panelHeading"></h2>
+      <div class="panel-meta" id="panelMeta"></div>
+      <div id="panelBody"></div>
+    </div>
+  </div>
+
+  <h2 class="section"><b style="color:var(--text)">.claude/collections.md</b> — Bruno collections status</h2>
+  <div class="stats" id="collStats"></div>
+  <div class="card">
+    <div class="table-scroll">
+      <table id="collTbl">
+        <thead><tr><th>name</th><th>format</th><th>requests</th><th>subfolders</th><th>env</th><th>npm run</th><th>status</th></tr></thead>
+        <tbody id="collRows"></tbody>
+      </table>
+    </div>
+  </div>
+  <div id="collMeta"></div>
+</div>
+
+<script>
+let selectedId = null;
+let selectedState = null;
+let featureRows = [];
+let sortCol = null;
+let sortDir = 1;
+const STATES = ['PENDING', 'IN_PROCESS', 'TESTING', 'ENDED'];
+
+async function load() {
+  const err = document.getElementById('err');
+  try {
+    const res = await fetch('/.claude/history.md', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    render(text);
+    err.textContent = '';
+  } catch (e) {
+    err.textContent = 'history.md fetch fail: ' + e.message + ' (serve project root over http, file:// blocked)';
+  }
+}
+
+// collections.md: a markdown table (feature 001). Columns:
+// | Name | Format | Requests | Subfolders | Environments | npm run | Status |
+// Status cell may carry extra prose after the flag word (e.g. "ACTIVE - built ...") -
+// only the leading all-caps token drives the badge class.
+const COLL_STATES = ['ACTIVE', 'BULK', 'EMPTY', 'SKELETON', 'SCRIPT_BROKEN'];
+
+async function loadCollections() {
+  const err = document.getElementById('err');
+  try {
+    const res = await fetch('/.claude/collections.md', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    renderCollections(await res.text());
+  } catch (e) {
+    err.textContent = (err.textContent ? err.textContent + ' | ' : '') +
+      'collections.md fetch fail: ' + e.message;
+  }
+}
+
+function parseMdTable(text) {
+  const rows = [];
+  for (const raw of text.split('\n')) {
+    const line = raw.trim();
+    if (!line.startsWith('|')) continue;
+    const cells = line.slice(1, line.endsWith('|') ? -1 : undefined).split('|').map(c => c.trim());
+    if (cells.every(c => /^:?-+:?$/.test(c))) continue; // separator row
+    rows.push(cells);
+  }
+  if (!rows.length) return [];
+  return rows.slice(1); // drop header row
+}
+
+function renderCollections(text) {
+  const rows = document.getElementById('collRows');
+  rows.innerHTML = '';
+  const counts = {};
+  for (const cells of parseMdTable(text)) {
+    const [name, format, requests, subfolders, envs, npmRun, status] = cells;
+    if (!name) continue;
+    const flag = (status.match(/^[A-Z_]+/) || ['?'])[0];
+    counts[flag] = (counts[flag] || 0) + 1;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${escapeHtml(name)}</td><td>${inlineMd(escapeHtml(format))}</td>` +
+      `<td>${escapeHtml(requests)}</td><td>${escapeHtml(subfolders)}</td>` +
+      `<td>${inlineMd(escapeHtml(envs))}</td><td>${inlineMd(escapeHtml(npmRun))}</td>` +
+      `<td><span class="state ${COLL_STATES.includes(flag) ? flag : 'PENDING'}">${escapeHtml(status)}</span></td>`;
+    rows.appendChild(tr);
+  }
+  renderCollStats(counts);
+  document.getElementById('collMeta').textContent = 'last checked ' + new Date().toLocaleTimeString();
+}
+
+function renderCollStats(counts) {
+  const stats = document.getElementById('collStats');
+  const total = Object.values(counts).reduce((a, b) => a + b, 0);
+  stats.innerHTML = `<div class="stat">collections <b>${total}</b></div>` +
+    Object.entries(counts).map(([flag, n]) =>
+      `<div class="stat"><span class="dot ${COLL_STATES.includes(flag) ? flag : 'PENDING'}"></span>${flag} <b>${n}</b></div>`
+    ).join('');
+}
+
+function render(text) {
+  const lines = text.split('\n').filter(l => l && !l.startsWith('#'));
+  // first non-comment line is header "id|slug|state|role"
+  const dataLines = lines.slice(1);
+  featureRows = [];
+  let active = null;
+  const counts = { PENDING: 0, IN_PROCESS: 0, TESTING: 0, ENDED: 0 };
+  for (const line of dataLines) {
+    const [id, slug, state, role, commit, commitUrl] = line.split('|');
+    if (!id) continue;
+    if (counts[state] !== undefined) counts[state]++;
+    if (state === 'IN_PROCESS' || state === 'TESTING') active = slug;
+    featureRows.push({ id, slug, state, role, commit: commit || '', commitUrl: commitUrl || '' });
+  }
+  renderTableRows();
+  renderStats(counts);
+  document.getElementById('meta').textContent =
+    (active ? 'AI working on: ' + active : 'nothing in process') +
+    ' — last checked ' + new Date().toLocaleTimeString();
+}
+
+// id sorts numeric; slug/state/role sort alphabetically (case-insensitive).
+function renderTableRows() {
+  const rows = document.getElementById('rows');
+  rows.innerHTML = '';
+  let data = featureRows.slice();
+  if (sortCol) {
+    data.sort((a, b) => {
+      let av = a[sortCol], bv = b[sortCol];
+      if (sortCol === 'id') { av = Number(av); bv = Number(bv); }
+      else { av = av.toLowerCase(); bv = bv.toLowerCase(); }
+      if (av < bv) return -sortDir;
+      if (av > bv) return sortDir;
+      return 0;
+    });
+  }
+  for (const { id, slug, state, role, commit, commitUrl } of data) {
+    const tr = document.createElement('tr');
+    tr.dataset.id = id;
+    tr.dataset.slug = slug;
+    tr.dataset.state = state;
+    if (state === 'IN_PROCESS' || state === 'TESTING') tr.classList.add('active');
+    if (id === selectedId) tr.classList.add('selected');
+    tr.innerHTML = `<td>${id}</td><td>${slug}</td><td><span class="state ${state}">${state}</span></td><td>${role}</td>` +
+      `<td>${commitCell(commit, commitUrl)}</td>`;
+    tr.addEventListener('click', () => openFeature(id, slug));
+    rows.appendChild(tr);
+  }
+  filterRows();
+}
+
+// A recorded commit hash links out to the remote host when set-commit.cjs resolved a URL;
+// otherwise it's plain text (or an em-dash before any commit is recorded).
+function commitCell(commit, commitUrl) {
+  if (!commit) return '<span class="commit-empty">—</span>';
+  const hash = escapeHtml(commit);
+  if (!commitUrl) return `<span class="commit-hash">${hash}</span>`;
+  return `<a class="commit-hash commit-link" href="${escapeHtml(commitUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${hash}</a>`;
+}
+
+function sortBy(col) {
+  sortDir = sortCol === col ? -sortDir : 1;
+  sortCol = col;
+  document.querySelectorAll('#tbl thead th').forEach(th => {
+    th.querySelector('.sort-arrow').textContent = th.dataset.col === col ? (sortDir === 1 ? '▲' : '▼') : '';
+  });
+  renderTableRows();
+}
+
+function filterRows() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  document.querySelectorAll('#rows tr').forEach(tr => {
+    const hay = tr.textContent.toLowerCase();
+    const matchesText = !q || hay.includes(q);
+    const matchesState = !selectedState || tr.dataset.state === selectedState;
+    tr.style.display = matchesText && matchesState ? '' : 'none';
+  });
+}
+
+function renderStats(counts) {
+  const stats = document.getElementById('stats');
+  stats.innerHTML = STATES.map(s =>
+    `<div class="stat clickable${s === selectedState ? ' stat-active' : ''}" data-state="${s}" onclick="toggleStateFilter('${s}')"><span class="dot ${s}"></span>${s} <b>${counts[s]}</b></div>`
+  ).join('');
+}
+
+function toggleStateFilter(s) {
+  selectedState = selectedState === s ? null : s;
+  document.querySelectorAll('#stats .stat').forEach(el =>
+    el.classList.toggle('stat-active', el.dataset.state === selectedState)
+  );
+  filterRows();
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function inlineMd(s) {
+  return s.replace(/`([^`]+)`/g, '<code>$1</code>');
+}
+
+// Feature files: YAML-ish frontmatter (--- k: v ... ---) then a markdown body
+// of "## Heading" sections, "- item" lists, and plain paragraphs.
+function parseFeature(text) {
+  const fm = text.match(/^---\n([\s\S]*?)\n---\n?/);
+  const meta = {};
+  const body = fm ? text.slice(fm[0].length) : text;
+  if (fm) {
+    for (const line of fm[1].split('\n')) {
+      const i = line.indexOf(':');
+      if (i === -1) continue;
+      meta[line.slice(0, i).trim()] = line.slice(i + 1).trim().replace(/^"|"$/g, '');
+    }
+  }
+  return { meta, body };
+}
+
+function mdToHtml(md) {
+  let html = '';
+  let inList = false;
+  const closeList = () => { if (inList) { html += '</ul>'; inList = false; } };
+  for (const raw of md.split('\n')) {
+    const line = raw.trim();
+    if (/^#\s+/.test(line)) continue; // redundant with panel heading
+    if (/^##\s+/.test(line)) {
+      closeList();
+      html += `<h3>${escapeHtml(line.replace(/^##\s+/, ''))}</h3>`;
+    } else if (/^-\s+/.test(line)) {
+      if (!inList) { html += '<ul>'; inList = true; }
+      html += `<li>${inlineMd(escapeHtml(line.replace(/^-\s+/, '')))}</li>`;
+    } else if (line === '') {
+      closeList();
+    } else {
+      closeList();
+      html += `<p>${inlineMd(escapeHtml(line))}</p>`;
+    }
+  }
+  closeList();
+  return html || '<p class="empty">(empty)</p>';
+}
+
+function commitChip(id) {
+  const row = featureRows.find(r => r.id === id);
+  if (!row || !row.commit) return '';
+  const hash = escapeHtml(row.commit);
+  const inner = row.commitUrl
+    ? `<a href="${escapeHtml(row.commitUrl)}" target="_blank" rel="noopener">${hash}</a>`
+    : hash;
+  return `<span class="panel-chip">commit<b>${inner}</b></span>`;
+}
+
+async function openFeature(id, slug) {
+  selectedId = id;
+  document.querySelectorAll('#rows tr').forEach(r => r.classList.toggle('selected', r.dataset.id === id));
+  const panel = document.getElementById('panel');
+  const heading = document.getElementById('panelHeading');
+  const metaEl = document.getElementById('panelMeta');
+  const body = document.getElementById('panelBody');
+  document.getElementById('panelTitle').textContent = `${id}_${slug}.md`;
+  panel.style.display = 'block';
+  document.getElementById('mainRow').classList.add('split');
+  heading.textContent = '';
+  metaEl.innerHTML = '';
+  body.innerHTML = '<p class="empty">loading…</p>';
+  try {
+    const res = await fetch(`/.claude/features/${id}_${slug}.md`, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const { meta, body: md } = parseFeature(await res.text());
+    heading.textContent = meta.title || slug;
+    metaEl.innerHTML = ['role', 'type', 'extends'].filter(k => meta[k])
+      .map(k => `<span class="panel-chip">${k}<b>${escapeHtml(meta[k])}</b></span>`).join('') +
+      commitChip(id);
+    body.innerHTML = mdToHtml(md);
+  } catch (e) {
+    body.innerHTML = `<p class="empty">fetch fail: ${escapeHtml(e.message)}</p>`;
+  }
+}
+
+function closePanel() {
+  selectedId = null;
+  document.getElementById('panel').style.display = 'none';
+  document.getElementById('mainRow').classList.remove('split');
+  document.querySelectorAll('#rows tr.selected').forEach(r => r.classList.remove('selected'));
+}
+
+function refreshAll() {
+  load();
+  loadCollections();
+}
+refreshAll();
+setInterval(refreshAll, 5000);
+</script>
+</body>
+</html>

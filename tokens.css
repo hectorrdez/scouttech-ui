@@ -1,0 +1,32 @@
+/*
+ * scouttech-ui design tokens (contract + neutral defaults).
+ * Apps override these values; components only use the ui-* names.
+ * Defaults are neutral (zinc / slate family) and pass 4.5:1 text contrast.
+ */
+@theme {
+  --color-ui-primary: #3f3f46;
+  --color-ui-on-primary: #ffffff;
+  --color-ui-primary-hover: #52525b;
+  --color-ui-primary-active: #27272a;
+
+  --color-ui-surface: #ffffff;
+  --color-ui-surface-hover: #f4f4f5;
+  --color-ui-surface-active: #e4e4e7;
+  --color-ui-on-surface: #18181b;
+  --color-ui-on-surface-muted: #52525b;
+
+  --color-ui-outline: #d4d4d8;
+  --color-ui-outline-strong: #71717a;
+  --color-ui-focus: #2563eb;
+
+  --color-ui-danger: #b91c1c;
+  --color-ui-on-danger: #ffffff;
+  --color-ui-danger-hover: #991b1b;
+  --color-ui-danger-soft: #fef2f2;
+
+  --color-ui-disabled: #f4f4f5;
+  --color-ui-on-disabled: #52525b;
+
+  --radius-ui-control: 0.5rem;
+  --shadow-ui-control: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+}

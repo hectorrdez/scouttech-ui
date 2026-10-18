@@ -1,0 +1,59 @@
+{
+  "backend": "plane",
+  "baseUrl": "https://plane.hectorrdez.es",
+  "workspace": "scouttech",
+  "profile": "scouttech",
+  "project": "e83f037d-faaf-41d9-bc7a-4284b03e8e2c",
+  "projectName": "Scouttech",
+  "projectIdentifier": "SCOUT",
+  "repo": "scouttech-ui",
+  "mode": "harness",
+  "assignee": "5d8fa510-7493-4814-9555-8ba93819dd02",
+  "stages": {
+    "idea": {
+      "id": "e53f74e6-007b-4c06-bcb1-97aff60b99df",
+      "name": "Idea"
+    },
+    "ready": {
+      "id": "8ada2432-c3cd-4ecb-b7ec-4b9a591e11ca",
+      "name": "Listo para empezar"
+    },
+    "doing": {
+      "id": "b447cacd-d011-4446-bc9e-95937dd74e4a",
+      "name": "En progreso"
+    },
+    "testing": {
+      "id": "878323a3-2127-4f17-b005-352df90db3af",
+      "name": "Por probar"
+    },
+    "pre": {
+      "id": "0cef8c8e-9f72-4fe9-aa5b-80804ab47c36",
+      "name": "Pendiente PRE"
+    },
+    "pro": {
+      "id": "73723f8f-3461-48d6-991d-80f004c2d751",
+      "name": "Pendiente PRO"
+    },
+    "done": {
+      "id": "8b17d9aa-b063-4060-b51d-515a8301864c",
+      "name": "Completado"
+    }
+  },
+  "labels": {
+    "repo:scouttech-frontend": "4d45319d-1ce1-48c1-b6f3-28547d39b4f1",
+    "repo:scouttech-api": "cd186bc7-25c7-4c43-875f-80825fb86155",
+    "repo:scouttech-api-testing": "292a9b05-ede5-4576-b70f-07b05fea69c4",
+    "repo:scoutgroup-frontend": "4fbd20cf-747b-4e66-b124-2a29b4f51a29",
+    "repo:scoutlog-frontend": "f8be265d-0a29-46fc-a6a0-21aa9e6cee2c",
+    "repo:scouttech-ui": "b2534b4c-e387-4e9b-a383-2be395883c6c",
+    "tipo:Feature": "675ad07a-6d13-458b-81fd-ef6c12e996da",
+    "tipo:Mejora": "121b24c7-d67f-490a-bc46-0f28fa1b008b",
+    "tipo:Bug": "466026e9-16a0-444b-9b9f-e893ec2fedf2",
+    "tipo:Error": "17d296b5-69e9-44fb-9858-6697a8fc8789",
+    "tipo:Doc": "b6b963f2-d6e4-422b-8a27-ab8180b84df8",
+    "env:DEV": "60e0449a-8f5b-4b35-a9ea-c687e711a035",
+    "env:PRE": "ce424088-a81b-48bf-8cb6-00bec966ee2d",
+    "env:PRO": "1feccf00-6213-411f-8bc2-428debc44880"
+  },
+  "titleFormat": "{id} {slug}"
+}
