@@ -9,7 +9,7 @@ Stack: React 19, TypeScript 6, Tailwind CSS 4, React Router 7 and lucide-react (
 ## Install
 
 ```bash
-npm i github:hectorrdez/scouttech-ui#v0.1.2
+npm i github:hectorrdez/scouttech-ui#v0.1.3
 ```
 
 The `prepare` script builds `dist/` when npm installs the git dependency.
@@ -100,14 +100,20 @@ For app-specific controls (for example a Textarea) that should look like `Input`
 field classes. They are public API:
 
 ```tsx
-import { controlClassName, controlBorderClassName } from "scouttech-ui";
-// or: import { controlClassName, controlBorderClassName } from "scouttech-ui/Field";
+import {
+  controlClassName,
+  controlBorderClassName,
+  controlErrorClassName,
+  controlMandatoryClassName,
+} from "scouttech-ui";
+// or the same names from "scouttech-ui/Field"
 
 <textarea className={`${controlClassName} ${controlBorderClassName} min-h-24 py-2`} />;
 ```
 
 `controlClassName` holds the size, radius, colours and focus ring. `controlBorderClassName` holds the default border.
-Use `controlErrorClassName` for the error state if you need it from `scouttech-ui/Field` too.
+`controlErrorClassName` replaces the border for the error state, and `controlMandatoryClassName` adds the amber
+mandatory bar (visual only, like the `mandatory` prop).
 
 ## Theme
 

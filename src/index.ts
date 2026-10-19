@@ -8,7 +8,13 @@ export { Input } from "./Input.js";
 export type { InputProps } from "./Input.js";
 export { Select } from "./Select.js";
 export type { SelectProps } from "./Select.js";
-export { FieldError, controlClassName, controlBorderClassName } from "./Field.js";
+export {
+  FieldError,
+  controlClassName,
+  controlBorderClassName,
+  controlErrorClassName,
+  controlMandatoryClassName,
+} from "./Field.js";
 export { ThemeToggle } from "./ThemeToggle.js";
 export type { ThemeToggleLabels, ThemeToggleProps } from "./ThemeToggle.js";
 export {
