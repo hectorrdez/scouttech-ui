@@ -1,19 +1,24 @@
-import { Mail, Search, Trash2, Plus } from "lucide-react";
+import { Mail, Search, Trash2, Plus, Users } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 import {
   Button,
   ButtonLink,
   ButtonToogle,
+  Card,
+  CookieConsent,
   FieldError,
   Input,
   Select,
+  StatCard,
   ThemeProvider,
   ThemeToggle,
   buttonClassName,
   useTheme,
   type ButtonSize,
   type ButtonVariant,
+  type CardVariant,
+  type CookieConsentValues,
 } from "../src/index.js";
 
 const PALETTE_KEY = "scouttech-ui-demo-palette";
@@ -40,9 +45,21 @@ function readInitialPalette(): Palette {
   return "scoutgroup";
 }
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+function Section({
+  title,
+  children,
+  e2eText = false,
+}: {
+  title: string;
+  children: ReactNode;
+  /** Marks the section for the text contrast E2E check (data-e2e-text). */
+  e2eText?: boolean;
+}) {
   return (
-    <section className="flex flex-col gap-4 border-t border-ui-outline pt-6">
+    <section
+      data-e2e-text={e2eText ? "" : undefined}
+      className="flex flex-col gap-4 border-t border-ui-outline pt-6"
+    >
       <h2 className="text-lg font-semibold">{title}</h2>
       {children}
     </section>
@@ -51,6 +68,27 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 
 const variants: ButtonVariant[] = ["primary", "secondary", "outline", "ghost", "danger", "danger-soft"];
 const sizes: ButtonSize[] = ["sm", "md"];
+const cardVariants: CardVariant[] = ["elevated", "tonal", "outlined"];
+
+const cookieSections = [
+  {
+    key: "marketing",
+    title: "Marketing",
+    description:
+      "Usamos cookies de marketing para mostrarte anuncios y contenidos adaptados a tus intereses, y para medir si esas campañas funcionan. Pueden compartir datos con socios publicitarios.",
+  },
+  {
+    key: "analysis",
+    title: "Análisis",
+    description: "Nos ayudan a entender cómo se usa la aplicación para mejorarla.",
+  },
+  {
+    key: "technical",
+    title: "Técnicas",
+    description: "Necesarias para iniciar sesión y recordar tus preferencias. No se pueden desactivar.",
+    required: true,
+  },
+];
 
 function ThemeState() {
   const { mode, resolved } = useTheme();
@@ -64,6 +102,8 @@ function ThemeState() {
 function Demo() {
   const [palette, setPalette] = useState<Palette>(readInitialPalette);
   const [notify, setNotify] = useState(true);
+  const [cookiesOpen, setCookiesOpen] = useState(false);
+  const [cookieResult, setCookieResult] = useState<CookieConsentValues | null>(null);
 
   useEffect(() => {
     document.documentElement.dataset.demo = palette;
@@ -267,6 +307,82 @@ function Demo() {
 
       <Section title="FieldError">
         <FieldError>Error suelto, fuera de un campo</FieldError>
+      </Section>
+
+      <Section title="Card" e2eText>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {cardVariants.map((variant) => (
+            <Card key={variant} variant={variant} className="flex flex-col gap-1">
+              <h3 className="text-base font-semibold">Tarjeta {variant}</h3>
+              <p className="text-sm text-ui-on-surface-muted">Contenedor estático.</p>
+            </Card>
+          ))}
+        </div>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {cardVariants.map((variant) => (
+            <Card key={`${variant}-interactive`} variant={variant} interactive className="flex flex-col gap-1">
+              <h3 className="text-base font-semibold">Tarjeta {variant} interactiva</h3>
+              <p className="text-sm text-ui-on-surface-muted">Sombra al pasar el ratón.</p>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="StatCard" e2eText>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <StatCard
+            label="Licencias en uso"
+            value="128"
+            description="Actualizado hoy"
+            delta="+4,2 % mes"
+            icon={<Users size={20} />}
+            footer="Ver detalle"
+            footerMeta="ID 042"
+            testId="stat-licences"
+          />
+          <StatCard label="Grupos activos" value="14" />
+          <StatCard
+            variant="tonal"
+            label="Unidades"
+            value="37"
+            description="Incluye unidades inactivas"
+          />
+          <StatCard
+            variant="outlined"
+            label="Pendientes"
+            value="6"
+            footer="Revisar"
+          />
+        </div>
+      </Section>
+
+      <Section title="CookieConsent" e2eText>
+        <div className="flex flex-wrap items-center gap-3">
+          <Button onClick={() => setCookiesOpen(true)}>Configurar cookies</Button>
+        </div>
+        {cookiesOpen && (
+          <CookieConsent
+            title="Selecciona cómo tratamos tu información"
+            description="Puedes aceptar todas las cookies, elegir cuáles quieres o rechazar las opcionales."
+            sections={cookieSections}
+            initial={{ marketing: true, analysis: true }}
+            rejectOptionalLabel="Rechazar opcionales"
+            moreInfo={
+              <ButtonLink to="/cookies" variant="ghost" size="sm">
+                Saber más
+              </ButtonLink>
+            }
+            onSubmit={(values: CookieConsentValues) => {
+              setCookiesOpen(false);
+              setCookieResult(values);
+            }}
+          />
+        )}
+        {cookieResult && (
+          <p data-testid="cookie-result" className="text-sm text-ui-on-surface-muted">
+            Preferencias: {JSON.stringify(cookieResult)}
+          </p>
+        )}
       </Section>
 
       <Section title="ThemeToggle">

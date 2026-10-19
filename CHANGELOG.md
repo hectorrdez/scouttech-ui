@@ -3,6 +3,17 @@
 All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-10-19
+
+### Added
+- `Card` with `variant` (`elevated`, `tonal`, `outlined`) and `interactive`; forwards `ref`, `className`, `style` and `data-*`. `cardClassName()` exported for app elements that must look like a card.
+- `StatCard` KPI tile (label, value, description, delta, icon, footer, footerMeta, testId), built on `Card`.
+- `CookieConsent` modal dialog with one switch per section, `required` sections locked on, accept selection / accept all and an optional reject-optional button.
+- Tokens: `--color-ui-surface-tonal`, `--color-ui-overlay`, `--radius-ui-card`, `--spacing-ui-card`, `--shadow-ui-card`, `--shadow-ui-card-hover`, mapped in the demo themes for light and dark.
+- Subpath exports `scouttech-ui/Card`, `scouttech-ui/StatCard` and `scouttech-ui/CookieConsent`.
+- Demo: Card, StatCard and CookieConsent sections.
+- Tests: Vitest for Card, StatCard, CookieConsent and the root barrel; E2E cookie consent on 320/375/414 px widths, dialog text contrast on the 3 themes × light/dark, and text contrast now also checks the Card, StatCard and CookieConsent text.
+
 ## [0.1.3] - 2026-10-19
 
 ### Added

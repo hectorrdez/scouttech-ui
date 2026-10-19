@@ -53,7 +53,8 @@
     "tipo:Doc": "b6b963f2-d6e4-422b-8a27-ab8180b84df8",
     "env:DEV": "60e0449a-8f5b-4b35-a9ea-c687e711a035",
     "env:PRE": "ce424088-a81b-48bf-8cb6-00bec966ee2d",
-    "env:PRO": "1feccf00-6213-411f-8bc2-428debc44880"
+    "env:PRO": "1feccf00-6213-411f-8bc2-428debc44880",
+    "repo:scoutpulse-frontend": "7faa0979-62a8-416b-a262-ff0154af4e3f"
   },
   "titleFormat": "{id} {slug}"
 }

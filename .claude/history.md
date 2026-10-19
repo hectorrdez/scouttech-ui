@@ -7,3 +7,4 @@ id|slug|state|role|commit|commit_url
 002|demo-scouttech-theme|ENDED|frontend|46ab04c|https://github.com/hectorrdez/scouttech-ui/commit/46ab04c
 003|danger-soft-mandatory-exports|ENDED|frontend|51e2bfa|https://github.com/hectorrdez/scouttech-ui/commit/51e2bfa
 004|export-field-classes-root|ENDED|frontend|2f5a3ca|https://github.com/hectorrdez/scouttech-ui/commit/2f5a3ca
+005|cards|ENDED|frontend||

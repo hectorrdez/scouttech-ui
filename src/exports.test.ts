@@ -1,11 +1,24 @@
 import { describe, expect, it } from "vitest";
 import * as field from "./Field.js";
 import {
+  Card,
+  CookieConsent,
+  StatCard,
+  cardClassName,
   controlBorderClassName,
   controlClassName,
   controlErrorClassName,
   controlMandatoryClassName,
 } from "./index.js";
+
+describe("root barrel exports the cards", () => {
+  it("exports Card, StatCard, CookieConsent and cardClassName", () => {
+    expect(typeof Card).toBe("function");
+    expect(typeof StatCard).toBe("function");
+    expect(typeof CookieConsent).toBe("function");
+    expect(typeof cardClassName).toBe("function");
+  });
+});
 
 describe("public control class helpers", () => {
   it("are non-empty strings exported from the root barrel", () => {

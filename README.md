@@ -9,7 +9,7 @@ Stack: React 19, TypeScript 6, Tailwind CSS 4, React Router 7 and lucide-react (
 ## Install
 
 ```bash
-npm i github:hectorrdez/scouttech-ui#v0.1.3
+npm i github:hectorrdez/scouttech-ui#v0.2.0
 ```
 
 The `prepare` script builds `dist/` when npm installs the git dependency.
@@ -64,8 +64,10 @@ Components only use the `ui-*` names. They never use raw hex values, opacity mod
 | `--color-ui-surface` | `bg-ui-surface` | Fields, outline buttons, switch thumb |
 | `--color-ui-surface-hover` | `bg-ui-surface-hover` | Secondary button, hover states |
 | `--color-ui-surface-active` | `bg-ui-surface-active` | Pressed surface states |
+| `--color-ui-surface-tonal` | `bg-ui-surface-tonal` | Tonal `Card` background |
 | `--color-ui-on-surface` | `text-ui-on-surface` | Body text, labels |
 | `--color-ui-on-surface-muted` | `text-ui-on-surface-muted` | Hints, placeholders, inactive icons |
+| `--color-ui-overlay` | `bg-ui-overlay` | Backdrop behind `CookieConsent` |
 | `--color-ui-outline` | `border-ui-outline` | Field borders |
 | `--color-ui-outline-strong` | `border-ui-outline-strong` | Outline button border, switch off track |
 | `--color-ui-focus` | `outline-ui-focus` | Focus outline (2px, offset 2px) |
@@ -78,6 +80,10 @@ Components only use the `ui-*` names. They never use raw hex values, opacity mod
 | `--color-ui-on-disabled` | `text-ui-on-disabled` | Text on disabled controls |
 | `--radius-ui-control` | `rounded-ui-control` | Corners of controls (0.5rem) |
 | `--shadow-ui-control` | `shadow-ui-control` | Elevation of primary and danger buttons |
+| `--radius-ui-card` | `rounded-ui-card` | Corners of `Card` and `StatCard` (0.75rem) |
+| `--spacing-ui-card` | `p-ui-card` | Padding of `Card` and `StatCard` (1.5rem) |
+| `--shadow-ui-card` | `shadow-ui-card` | Elevated `Card` |
+| `--shadow-ui-card-hover` | `hover:shadow-ui-card-hover` | Interactive `Card` on hover |
 
 Typography is inherited from the app.
 
@@ -114,6 +120,52 @@ import {
 `controlClassName` holds the size, radius, colours and focus ring. `controlBorderClassName` holds the default border.
 `controlErrorClassName` replaces the border for the error state, and `controlMandatoryClassName` adds the amber
 mandatory bar (visual only, like the `mandatory` prop).
+
+## Cards
+
+`Card` is the container for grouped content. `StatCard` is a KPI tile built on it:
+
+```tsx
+import { Card, StatCard, cardClassName } from "scouttech-ui";
+
+<Card variant="tonal">Contenido</Card>
+<Card interactive>Tarjeta clicable</Card>
+
+<StatCard
+  label="Licencias en uso"
+  value="128"
+  description="Actualizado hoy"
+  delta="+4,2 % mes"
+  footer="Ver detalle"
+  footerMeta="ID 042"
+  testId="stat-licences"
+/>
+
+// Link styled as a card
+<Link to="/detalle" className={cardClassName({ interactive: true })}>…</Link>;
+```
+
+## Cookie consent
+
+`CookieConsent` is a modal with one switch per section. Sections with `required` stay on and cannot be changed.
+The component does not store the choice: save the values in `onSubmit` and stop rendering the dialog.
+
+```tsx
+import { CookieConsent } from "scouttech-ui";
+
+<CookieConsent
+  title="Selecciona cómo tratamos tu información"
+  sections={[
+    { key: "marketing", title: "Marketing", description: "Anuncios personalizados." },
+    { key: "analysis", title: "Análisis", description: "Medición de uso." },
+    { key: "technical", title: "Técnicas", description: "Necesarias.", required: true },
+  ]}
+  initial={{ marketing: true }}
+  rejectOptionalLabel="Rechazar opcionales"
+  moreInfo={<Link to="/cookies">Saber más</Link>}
+  onSubmit={(values) => saveConsent(values)}
+/>;
+```
 
 ## Theme
 
@@ -160,12 +212,16 @@ node -e 'import("scouttech-ui/theme").then(m=>console.log(m.themeInitScript("sco
 | `Select` | `label`, `hint`, `error`, `required`, `mandatory`, `mandatoryLabel`, `fieldClassName`, plus `<select>` props | Same field behaviour as `Input`. |
 | `FieldError` | `id?` | `role="alert"`, `text-ui-danger`. |
 | `ThemeToggle` | `className`, `labels?: { group?, light?, dark?, system? }` | `radiogroup` with three `radio` buttons and `aria-checked`. Spanish defaults. |
+| `Card` | `variant` (`elevated` | `tonal` | `outlined`), `interactive`, plus `<div>` props | Forwards `ref`, `className`, `style` and `data-*`. `cardClassName()` returns the same classes for app elements (e.g. a link). |
+| `StatCard` | `label`, `value`, `description`, `delta`, `icon`, `footer`, `footerMeta`, `testId`, plus `Card` props | KPI tile. `icon` is decorative (`aria-hidden`). `testId` goes on the card; the figure gets `${testId}-value`. |
+| `CookieConsent` | `title`, `description`, `sections`, `initial`, `onSubmit`, `moreInfo`, `rejectOptionalLabel`, labels, `className` | Modal dialog with one switch per section. Focuses itself on mount. Required sections are locked on. Persisting the choice is the app's job (`onSubmit`). |
 | `ThemeProvider` | `storageKey`, `defaultMode`, `children` | See Theme. |
 | `useTheme` | — | `{ mode, resolved, setMode }`. |
 | `themeInitScript` | `storageKey?`, `defaultMode?` | Returns the inline script body (string). |
 
-Subpaths `scouttech-ui/Button`, `scouttech-ui/ButtonLink`, `scouttech-ui/ButtonToogle`, `scouttech-ui/Input`,
-`scouttech-ui/Select`, `scouttech-ui/Field`, `scouttech-ui/ThemeToggle` and `scouttech-ui/theme` are also exported. The root barrel
+Subpaths `scouttech-ui/Button`, `scouttech-ui/ButtonLink`, `scouttech-ui/ButtonToogle`, `scouttech-ui/Card`,
+`scouttech-ui/StatCard`, `scouttech-ui/CookieConsent`, `scouttech-ui/Input`, `scouttech-ui/Select`, `scouttech-ui/Field`,
+`scouttech-ui/ThemeToggle` and `scouttech-ui/theme` are also exported. The root barrel
 re-exports everything, and each component file also has a default export. Types (`ButtonProps`, `ButtonVariant`,
 `ButtonSize`, `InputProps`, `SelectProps`, `ThemeMode`, `ResolvedTheme`, and others) are exported from the root.
 
