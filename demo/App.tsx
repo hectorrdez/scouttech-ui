@@ -3,6 +3,11 @@ import { useEffect, useState, type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 import {
   AuthBrandHeader,
+  Badge,
+  EmptyState,
+  Skeleton,
+  TabPanel,
+  Tabs,
   Button,
   ButtonLink,
   ButtonToogle,
@@ -31,6 +36,7 @@ import {
   type CardVariant,
   productNames,
   products,
+  type BadgeTone,
   type CookieConsentValues,
   type ModalSize,
   type Product,
@@ -191,6 +197,7 @@ function Demo() {
   const [notify, setNotify] = useState(true);
   const [cookiesOpen, setCookiesOpen] = useState(false);
   const [modalSize, setModalSize] = useState<ModalSize | null>(null);
+  const [tab, setTab] = useState("uno");
   const [cookieResult, setCookieResult] = useState<CookieConsentValues | null>(null);
 
   useEffect(() => {
@@ -599,6 +606,54 @@ function Demo() {
             </div>
           </Modal>
         )}
+      </Section>
+
+      <Section title="Badge" e2eText>
+        <div className="flex flex-wrap items-center gap-2">
+          {(["neutral", "primary", "success", "warning", "danger", "info"] as BadgeTone[]).map((tone) => (
+            <Badge key={tone} tone={tone}>
+              {tone}
+            </Badge>
+          ))}
+          <Badge tone="custom" className="bg-ui-surface-tonal text-ui-on-surface">
+            custom
+          </Badge>
+        </div>
+      </Section>
+
+      <Section title="Tabs" e2eText>
+        <Tabs
+          label="Secciones de ejemplo"
+          active={tab}
+          onChange={setTab}
+          tabs={[
+            { id: "uno", label: "Uno" },
+            { id: "dos", label: "Dos", badge: <Badge tone="primary">3</Badge> },
+            { id: "tres", label: "Tres" },
+          ]}
+        />
+        <TabPanel id={tab} className="mt-3 text-sm">
+          Contenido de la pestaña {tab}
+        </TabPanel>
+      </Section>
+
+      <Section title="EmptyState" e2eText>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <EmptyState
+            title="Sin eventos"
+            description="Crea el primero para empezar."
+            action={<Button>Crear evento</Button>}
+          />
+          <EmptyState title="Sin resultados" />
+        </div>
+      </Section>
+
+      <Section title="Skeleton">
+        <div className="flex flex-col gap-2">
+          <Skeleton />
+          <Skeleton className="h-4 w-2/3" />
+          <Skeleton className="size-12 rounded-full" />
+        </div>
       </Section>
 
       <Section title="Marca y semánticos" e2eText>
