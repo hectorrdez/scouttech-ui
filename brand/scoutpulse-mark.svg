@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor">
+  <!-- ScoutPulse: group pulse (past heartbeat) and a detached point (the prediction). One ink, cut-out line. -->
+  <mask id="scoutpulse-cut">
+    <rect width="32" height="32" fill="#fff" />
+    <path d="M5 17h4.5l2.5-6 4 11 3-7.5" fill="none" stroke="#000" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="24" cy="15" r="2.75" fill="#000" />
+  </mask>
+  <rect width="32" height="32" rx="8" mask="url(#scoutpulse-cut)" />
+</svg>

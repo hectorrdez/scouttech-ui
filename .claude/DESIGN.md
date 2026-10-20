@@ -6,6 +6,9 @@
   and dark values live in `@layer theme` (`:root` and `html[data-theme="dark"]`). Radius/shadow/spacing tokens
   (`--radius-ui-control`, `--shadow-ui-control`, `--radius-ui-card`, `--spacing-ui-card`, `--shadow-ui-card`,
   `--shadow-ui-card-hover`) stay literal.
+- Product brand tokens: `--color-ui-brand-scouttech|scoutgroup|scoutlog|scoutpulse` (base, not per theme; light/dark values
+  in `tokens.css`). Use them only through `ProductMark` / `AuthBrandHeader` or `text-ui-brand-<product>` for brand graphics.
+  Graphics need 3:1 on `ui-surface`; ScoutLog light uses its ink (`#b45309`), not `#f59e0b`.
 - Brand themes: `themes/{scouttech,scoutgroup,scoutlog,scoutpulse}.css`. They set only the brand scale
   (`--ui-primary`, `-on-primary`, `-primary-hover`, `-primary-active`, `-primary-ink`, `-primary-soft`), unlayered, for
   light and dark. Apps import `tokens.css`, then one theme.
@@ -26,6 +29,11 @@
 - `ui-danger` / `ui-on-danger` / `ui-danger-hover` / `ui-danger-soft`: destructive actions, errors.
 - `ui-disabled` / `ui-on-disabled`: disabled and loading states (never opacity).
 Rule: no raw hex, no opacity modifiers, no dynamic class names in components.
+
+## Product marks and login header
+- `ProductMark` (marks, one ink, `currentColor`) and `AuthBrandHeader` (login heading) are the only place product marks live.
+  Copy the mark from `brand/<product>-mark.svg`, never redraw it. Decorative unless `title` is given.
+- Chevron animation: `motion-safe:animate-ui-chevron` only. Never an unconditional `animate-*`.
 
 ## Typography
 Inherited from the consumer app. Controls use `text-sm`/`text-base` + `font-medium` for labels.

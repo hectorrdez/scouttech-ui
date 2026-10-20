@@ -81,6 +81,11 @@ const pairs: Array<{ fg: string; bg: string; min: number }> = [
   { fg: "on-disabled", bg: "disabled", min: 4.5 },
   { fg: "focus", bg: "surface", min: 3 },
   { fg: "outline-strong", bg: "surface", min: 3 },
+  // Product marks (base tokens, same in every theme): graphics need 3:1.
+  { fg: "brand-scouttech", bg: "surface", min: 3 },
+  { fg: "brand-scoutgroup", bg: "surface", min: 3 },
+  { fg: "brand-scoutlog", bg: "surface", min: 3 },
+  { fg: "brand-scoutpulse", bg: "surface", min: 3 },
 ];
 
 const scenarios = [
@@ -103,6 +108,31 @@ describe("theme files", () => {
     for (const mode of MODES) {
       const missing = referenced.filter((name) => !(name in base[mode]));
       expect(missing, `${mode} missing`).toEqual([]);
+    }
+  });
+
+  it("@theme maps the 4 product brand tokens and base defines them in both modes", () => {
+    const theme = themeBlockMatch![1];
+    for (const product of BRANDS) {
+      expect(theme, `--color-ui-brand-${product}`).toContain(`--color-ui-brand-${product}: var(--ui-brand-${product});`);
+      for (const mode of MODES) {
+        expect(base[mode], `${mode} brand-${product}`).toHaveProperty(`brand-${product}`);
+      }
+    }
+  });
+
+  it("the @theme animation for the chevrons is defined with its keyframes", () => {
+    const theme = themeBlockMatch![1];
+    expect(theme).toContain("--animate-ui-chevron: ui-chevron 1.4s ease-in-out infinite;");
+    expect(theme).toMatch(/@keyframes ui-chevron\s*\{/);
+  });
+
+  it("brand themes never set the product brand tokens (they live in the base)", () => {
+    for (const brand of BRANDS) {
+      for (const mode of MODES) {
+        const keys = Object.keys(brandVars[brand][mode]);
+        expect(keys.filter((key) => key.startsWith("brand-")), `${brand} ${mode}`).toEqual([]);
+      }
     }
   });
 

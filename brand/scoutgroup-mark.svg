@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor">
+  <!-- ScoutGroup: stepped pine. One ink (currentColor). -->
+  <path d="M16 2 22.5 11H9.5L16 2Z" />
+  <path d="M16 8 24.5 19h-17L16 8Z" />
+  <path d="M16 15 27 26H5l11-11Z" />
+  <rect x="14" y="26" width="4" height="4" rx="1" />
+</svg>

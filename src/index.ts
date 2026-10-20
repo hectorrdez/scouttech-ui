@@ -40,3 +40,7 @@ export type {
   ThemeContextValue,
   ThemeProviderProps,
 } from "./theme.js";
+export { ProductMark, products, productNames } from "./ProductMark.js";
+export type { Product, ProductMarkProps } from "./ProductMark.js";
+export { AuthBrandHeader } from "./AuthBrandHeader.js";
+export type { AuthBrandHeaderProps } from "./AuthBrandHeader.js";

@@ -3,8 +3,12 @@ import * as field from "./Field.js";
 import {
   Card,
   CookieConsent,
+  AuthBrandHeader,
+  ProductMark,
   StatCard,
   cardClassName,
+  productNames,
+  products,
   controlBorderClassName,
   controlClassName,
   controlErrorClassName,
@@ -17,6 +21,15 @@ describe("root barrel exports the cards", () => {
     expect(typeof StatCard).toBe("function");
     expect(typeof CookieConsent).toBe("function");
     expect(typeof cardClassName).toBe("function");
+  });
+});
+
+describe("root barrel exports the product marks", () => {
+  it("exports ProductMark, AuthBrandHeader and the product lists", () => {
+    expect(typeof ProductMark).toBe("function");
+    expect(typeof AuthBrandHeader).toBe("function");
+    expect(products).toEqual(["scouttech", "scoutgroup", "scoutlog", "scoutpulse"]);
+    expect(Object.keys(productNames)).toEqual([...products]);
   });
 });
 

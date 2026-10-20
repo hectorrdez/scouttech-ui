@@ -3,6 +3,20 @@
 All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] - 2026-10-20
+
+### Added
+- `ProductMark`: inline SVG marks for `scouttech`, `scoutgroup`, `scoutlog` and `scoutpulse` (one ink, `currentColor`, default colour `text-ui-brand-<product>`). Exports `products`, `productNames` and the `Product` type. Subpath `scouttech-ui/ProductMark`.
+- `AuthBrandHeader`: login heading with the ScoutTech › product marks row, chevrons animated under `motion-safe:` only, optional account info link. Subpath `scouttech-ui/AuthBrandHeader`.
+- Brand tokens `--color-ui-brand-scouttech|scoutgroup|scoutlog|scoutpulse` in `tokens.css` (light and dark, always present, not set by brand themes).
+- Animation `--animate-ui-chevron` with `@keyframes ui-chevron` in `@theme`.
+- Standalone SVG files `brand/{scouttech,scoutgroup,scoutlog,scoutpulse}-mark.svg`, exported as `scouttech-ui/brand/<name>-mark.svg`. Package `files` includes `brand`.
+- Demo: "Marcas de producto" and "Cabecera de login" sections.
+- Tests: Vitest for ProductMark and AuthBrandHeader; brand tokens checked at 3:1 on `ui-surface` in light and dark for the base and every brand theme.
+
+### Note
+- The ScoutPulse mark is new in this release and pending user validation.
+
 ## [0.3.0] - 2026-10-20
 
 ### Added

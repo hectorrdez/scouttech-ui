@@ -2,11 +2,13 @@ import { Mail, Search, Trash2, Plus, Users } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 import {
+  AuthBrandHeader,
   Button,
   ButtonLink,
   ButtonToogle,
   Card,
   CookieConsent,
+  ProductMark,
   FieldError,
   Input,
   Select,
@@ -18,7 +20,10 @@ import {
   type ButtonSize,
   type ButtonVariant,
   type CardVariant,
+  productNames,
+  products,
   type CookieConsentValues,
+  type Product,
 } from "../src/index.js";
 
 import scoutgroupTheme from "../themes/scoutgroup.css?raw";
@@ -119,6 +124,8 @@ function Section({
 const variants: ButtonVariant[] = ["primary", "secondary", "outline", "ghost", "danger", "danger-soft"];
 const sizes: ButtonSize[] = ["sm", "md"];
 const cardVariants: CardVariant[] = ["elevated", "tonal", "outlined"];
+const markSizes = [16, 24, 32, 64];
+const loginProducts: Product[] = ["scouttech", "scoutgroup", "scoutlog", "scoutpulse"];
 
 const cookieSections = [
   {
@@ -478,6 +485,32 @@ function Demo() {
           <p className="text-ui-warning">Atención: revisa los datos antes de continuar.</p>
           <p className="text-ui-info">Información: el aviso se envía mañana.</p>
           <p className="text-ui-danger">Error: no se pudo completar la acción.</p>
+        </div>
+      </Section>
+
+      <Section title="Marcas de producto">
+        <div className="flex flex-col gap-4">
+          {products.map((product) => (
+            <div key={product} className="flex flex-wrap items-end gap-6">
+              <span className="w-28 text-sm font-medium">{productNames[product]}</span>
+              {markSizes.map((size) => (
+                <ProductMark key={size} product={product} size={size} title={`${productNames[product]} ${size}px`} />
+              ))}
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Cabecera de login" e2eText>
+        <div className="grid gap-6 sm:grid-cols-2">
+          {loginProducts.map((product) => (
+            <Card key={product} variant="outlined" className="flex flex-col">
+              <AuthBrandHeader
+                product={product}
+                accountInfoHref="/cuenta"
+              />
+            </Card>
+          ))}
         </div>
       </Section>
 

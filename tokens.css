@@ -38,6 +38,25 @@
   --color-ui-disabled: var(--ui-disabled);
   --color-ui-on-disabled: var(--ui-on-disabled);
 
+  /* Product marks (ProductMark / AuthBrandHeader). Always present; brand themes do not set them. */
+  --color-ui-brand-scouttech: var(--ui-brand-scouttech);
+  --color-ui-brand-scoutgroup: var(--ui-brand-scoutgroup);
+  --color-ui-brand-scoutlog: var(--ui-brand-scoutlog);
+  --color-ui-brand-scoutpulse: var(--ui-brand-scoutpulse);
+
+  --animate-ui-chevron: ui-chevron 1.4s ease-in-out infinite;
+  @keyframes ui-chevron {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: translateX(-2px);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(2px);
+    }
+  }
+
   --radius-ui-control: 0.5rem;
   --shadow-ui-control: 0 1px 2px 0 rgb(0 0 0 / 0.08);
 
@@ -75,6 +94,11 @@
     --ui-primary-active: #27272a;
     --ui-primary-ink: #3f3f46;
     --ui-primary-soft: #f4f4f5;
+    /* Product marks: light values (ScoutLog uses its ink; #f59e0b is 2.15:1 on white). */
+    --ui-brand-scouttech: #005235;
+    --ui-brand-scoutgroup: #0369a1;
+    --ui-brand-scoutlog: #b45309;
+    --ui-brand-scoutpulse: #c8102e;
   }
 
   html[data-theme="dark"] {
@@ -104,5 +128,10 @@
     --ui-primary-active: #a1a1aa;
     --ui-primary-ink: #d4d4d8;
     --ui-primary-soft: #27272a;
+    /* Product marks: dark values. */
+    --ui-brand-scouttech: #4fa97c;
+    --ui-brand-scoutgroup: #7dd3fc;
+    --ui-brand-scoutlog: #fbbf24;
+    --ui-brand-scoutpulse: #ff6b81;
   }
 }

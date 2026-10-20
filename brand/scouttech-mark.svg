@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor">
+  <!-- ScoutTech: tent whose corners are ecosystem nodes. One ink (currentColor). -->
+  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 6 5 26h22L16 6Z" />
+    <path d="M16 15v11" />
+  </g>
+  <circle cx="16" cy="6" r="3.5" />
+  <circle cx="5" cy="26" r="3" />
+  <circle cx="27" cy="26" r="3" />
+</svg>

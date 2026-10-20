@@ -1,6 +1,6 @@
 {
   "name": "scouttech-ui",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Shared design tokens and React controls for the ScoutTech apps",
   "type": "module",
   "license": "UNLICENSED",
@@ -8,7 +8,8 @@
   "files": [
     "dist",
     "tokens.css",
-    "themes"
+    "themes",
+    "brand"
   ],
   "sideEffects": [
     "*.css"
@@ -64,8 +65,17 @@
       "types": "./dist/theme.d.ts",
       "default": "./dist/theme.js"
     },
+    "./ProductMark": {
+      "types": "./dist/ProductMark.d.ts",
+      "default": "./dist/ProductMark.js"
+    },
+    "./AuthBrandHeader": {
+      "types": "./dist/AuthBrandHeader.d.ts",
+      "default": "./dist/AuthBrandHeader.js"
+    },
     "./tokens.css": "./tokens.css",
-    "./themes/*.css": "./themes/*.css"
+    "./themes/*.css": "./themes/*.css",
+    "./brand/*.svg": "./brand/*.svg"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",

@@ -178,6 +178,30 @@ import { Card, StatCard, cardClassName } from "scouttech-ui";
 <Link to="/detalle" className={cardClassName({ interactive: true })}>…</Link>;
 ```
 
+## Product marks and login header
+
+`ProductMark` is the logo of an ecosystem product (`scouttech`, `scoutgroup`, `scoutlog`, `scoutpulse`) as inline SVG
+with one ink (`currentColor`). Its default colour is the brand token `text-ui-brand-<product>`. Brand tokens
+`--color-ui-brand-<product>` live in `tokens.css` (light and dark) and are always present, whatever theme the app imports.
+
+`AuthBrandHeader` is the heading of a login screen. For `scouttech` it shows the ScoutTech mark and "Inicia sesión".
+For the other products it shows ScoutTech › › › product marks, "Inicia sesión en {Name}" and "con tu cuenta de ScoutTech".
+The chevrons animate with `motion-safe:animate-ui-chevron` and stay still under `prefers-reduced-motion`.
+
+```tsx
+import { AuthBrandHeader, ProductMark } from "scouttech-ui";
+
+<ProductMark product="scoutlog" size={32} />               // decorative
+<ProductMark product="scoutpulse" title="ScoutPulse" />    // role="img"
+
+<AuthBrandHeader product="scoutgroup" accountInfoHref="/cuenta" />
+<AuthBrandHeader product="scouttech" title="Entrar" subtitle="Usa tu cuenta" />
+```
+
+The standalone SVG files `brand/{scouttech,scoutgroup,scoutlog,scoutpulse}-mark.svg` (viewBox 0 0 32 32, `currentColor`)
+ship with the package: `import mark from "scouttech-ui/brand/scoutlog-mark.svg"`, or copy them. The ScoutPulse mark is new
+in 0.4.0 and pending user validation.
+
 ## Cookie consent
 
 `CookieConsent` is a modal with one switch per section. Sections with `required` stay on and cannot be changed.
@@ -247,6 +271,8 @@ node -e 'import("scouttech-ui/theme").then(m=>console.log(m.themeInitScript("sco
 | `ThemeToggle` | `className`, `labels?: { group?, light?, dark?, system? }` | `radiogroup` with three `radio` buttons and `aria-checked`. Spanish defaults. |
 | `Card` | `variant` (`elevated` | `tonal` | `outlined`), `interactive`, plus `<div>` props | Forwards `ref`, `className`, `style` and `data-*`. `cardClassName()` returns the same classes for app elements (e.g. a link). |
 | `StatCard` | `label`, `value`, `description`, `delta`, `icon`, `footer`, `footerMeta`, `testId`, plus `Card` props | KPI tile. `icon` is decorative (`aria-hidden`). `testId` goes on the card; the figure gets `${testId}-value`. |
+| `ProductMark` | `product` (`scouttech` \| `scoutgroup` \| `scoutlog` \| `scoutpulse`), `size` (default 24), `tone` (`brand` default | `inherit`), `className` (merged), `title` | Inline SVG mark. Decorative without `title`; with `title` it is `role="img"`. `products` and `productNames` are exported. |
+| `AuthBrandHeader` | `product`, `title`, `subtitle`, `accountInfoHref`, `accountInfoLabel`, `className` | Login heading (`h1`) with the marks row (single `aria-label`). Chevrons are animated only under `motion-safe:`. |
 | `CookieConsent` | `title`, `description`, `sections`, `initial`, `onSubmit`, `moreInfo`, `rejectOptionalLabel`, labels, `className` | Modal dialog with one switch per section. Focuses itself on mount. Required sections are locked on. Persisting the choice is the app's job (`onSubmit`). |
 | `ThemeProvider` | `storageKey`, `defaultMode`, `children` | See Theme. |
 | `useTheme` | — | `{ mode, resolved, setMode }`. |
@@ -254,7 +280,8 @@ node -e 'import("scouttech-ui/theme").then(m=>console.log(m.themeInitScript("sco
 
 Subpaths `scouttech-ui/Button`, `scouttech-ui/ButtonLink`, `scouttech-ui/ButtonToogle`, `scouttech-ui/Card`,
 `scouttech-ui/StatCard`, `scouttech-ui/CookieConsent`, `scouttech-ui/Input`, `scouttech-ui/Select`, `scouttech-ui/Field`,
-`scouttech-ui/ThemeToggle` and `scouttech-ui/theme` are also exported. The root barrel
+`scouttech-ui/ThemeToggle`, `scouttech-ui/theme`, `scouttech-ui/ProductMark` and `scouttech-ui/AuthBrandHeader` are also exported,
+and `scouttech-ui/brand/<name>-mark.svg` is the standalone SVG file. The root barrel
 re-exports everything, and each component file also has a default export. Types (`ButtonProps`, `ButtonVariant`,
 `ButtonSize`, `InputProps`, `SelectProps`, `ThemeMode`, `ResolvedTheme`, and others) are exported from the root.
 
