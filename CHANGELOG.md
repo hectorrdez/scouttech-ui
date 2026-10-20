@@ -3,6 +3,24 @@
 All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] - 2026-10-20
+
+### Added
+- Brand themes `themes/{scouttech,scoutgroup,scoutlog,scoutpulse}.css`, exported as `scouttech-ui/themes/<name>.css`. Each sets only the brand scale (`primary`, `on-primary`, `primary-hover`, `primary-active`, `primary-ink`, `primary-soft`) for light and dark. Import after `tokens.css`.
+- Tokens: `--color-ui-primary-ink`, `--color-ui-primary-soft`, `--color-ui-success`, `--color-ui-info`.
+- Dark base in `tokens.css`: surfaces, text, outlines, focus and semantic colours for `html[data-theme="dark"]`, next to the light base.
+- Demo: "Comparar 4 marcas" view (8 embedded demos, brands x light/dark, `?embed=1&demo=<brand>&theme=<mode>`), a "Marca y semánticos" section, and ScoutPulse in the brand selector.
+- Tests: Vitest contrast test over `tokens.css` and every theme file (base alone and each brand, light and dark); Playwright contrast on 8 demo combinations (4 brands x light/dark).
+
+### Changed
+- Tokens indirection: `@theme` maps `--color-ui-*` onto private `--ui-*` variables defined in `@layer theme`. Apps that override `--color-ui-*` in their own `@theme` keep working in both modes.
+- `--color-ui-warning` moves from `#b45309` to `#c2410c` (light); dark `#fb923c`.
+- Demo test themes (scoutgroup / scoutlog / scouttech in `demo/demo.css`) are replaced by the shipped `themes/*.css`, loaded one brand at a time.
+- Package `files` includes `themes`.
+- `StatCard` delta and footer text use `ui-primary-ink` instead of `ui-primary` (brand fills such as ScoutLog amber fail 4.5:1 as text on white).
+
+Consumers: no change needed until they adopt a theme (SCOUT-247..250). Apps that keep mapping `--color-ui-*` by hand should also map `--color-ui-primary-ink` (and `-soft`, `success`, `info`); unmapped, they fall back to the neutral base (StatCard delta/footer show grey instead of the brand).
+
 ## [0.2.0] - 2026-10-19
 
 ### Added

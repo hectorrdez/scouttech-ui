@@ -9,7 +9,7 @@ Stack: React 19, TypeScript 6, Tailwind CSS 4, React Router 7 and lucide-react (
 ## Install
 
 ```bash
-npm i github:hectorrdez/scouttech-ui#v0.2.0
+npm i github:hectorrdez/scouttech-ui#v0.3.0
 ```
 
 The `prepare` script builds `dist/` when npm installs the git dependency.
@@ -41,7 +41,7 @@ your own tokens:
   --color-ui-on-primary: var(--color-on-primary);
   --color-ui-surface: #ffffff;
   --color-ui-on-surface: #13323b;
-  --color-ui-warning: #b45309;
+  --color-ui-warning: #c2410c;
   /* ...the rest of the table below */
 }
 
@@ -61,6 +61,8 @@ Components only use the `ui-*` names. They never use raw hex values, opacity mod
 | `--color-ui-on-primary` | `text-ui-on-primary` | Text on primary |
 | `--color-ui-primary-hover` | `hover:bg-ui-primary-hover` | Primary hover |
 | `--color-ui-primary-active` | `active:bg-ui-primary-active` | Primary pressed |
+| `--color-ui-primary-ink` | `text-ui-primary-ink` | Links and brand text on surfaces (default `#3f3f46` light / `#d4d4d8` dark) |
+| `--color-ui-primary-soft` | `bg-ui-primary-soft` | Brand-tinted background, text in `primary-ink` (default `#f4f4f5` / `#27272a`) |
 | `--color-ui-surface` | `bg-ui-surface` | Fields, outline buttons, switch thumb |
 | `--color-ui-surface-hover` | `bg-ui-surface-hover` | Secondary button, hover states |
 | `--color-ui-surface-active` | `bg-ui-surface-active` | Pressed surface states |
@@ -75,7 +77,9 @@ Components only use the `ui-*` names. They never use raw hex values, opacity mod
 | `--color-ui-on-danger` | `text-ui-on-danger` | Text on danger |
 | `--color-ui-danger-hover` | `hover:bg-ui-danger-hover` | Danger hover |
 | `--color-ui-danger-soft` | `bg-ui-danger-soft` | Field background in error |
-| `--color-ui-warning` | `border-l-ui-warning` | Mandatory marker bar on Input and Select (≥ 3:1 on `ui-surface`) |
+| `--color-ui-warning` | `border-l-ui-warning`, `text-ui-warning` | Mandatory marker bar on Input and Select (≥ 3:1 on `ui-surface`); warning text. Default `#c2410c` light / `#fb923c` dark |
+| `--color-ui-success` | `text-ui-success` | Success text (default `#15803d` / `#4ade80`) |
+| `--color-ui-info` | `text-ui-info` | Informational text (default `#1d4ed8` / `#60a5fa`) |
 | `--color-ui-disabled` | `bg-ui-disabled` | Disabled and loading controls |
 | `--color-ui-on-disabled` | `text-ui-on-disabled` | Text on disabled controls |
 | `--radius-ui-control` | `rounded-ui-control` | Corners of controls (0.5rem) |
@@ -120,6 +124,35 @@ import {
 `controlClassName` holds the size, radius, colours and focus ring. `controlBorderClassName` holds the default border.
 `controlErrorClassName` replaces the border for the error state, and `controlMandatoryClassName` adds the amber
 mandatory bar (visual only, like the `mandatory` prop).
+
+## Themes
+
+`tokens.css` is the neutral base for both modes: light by default, dark under `html[data-theme="dark"]`. Its colour
+values are private `--ui-*` variables inside `@layer theme`, and `@theme` maps each `--color-ui-*` onto them. An app
+that still overrides `--color-ui-*` in its own `@theme` keeps working in both modes with no change.
+
+A brand theme changes only the brand scale: `primary`, `on-primary`, `primary-hover`, `primary-active`, `primary-ink` and
+`primary-soft`. Everything else (surfaces, text, outlines, semantic colours) is the same for every brand. Import the
+theme after the base tokens:
+
+```css
+@import "tailwindcss";
+@import "scouttech-ui/tokens.css";
+@import "scouttech-ui/themes/scoutgroup.css";
+@source "../node_modules/scouttech-ui/dist";
+```
+
+The theme files are plain CSS and unlayered, so they win over the base. Import one theme per app.
+
+| Brand (`themes/<brand>.css`) | Light `primary` / `on-primary` | Dark `primary` / `on-primary` |
+| --- | --- | --- |
+| `scouttech` | `#005235` / `#ffffff` | `#4fa97c` / `#00301c` |
+| `scoutgroup` | `#0369a1` / `#ffffff` | `#7dd3fc` / `#082f49` |
+| `scoutlog` | `#f59e0b` / `#1c1917` | `#fbbf24` / `#1c1917` |
+| `scoutpulse` | `#c8102e` / `#ffffff` | `#ff6b81` / `#2a0510` |
+
+Each theme also sets `primary-hover`, `primary-active`, `primary-ink` and `primary-soft` for light and dark. The contrast
+test (`src/themes.test.tsx`) checks every theme and mode against the same pairs as the base.
 
 ## Cards
 
@@ -243,7 +276,7 @@ re-exports everything, and each component file also has a default export. Types 
 
 ```bash
 npm install
-npm run dev          # demo at http://127.0.0.1:5180 (test themes scoutgroup / scoutlog / scouttech, light / dark)
+npm run dev          # demo at http://127.0.0.1:5180 (brands scoutgroup / scoutlog / scoutpulse / scouttech, light / dark; "Comparar 4 marcas" shows all 8)
 npm run build        # tsc -> dist/
 npm run typecheck    # library + demo + tests
 npm run lint         # oxlint

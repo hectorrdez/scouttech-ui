@@ -1,0 +1,24 @@
+/*
+ * ScoutTech brand theme for scouttech-ui (v0.3.0).
+ * Import after the base tokens, in your app CSS:
+ *   @import "scouttech-ui/tokens.css";
+ *   @import "scouttech-ui/themes/scouttech.css";
+ * Only the brand scale changes. Unlayered on purpose: it beats the base in @layer theme.
+ */
+:root {
+  --ui-primary: #005235;
+  --ui-on-primary: #ffffff;
+  --ui-primary-hover: #00422b;
+  --ui-primary-active: #00301c;
+  --ui-primary-ink: #005235;
+  --ui-primary-soft: #e3f1e9;
+}
+
+html[data-theme="dark"] {
+  --ui-primary: #4fa97c;
+  --ui-on-primary: #00301c;
+  --ui-primary-hover: #6fbf95;
+  --ui-primary-active: #8fd0ad;
+  --ui-primary-ink: #6fbf95;
+  --ui-primary-soft: #10291d;
+}

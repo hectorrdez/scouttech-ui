@@ -21,17 +21,67 @@ import {
   type CookieConsentValues,
 } from "../src/index.js";
 
+import scoutgroupTheme from "../themes/scoutgroup.css?raw";
+import scoutlogTheme from "../themes/scoutlog.css?raw";
+import scoutpulseTheme from "../themes/scoutpulse.css?raw";
+import scouttechTheme from "../themes/scouttech.css?raw";
+
 const PALETTE_KEY = "scouttech-ui-demo-palette";
 const THEME_KEY = "scouttech-ui-demo-theme";
-type Palette = "scoutgroup" | "scoutlog" | "scouttech";
-const palettes: Palette[] = ["scoutgroup", "scoutlog", "scouttech"];
+const EMBED_KEY_PREFIX = "scouttech-ui-demo-embed-";
+type Palette = "scoutgroup" | "scoutlog" | "scoutpulse" | "scouttech";
+const palettes: Palette[] = ["scoutgroup", "scoutlog", "scoutpulse", "scouttech"];
 const paletteNames: Record<Palette, string> = {
   scoutgroup: "ScoutGroup",
   scoutlog: "ScoutLog",
+  scoutpulse: "ScoutPulse",
   scouttech: "ScoutTech",
+};
+const brandThemes: Record<Palette, string> = {
+  scoutgroup: scoutgroupTheme,
+  scoutlog: scoutlogTheme,
+  scoutpulse: scoutpulseTheme,
+  scouttech: scouttechTheme,
 };
 const isPalette = (value: string | null): value is Palette =>
   palettes.includes(value as Palette);
+
+/** Writes the selected shipped brand theme into one <style> element (created once). */
+function applyBrandTheme(palette: Palette) {
+  let style = document.getElementById("demo-brand-theme") as HTMLStyleElement | null;
+  if (!style) {
+    style = document.createElement("style");
+    style.id = "demo-brand-theme";
+    document.head.appendChild(style);
+  }
+  style.textContent = brandThemes[palette];
+}
+
+/**
+ * `?embed=1&demo=<brand>&theme=light|dark` is used by the compare view iframes. The embed
+ * forces its mode through a per-brand/per-mode storage key, so it never reads or writes the
+ * parent's palette or theme preference.
+ */
+type EmbedConfig = { palette: Palette; theme: "light" | "dark"; storageKey: string };
+function readEmbedConfig(): EmbedConfig | null {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("embed") !== "1") return null;
+    const demo = params.get("demo");
+    const palette: Palette = isPalette(demo) ? demo : "scoutgroup";
+    const theme = params.get("theme") === "dark" ? "dark" : "light";
+    const storageKey = `${EMBED_KEY_PREFIX}${palette}-${theme}`;
+    try {
+      localStorage.setItem(storageKey, theme);
+    } catch {
+      // Storage blocked: the embed still renders with the forced mode.
+    }
+    return { palette, theme, storageKey };
+  } catch {
+    return null;
+  }
+}
+const embedConfig = readEmbedConfig();
 
 function readInitialPalette(): Palette {
   try {
@@ -99,14 +149,36 @@ function ThemeState() {
   );
 }
 
+function CompareView() {
+  // One row per brand: light on the left, dark on the right (md and up).
+  return (
+    <div className="grid gap-6 md:grid-cols-2">
+      {palettes.flatMap((brand) =>
+        (["light", "dark"] as const).map((mode) => (
+          <iframe
+            key={`${brand}-${mode}`}
+            title={`${paletteNames[brand]} ${mode === "light" ? "claro" : "oscuro"}`}
+            src={`?${new URLSearchParams({ embed: "1", demo: brand, theme: mode }).toString()}`}
+            loading="lazy"
+            className="h-[600px] w-full rounded-ui-card border border-ui-outline"
+          />
+        )),
+      )}
+    </div>
+  );
+}
+
 function Demo() {
-  const [palette, setPalette] = useState<Palette>(readInitialPalette);
+  const [palette, setPalette] = useState<Palette>(() => embedConfig?.palette ?? readInitialPalette());
+  const [compare, setCompare] = useState(false);
   const [notify, setNotify] = useState(true);
   const [cookiesOpen, setCookiesOpen] = useState(false);
   const [cookieResult, setCookieResult] = useState<CookieConsentValues | null>(null);
 
   useEffect(() => {
     document.documentElement.dataset.demo = palette;
+    applyBrandTheme(palette);
+    if (embedConfig) return;
     try {
       localStorage.setItem(PALETTE_KEY, palette);
     } catch {
@@ -124,7 +196,7 @@ function Demo() {
         <div className="flex flex-wrap items-end gap-4">
           <div className="w-48">
             <Select
-              label="Tema de prueba"
+              label="Marca"
               value={palette}
               onChange={(event) => setPalette(event.target.value as Palette)}
             >
@@ -135,10 +207,17 @@ function Demo() {
               ))}
             </Select>
           </div>
-          <ThemeToggle />
+          <Button variant="outline" size="sm" onClick={() => setCompare((value) => !value)}>
+            {compare ? "Volver" : "Comparar 4 marcas"}
+          </Button>
+          {!embedConfig && <ThemeToggle />}
         </div>
       </header>
 
+      {compare ? (
+        <CompareView />
+      ) : (
+        <>
       <p className="text-sm text-ui-on-surface-muted">
         Pulsa Tab para recorrer los controles y ver el foco visible.
       </p>
@@ -385,6 +464,23 @@ function Demo() {
         )}
       </Section>
 
+      <Section title="Marca y semánticos" e2eText>
+        <div className="flex flex-wrap items-center gap-4">
+          <span className="font-medium text-ui-primary-ink underline underline-offset-4">
+            Enlace de marca
+          </span>
+          <span className="rounded-full bg-ui-primary-soft px-3 py-1 text-sm font-medium text-ui-primary-ink">
+            Etiqueta de marca
+          </span>
+        </div>
+        <div className="flex flex-col gap-2">
+          <p className="text-ui-success">Éxito: los cambios se han guardado.</p>
+          <p className="text-ui-warning">Atención: revisa los datos antes de continuar.</p>
+          <p className="text-ui-info">Información: el aviso se envía mañana.</p>
+          <p className="text-ui-danger">Error: no se pudo completar la acción.</p>
+        </div>
+      </Section>
+
       <Section title="ThemeToggle">
         <div className="flex flex-wrap items-center gap-3">
           <ThemeToggle />
@@ -394,6 +490,8 @@ function Demo() {
           <ThemeState />
         </div>
       </Section>
+        </>
+      )}
     </div>
   );
 }
@@ -401,7 +499,10 @@ function Demo() {
 export default function App() {
   return (
     <MemoryRouter>
-      <ThemeProvider storageKey={THEME_KEY}>
+      <ThemeProvider
+        storageKey={embedConfig?.storageKey ?? THEME_KEY}
+        defaultMode={embedConfig?.theme ?? "system"}
+      >
         <main>
           <Demo />
         </main>

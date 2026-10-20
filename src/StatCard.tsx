@@ -38,7 +38,7 @@ export function StatCard({
         {(delta || icon) && (
           <div className="flex shrink-0 items-center gap-2">
             {delta && (
-              <span className="rounded-ui-control border border-ui-primary px-2 py-0.5 text-xs font-medium text-ui-primary">
+              <span className="rounded-ui-control border border-ui-primary px-2 py-0.5 text-xs font-medium text-ui-primary-ink">
                 {delta}
               </span>
             )}
@@ -60,7 +60,7 @@ export function StatCard({
       {(footer || footerMeta) && (
         <div className="mt-auto pt-4">
           <div className="flex items-center justify-between gap-3 border-t border-ui-outline pt-4 text-sm">
-            <span className="font-medium text-ui-primary">{footer}</span>
+            <span className="font-medium text-ui-primary-ink">{footer}</span>
             <span className="text-xs text-ui-on-surface-muted">{footerMeta}</span>
           </div>
         </div>

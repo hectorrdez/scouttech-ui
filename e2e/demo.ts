@@ -1,6 +1,6 @@
 import { expect, type Page } from "@playwright/test";
 
-export type Palette = "scoutgroup" | "scoutlog" | "scouttech";
+export type Palette = "scoutgroup" | "scoutlog" | "scoutpulse" | "scouttech";
 export type Theme = "light" | "dark";
 
 export const THEME_KEY = "scouttech-ui-demo-theme";
@@ -13,6 +13,8 @@ export const combos: Array<{ palette: Palette; theme: Theme }> = [
   { palette: "scoutlog", theme: "dark" },
   { palette: "scouttech", theme: "light" },
   { palette: "scouttech", theme: "dark" },
+  { palette: "scoutpulse", theme: "light" },
+  { palette: "scoutpulse", theme: "dark" },
 ];
 
 /**

@@ -1,35 +1,42 @@
 /*
  * scouttech-ui design tokens (contract + neutral defaults).
- * Apps override these values; components only use the ui-* names.
- * Defaults are neutral (zinc / slate family) and pass 4.5:1 text contrast.
+ * Components only use the ui-* names. Apps keep their own brand by importing
+ * themes/<brand>.css after this file, or by overriding --color-ui-* in their own @theme.
+ * Colour values live in private --ui-* variables inside @layer theme, so a consumer's
+ * @theme override of --color-ui-* keeps winning in both modes (no dark-mode specificity clash).
+ * Defaults are neutral (zinc family) and pass 4.5:1 text contrast in light and dark.
  */
 @theme {
-  --color-ui-primary: #3f3f46;
-  --color-ui-on-primary: #ffffff;
-  --color-ui-primary-hover: #52525b;
-  --color-ui-primary-active: #27272a;
+  --color-ui-primary: var(--ui-primary);
+  --color-ui-on-primary: var(--ui-on-primary);
+  --color-ui-primary-hover: var(--ui-primary-hover);
+  --color-ui-primary-active: var(--ui-primary-active);
+  --color-ui-primary-ink: var(--ui-primary-ink);
+  --color-ui-primary-soft: var(--ui-primary-soft);
 
-  --color-ui-surface: #ffffff;
-  --color-ui-surface-hover: #f4f4f5;
-  --color-ui-surface-active: #e4e4e7;
-  --color-ui-surface-tonal: #f4f4f5;
-  --color-ui-on-surface: #18181b;
-  --color-ui-on-surface-muted: #52525b;
-  --color-ui-overlay: rgb(0 0 0 / 0.4);
+  --color-ui-surface: var(--ui-surface);
+  --color-ui-surface-hover: var(--ui-surface-hover);
+  --color-ui-surface-active: var(--ui-surface-active);
+  --color-ui-surface-tonal: var(--ui-surface-tonal);
+  --color-ui-on-surface: var(--ui-on-surface);
+  --color-ui-on-surface-muted: var(--ui-on-surface-muted);
+  --color-ui-overlay: var(--ui-overlay);
 
-  --color-ui-outline: #d4d4d8;
-  --color-ui-outline-strong: #71717a;
-  --color-ui-focus: #2563eb;
+  --color-ui-outline: var(--ui-outline);
+  --color-ui-outline-strong: var(--ui-outline-strong);
+  --color-ui-focus: var(--ui-focus);
 
-  --color-ui-danger: #b91c1c;
-  --color-ui-on-danger: #ffffff;
-  --color-ui-danger-hover: #991b1b;
-  --color-ui-danger-soft: #fef2f2;
+  --color-ui-danger: var(--ui-danger);
+  --color-ui-on-danger: var(--ui-on-danger);
+  --color-ui-danger-hover: var(--ui-danger-hover);
+  --color-ui-danger-soft: var(--ui-danger-soft);
 
-  --color-ui-warning: #b45309;
+  --color-ui-warning: var(--ui-warning);
+  --color-ui-success: var(--ui-success);
+  --color-ui-info: var(--ui-info);
 
-  --color-ui-disabled: #f4f4f5;
-  --color-ui-on-disabled: #52525b;
+  --color-ui-disabled: var(--ui-disabled);
+  --color-ui-on-disabled: var(--ui-on-disabled);
 
   --radius-ui-control: 0.5rem;
   --shadow-ui-control: 0 1px 2px 0 rgb(0 0 0 / 0.08);
@@ -38,4 +45,64 @@
   --spacing-ui-card: 1.5rem;
   --shadow-ui-card: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.08);
   --shadow-ui-card-hover: 0 4px 12px -2px rgb(0 0 0 / 0.12), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+}
+
+@layer theme {
+  :root {
+    --ui-surface: #ffffff;
+    --ui-surface-hover: #f4f4f5;
+    --ui-surface-active: #e4e4e7;
+    --ui-surface-tonal: #f4f4f5;
+    --ui-on-surface: #18181b;
+    --ui-on-surface-muted: #52525b;
+    --ui-overlay: rgb(0 0 0 / 0.4);
+    --ui-outline: #d4d4d8;
+    --ui-outline-strong: #71717a;
+    --ui-focus: #2563eb;
+    --ui-danger: #b91c1c;
+    --ui-on-danger: #ffffff;
+    --ui-danger-hover: #991b1b;
+    --ui-danger-soft: #fef2f2;
+    --ui-warning: #c2410c;
+    --ui-success: #15803d;
+    --ui-info: #1d4ed8;
+    --ui-disabled: #f4f4f5;
+    --ui-on-disabled: #52525b;
+    /* Neutral brand default (overridden by themes/<brand>.css). */
+    --ui-primary: #3f3f46;
+    --ui-on-primary: #ffffff;
+    --ui-primary-hover: #52525b;
+    --ui-primary-active: #27272a;
+    --ui-primary-ink: #3f3f46;
+    --ui-primary-soft: #f4f4f5;
+  }
+
+  html[data-theme="dark"] {
+    --ui-surface: #121417;
+    --ui-surface-hover: #1c1f23;
+    --ui-surface-active: #262a2f;
+    --ui-surface-tonal: #1a1d21;
+    --ui-on-surface: #e6e8eb;
+    --ui-on-surface-muted: #a1a7b0;
+    --ui-overlay: rgb(0 0 0 / 0.6);
+    --ui-outline: #2e3238;
+    --ui-outline-strong: #6b7280;
+    --ui-focus: #60a5fa;
+    --ui-danger: #f87171;
+    --ui-on-danger: #450a0a;
+    --ui-danger-hover: #fca5a5;
+    --ui-danger-soft: #2a1215;
+    --ui-warning: #fb923c;
+    --ui-success: #4ade80;
+    --ui-info: #60a5fa;
+    --ui-disabled: #1c1f23;
+    --ui-on-disabled: #9ca3af;
+    /* Neutral brand default (overridden by themes/<brand>.css). */
+    --ui-primary: #e4e4e7;
+    --ui-on-primary: #18181b;
+    --ui-primary-hover: #d4d4d8;
+    --ui-primary-active: #a1a1aa;
+    --ui-primary-ink: #d4d4d8;
+    --ui-primary-soft: #27272a;
+  }
 }

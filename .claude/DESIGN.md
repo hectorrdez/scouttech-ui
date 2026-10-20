@@ -2,13 +2,21 @@
 # Read before building or changing any control. The real tokens live in code; this file documents usage rules.
 
 ## Tokens - source of truth
-- Contract + neutral defaults: `tokens.css` (`@theme`, `--color-ui-*`, `--radius-ui-control`, `--shadow-ui-control`,
-  `--radius-ui-card`, `--spacing-ui-card`, `--shadow-ui-card`, `--shadow-ui-card-hover`).
-- Each consumer app overrides the values (light in its `@theme`, dark under `html[data-theme="dark"]`).
-- Demo test themes (scoutgroup / scoutlog / scouttech): `demo/demo.css`.
+- Contract + neutral base: `tokens.css`. `@theme` maps each `--color-ui-*` onto a private `--ui-*` variable; the light
+  and dark values live in `@layer theme` (`:root` and `html[data-theme="dark"]`). Radius/shadow/spacing tokens
+  (`--radius-ui-control`, `--shadow-ui-control`, `--radius-ui-card`, `--spacing-ui-card`, `--shadow-ui-card`,
+  `--shadow-ui-card-hover`) stay literal.
+- Brand themes: `themes/{scouttech,scoutgroup,scoutlog,scoutpulse}.css`. They set only the brand scale
+  (`--ui-primary`, `-on-primary`, `-primary-hover`, `-primary-active`, `-primary-ink`, `-primary-soft`), unlayered, for
+  light and dark. Apps import `tokens.css`, then one theme.
+- Demo (`demo/App.tsx`) loads the shipped `themes/*.css` raw and swaps one brand at a time; `demo/demo.css` holds no
+  brand values. `?embed=1&demo=<brand>&theme=light|dark` renders one embed; the compare view shows 8 of them.
+- Apps that still override `--color-ui-*` in their own `@theme` keep working.
 
 ## Colors - usage
 - `ui-primary` / `ui-on-primary` (+ `-hover`, `-active`): main action.
+- `ui-primary-ink`: brand text and links on surfaces. `ui-primary-soft`: brand-tinted background (text in `primary-ink`).
+- `ui-success`, `ui-info`, `ui-warning`: semantic text. `ui-warning` is also the mandatory bar.
 - `ui-surface` / `ui-on-surface` (+ `-hover`, `-active`): secondary/outline/ghost buttons, field backgrounds,
   elevated/outlined cards.
 - `ui-surface-tonal`: tonal cards. `ui-overlay`: backdrop behind dialogs (CookieConsent).
