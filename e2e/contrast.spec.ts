@@ -6,6 +6,15 @@ test.describe("text contrast on the demo", () => {
     test(`${palette} ${theme}: text >= 4.5:1`, async ({ page }) => {
       await open(page, palette, theme);
 
+      // transition-colors animates after a theme switch: wait for it to settle before sampling colors.
+      await page.evaluate(() => Promise.all(
+          document
+            .getAnimations()
+            .filter((a) => Number.isFinite(a.effect?.getComputedTiming().endTime))
+            .map((a) => a.finished.catch(() => undefined)),
+        ),
+      );
+
       const result = await page.evaluate(() => {
         const h = (window as unknown as { __h: {
           parseColor: (s: string) => number[];
@@ -15,7 +24,7 @@ test.describe("text contrast on the demo", () => {
           isVisible: (el: Element) => boolean;
           isEnabled: (el: Element) => boolean;
         } }).__h;
-        const selector = "button, a[href], input, select, label, [role=alert], p[id$='-hint']";
+        const selector = "button, a[href], input, select, textarea, label, [role=alert], p[id$='-hint']";
         const out: string[] = [];
         let checked = 0;
         // Text-bearing elements inside [data-e2e-text] sections (cards, stat cards, cookie consent).
@@ -28,7 +37,7 @@ test.describe("text contrast on the demo", () => {
         ];
         for (const el of candidates) {
           if (!h.isVisible(el) || !h.isEnabled(el)) continue;
-          const isField = el.tagName === "INPUT" || el.tagName === "SELECT";
+          const isField = el.tagName === "INPUT" || el.tagName === "SELECT" || el.tagName === "TEXTAREA";
           if (!isField && !(el.textContent ?? "").trim()) continue;
           checked++;
           const ratio = h.contrast(
@@ -53,10 +62,18 @@ test.describe("focus outline contrast on the demo", () => {
 
       const total = await page.evaluate(() => {
         const sel =
-          "button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), [role=switch], [role=radio]";
+          "button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [role=switch], [role=radio]";
         let i = 0;
         for (const el of Array.from(document.querySelectorAll<HTMLElement>(sel))) {
           if (el.getAttribute("aria-disabled") === "true") continue;
+          // A native radio group is a single Tab stop: the checked radio, else the first enabled one.
+          if (el instanceof HTMLInputElement && el.type === "radio") {
+            const group = Array.from(
+              document.querySelectorAll<HTMLInputElement>(`input[type=radio][name="${el.name}"]:not([disabled])`),
+            );
+            const stop = group.find((r) => r.checked) ?? group[0];
+            if (stop !== el) continue;
+          }
           el.dataset.e2eFocus = String(i++);
         }
         return i;

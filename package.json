@@ -53,6 +53,18 @@
       "types": "./dist/Select.d.ts",
       "default": "./dist/Select.js"
     },
+    "./Textarea": {
+      "types": "./dist/Textarea.d.ts",
+      "default": "./dist/Textarea.js"
+    },
+    "./Checkbox": {
+      "types": "./dist/Checkbox.d.ts",
+      "default": "./dist/Checkbox.js"
+    },
+    "./Radio": {
+      "types": "./dist/Radio.d.ts",
+      "default": "./dist/Radio.js"
+    },
     "./Field": {
       "types": "./dist/Field.d.ts",
       "default": "./dist/Field.js"

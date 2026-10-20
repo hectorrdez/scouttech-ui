@@ -3,6 +3,11 @@
 All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- `Textarea`, `Checkbox`, `Radio` and `RadioGroup`: same Field pattern as `Input`/`Select` (label, hint, error, `mandatory`, `required`, disabled). Subpaths `scouttech-ui/Textarea`, `scouttech-ui/Checkbox`, `scouttech-ui/Radio`.
+
 ## [0.4.0] - 2026-10-20
 
 ### Added

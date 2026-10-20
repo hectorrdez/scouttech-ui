@@ -10,7 +10,7 @@ id|slug|state|role|commit|commit_url
 005|cards|ENDED|frontend|4e14369|https://github.com/hectorrdez/scouttech-ui/commit/4e14369
 006|ecosystem-theme|ENDED|frontend|c7262fd|https://github.com/hectorrdez/scouttech-ui/commit/c7262fd
 007|product-marks-auth-header|ENDED|frontend|4b3d09a|https://github.com/hectorrdez/scouttech-ui/commit/4b3d09a
-008|form-controls-textarea-checkbox-radio|PENDING|frontend
+008|form-controls-textarea-checkbox-radio|ENDED|frontend
 009|layout-row-column|PENDING|frontend
 010|modal-dialog|PENDING|frontend
 011|badge-tabs-emptystate-skeleton|PENDING|frontend

@@ -18,6 +18,12 @@ export { Input } from "./Input.js";
 export type { InputProps } from "./Input.js";
 export { Select } from "./Select.js";
 export type { SelectProps } from "./Select.js";
+export { Textarea } from "./Textarea.js";
+export type { TextareaProps } from "./Textarea.js";
+export { Checkbox } from "./Checkbox.js";
+export type { CheckboxProps } from "./Checkbox.js";
+export { Radio, RadioGroup } from "./Radio.js";
+export type { RadioProps, RadioGroupProps } from "./Radio.js";
 export {
   FieldError,
   controlClassName,

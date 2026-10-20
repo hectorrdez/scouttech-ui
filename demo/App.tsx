@@ -10,8 +10,12 @@ import {
   CookieConsent,
   ProductMark,
   FieldError,
+  Checkbox,
   Input,
+  Radio,
+  RadioGroup,
   Select,
+  Textarea,
   StatCard,
   ThemeProvider,
   ThemeToggle,
@@ -388,6 +392,60 @@ function Demo() {
           <Select label="Rama obligatoria con error" mandatory error="Elige una rama">
             <option value="">Sin elegir</option>
           </Select>
+        </div>
+      </Section>
+
+      <Section title="Textarea">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Textarea label="Observaciones" placeholder="Escribe aquí" />
+          <Textarea label="Con pista" hint="Máximo 500 caracteres." />
+          <Textarea label="Con error" error="Campo requerido" />
+          <Textarea label="Deshabilitado" disabled defaultValue="Solo lectura" />
+          <Textarea label="Obligatorio" required hint="Campo obligatorio" />
+          <Textarea label="Obligatorio visual" mandatory />
+          <Textarea label="Obligatorio con error" mandatory error="Completa este campo" />
+        </div>
+      </Section>
+
+      <Section title="Checkbox">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Checkbox label="Acepto los términos" />
+          <Checkbox label="Marcado" defaultChecked hint="Con pista" />
+          <Checkbox label="Con error" error="Debes aceptar" />
+          <Checkbox label="Deshabilitado" disabled />
+          <Checkbox label="Deshabilitado marcado" disabled defaultChecked />
+          <Checkbox label="Obligatorio" required />
+          <Checkbox label="Obligatorio visual" mandatory />
+          <Checkbox label="Obligatorio con error" mandatory error="Debes aceptar" />
+        </div>
+      </Section>
+
+      <Section title="Radio">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <RadioGroup label="Rama" hint="Elige una rama.">
+            <Radio label="Lobatos" value="lobatos" defaultChecked />
+            <Radio label="Scouts" value="scouts" />
+          </RadioGroup>
+          <RadioGroup label="Sección" error="Selecciona una sección">
+            <Radio label="A" value="a" />
+            <Radio label="B" value="b" />
+          </RadioGroup>
+          <RadioGroup label="Deshabilitado" disabled>
+            <Radio label="Uno" value="1" defaultChecked />
+            <Radio label="Dos" value="2" />
+          </RadioGroup>
+          <RadioGroup label="Obligatorio" required>
+            <Radio label="Sí" value="si" />
+            <Radio label="No" value="no" />
+          </RadioGroup>
+          <RadioGroup label="Obligatorio visual" mandatory>
+            <Radio label="Sí" value="si" />
+            <Radio label="No" value="no" />
+          </RadioGroup>
+          <RadioGroup label="Obligatorio con error" mandatory error="Elige una opción">
+            <Radio label="Sí" value="si" />
+            <Radio label="No" value="no" />
+          </RadioGroup>
         </div>
       </Section>
 
