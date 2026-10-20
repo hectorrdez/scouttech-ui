@@ -103,6 +103,10 @@
     "./ColumnInverted": {
       "types": "./dist/ColumnInverted.d.ts",
       "default": "./dist/ColumnInverted.js"
+    },
+    "./Modal": {
+      "types": "./dist/Modal.d.ts",
+      "default": "./dist/Modal.js"
     }
   },
   "scripts": {
