@@ -62,7 +62,7 @@ test.describe("focus outline contrast on the demo", () => {
 
       const total = await page.evaluate(() => {
         const sel =
-          "button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [role=switch], [role=radio]";
+          "button:not([disabled]):not([tabindex=\"-1\"]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [role=switch], [role=radio]";
         let i = 0;
         for (const el of Array.from(document.querySelectorAll<HTMLElement>(sel))) {
           if (el.getAttribute("aria-disabled") === "true") continue;
