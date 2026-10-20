@@ -87,7 +87,23 @@
     },
     "./tokens.css": "./tokens.css",
     "./themes/*.css": "./themes/*.css",
-    "./brand/*.svg": "./brand/*.svg"
+    "./brand/*.svg": "./brand/*.svg",
+    "./Row": {
+      "types": "./dist/Row.d.ts",
+      "default": "./dist/Row.js"
+    },
+    "./Column": {
+      "types": "./dist/Column.d.ts",
+      "default": "./dist/Column.js"
+    },
+    "./RowInverted": {
+      "types": "./dist/RowInverted.d.ts",
+      "default": "./dist/RowInverted.js"
+    },
+    "./ColumnInverted": {
+      "types": "./dist/ColumnInverted.d.ts",
+      "default": "./dist/ColumnInverted.js"
+    }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
