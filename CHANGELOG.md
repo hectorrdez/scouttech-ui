@@ -5,6 +5,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-20
+
 ### Added
 - `Table` (+ `THead`, `TBody`, `TR`, `TH`, `TD`): from scouttech-frontend `data/Table`; card with title/meta header and inner horizontal scroll. Removed the app-only `useReveal`/`revealDelay` (apps animate via `className`); `TR` keeps `selected`. Subpath `scouttech-ui/Table`.
 - `FileInput`: new, styled native `type=file` in the Field pattern (label, hint, error, `required`, `onFilesChange(files)`). Replaces the raw `<input type="file">` in scoutgroup `UploadDocumentDialog` and scoutlog `CreateActivityPage`; scouttech `OrgSettingsPage` hides its input behind a Button (keep that with a `ref` if wanted). Subpath `scouttech-ui/FileInput`.
