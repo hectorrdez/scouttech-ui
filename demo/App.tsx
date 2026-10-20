@@ -4,8 +4,16 @@ import { MemoryRouter } from "react-router-dom";
 import {
   AuthBrandHeader,
   Badge,
+  DropdownFloating,
   EmptyState,
+  FileInput,
   Skeleton,
+  Table,
+  TBody,
+  TD,
+  TH,
+  THead,
+  TR,
   TabPanel,
   Tabs,
   Button,
@@ -653,6 +661,74 @@ function Demo() {
           <Skeleton />
           <Skeleton className="h-4 w-2/3" />
           <Skeleton className="size-12 rounded-full" />
+        </div>
+      </Section>
+
+      <Section title="Table" e2eText>
+        <Table title="Miembros" meta="3 filas" aria-label="Miembros de ejemplo">
+          <THead>
+            <TR>
+              <TH>Nombre</TH>
+              <TH>Sección</TH>
+              <TH>Estado</TH>
+            </TR>
+          </THead>
+          <TBody>
+            <TR>
+              <TD>Ana</TD>
+              <TD>Castores</TD>
+              <TD>
+                <Badge tone="success">Activo</Badge>
+              </TD>
+            </TR>
+            <TR selected>
+              <TD>Luis (seleccionado)</TD>
+              <TD>Manada</TD>
+              <TD>
+                <Badge tone="warning">Pendiente</Badge>
+              </TD>
+            </TR>
+            <TR>
+              <TD>Marta</TD>
+              <TD>Tropa</TD>
+              <TD>
+                <Badge tone="danger">Baja</Badge>
+              </TD>
+            </TR>
+          </TBody>
+        </Table>
+        <Table aria-label="Tabla sin cabecera">
+          <TBody>
+            <TR>
+              <TD>Sin título ni meta</TD>
+              <TD>Solo filas</TD>
+            </TR>
+          </TBody>
+        </Table>
+      </Section>
+
+      <Section title="FileInput" e2eText>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <FileInput label="Archivo" hint="PDF o imagen, máx. 5 MB" />
+          <FileInput label="Archivo obligatorio" required />
+          <FileInput label="Varios archivos" multiple />
+          <FileInput label="Con error" error="Selecciona un archivo" />
+          <FileInput label="Deshabilitado" disabled />
+        </div>
+      </Section>
+
+      <Section title="DropdownFloating" e2eText>
+        <div className="flex flex-wrap items-center gap-4">
+          <DropdownFloating
+            label="Acciones de ejemplo"
+            items={[
+              { label: "Editar", icon: <Mail size={16} aria-hidden />, description: "Cambiar los datos" },
+              { label: "Actual", active: true, endIcon: <Badge tone="primary">activo</Badge> },
+              { label: "Eliminar", icon: <Trash2 size={16} aria-hidden />, disabled: true },
+            ]}
+          >
+            <Button variant="outline">Acciones</Button>
+          </DropdownFloating>
         </div>
       </Section>
 

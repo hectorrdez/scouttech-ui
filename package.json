@@ -123,6 +123,18 @@
     "./Tabs": {
       "types": "./dist/Tabs.d.ts",
       "default": "./dist/Tabs.js"
+    },
+    "./Table": {
+      "types": "./dist/Table.d.ts",
+      "default": "./dist/Table.js"
+    },
+    "./FileInput": {
+      "types": "./dist/FileInput.d.ts",
+      "default": "./dist/FileInput.js"
+    },
+    "./DropdownFloating": {
+      "types": "./dist/DropdownFloating.d.ts",
+      "default": "./dist/DropdownFloating.js"
     }
   },
   "scripts": {
