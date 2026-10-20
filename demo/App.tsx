@@ -11,9 +11,13 @@ import {
   ProductMark,
   FieldError,
   Checkbox,
+  Column,
+  ColumnInverted,
   Input,
   Radio,
   RadioGroup,
+  Row,
+  RowInverted,
   Select,
   Textarea,
   StatCard,
@@ -446,6 +450,43 @@ function Demo() {
             <Radio label="Sí" value="si" />
             <Radio label="No" value="no" />
           </RadioGroup>
+        </div>
+      </Section>
+
+      <Section title="Layout">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Card variant="outlined">
+            <p className="mb-2 text-sm font-medium">Row</p>
+            <Row className="gap-2">
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">1</span>
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">2</span>
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">3</span>
+            </Row>
+          </Card>
+          <Card variant="outlined">
+            <p className="mb-2 text-sm font-medium">Column</p>
+            <Column className="gap-2">
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">1</span>
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">2</span>
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">3</span>
+            </Column>
+          </Card>
+          <Card variant="outlined">
+            <p className="mb-2 text-sm font-medium">RowInverted</p>
+            <RowInverted className="gap-2">
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">1</span>
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">2</span>
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">3</span>
+            </RowInverted>
+          </Card>
+          <Card variant="outlined">
+            <p className="mb-2 text-sm font-medium">ColumnInverted</p>
+            <ColumnInverted className="gap-2">
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">1</span>
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">2</span>
+              <span className="rounded-ui-control bg-ui-surface-tonal px-3 py-1 text-sm text-ui-on-surface">3</span>
+            </ColumnInverted>
+          </Card>
         </div>
       </Section>
 
