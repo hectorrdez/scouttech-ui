@@ -11,7 +11,7 @@ id|slug|state|role|commit|commit_url
 006|ecosystem-theme|ENDED|frontend|c7262fd|https://github.com/hectorrdez/scouttech-ui/commit/c7262fd
 007|product-marks-auth-header|ENDED|frontend|4b3d09a|https://github.com/hectorrdez/scouttech-ui/commit/4b3d09a
 008|form-controls-textarea-checkbox-radio|ENDED|frontend|ce4cdf3|https://github.com/hectorrdez/scouttech-ui/commit/ce4cdf3
-009|layout-row-column|ENDED|frontend
+009|layout-row-column|ENDED|frontend|ce1e241|https://github.com/hectorrdez/scouttech-ui/commit/ce1e241
 010|modal-dialog|PENDING|frontend
 011|badge-tabs-emptystate-skeleton|PENDING|frontend
 012|table-fileinput-dropdown|PENDING|frontend
