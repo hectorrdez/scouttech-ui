@@ -14,4 +14,4 @@ id|slug|state|role|commit|commit_url
 009|layout-row-column|ENDED|frontend|ce1e241|https://github.com/hectorrdez/scouttech-ui/commit/ce1e241
 010|modal-dialog|ENDED|frontend|3fb8dc3|https://github.com/hectorrdez/scouttech-ui/commit/3fb8dc3
 011|badge-tabs-emptystate-skeleton|ENDED|frontend|df0a6b9|https://github.com/hectorrdez/scouttech-ui/commit/df0a6b9
-012|table-fileinput-dropdown|PENDING|frontend
+012|table-fileinput-dropdown|ENDED|frontend|fd1f665|https://github.com/hectorrdez/scouttech-ui/commit/fd1f665
