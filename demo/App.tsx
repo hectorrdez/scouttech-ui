@@ -14,6 +14,7 @@ import {
   Column,
   ColumnInverted,
   Input,
+  Modal,
   Radio,
   RadioGroup,
   Row,
@@ -31,6 +32,7 @@ import {
   productNames,
   products,
   type CookieConsentValues,
+  type ModalSize,
   type Product,
 } from "../src/index.js";
 
@@ -188,6 +190,7 @@ function Demo() {
   const [compare, setCompare] = useState(false);
   const [notify, setNotify] = useState(true);
   const [cookiesOpen, setCookiesOpen] = useState(false);
+  const [modalSize, setModalSize] = useState<ModalSize | null>(null);
   const [cookieResult, setCookieResult] = useState<CookieConsentValues | null>(null);
 
   useEffect(() => {
@@ -567,6 +570,34 @@ function Demo() {
           <p data-testid="cookie-result" className="text-sm text-ui-on-surface-muted">
             Preferencias: {JSON.stringify(cookieResult)}
           </p>
+        )}
+      </Section>
+
+      <Section title="Modal" e2eText>
+        <div className="flex flex-wrap items-center gap-3">
+          <Button onClick={() => setModalSize("md")}>Abrir modal</Button>
+          <Button variant="outline" onClick={() => setModalSize("sm")}>
+            Modal pequeño
+          </Button>
+          <Button variant="outline" onClick={() => setModalSize("lg")}>
+            Modal grande
+          </Button>
+        </div>
+        {modalSize && (
+          <Modal title="Modal de ejemplo" size={modalSize} onClose={() => setModalSize(null)}>
+            <div className="flex flex-col gap-4">
+              <p className="text-sm text-ui-on-surface-muted">
+                Escape, clic fuera o la X cierran el modal. Tab queda atrapado dentro.
+              </p>
+              <Input label="Nombre" />
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setModalSize(null)}>
+                  Cancelar
+                </Button>
+                <Button onClick={() => setModalSize(null)}>Guardar</Button>
+              </div>
+            </div>
+          </Modal>
         )}
       </Section>
 

@@ -6,6 +6,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 ## [Unreleased]
 
 ### Added
+- `Modal`: centered dialog from scoutgroup's `Modal` (same `title`/`onClose`/`children` props, mount to open). Adds `size` (`sm|md|lg`), `closeLabel`, `className`, `aria-labelledby` title, Tab focus trap and focus return to the trigger. Subpath `scouttech-ui/Modal`.
 - `Row`, `Column`, `RowInverted`, `ColumnInverted`: flex layout wrappers moved from scoutlog/scoutgroup `components/placing` (byte-identical in both; no diff). Same props (`div` props + `className`); `className` merges via `cx` instead of the app's `StringUtils.JoinClassName`. Subpaths `scouttech-ui/Row`, `/Column`, `/RowInverted`, `/ColumnInverted`.
 - `Textarea`, `Checkbox`, `Radio` and `RadioGroup`: same Field pattern as `Input`/`Select` (label, hint, error, `mandatory`, `required`, disabled). Subpaths `scouttech-ui/Textarea`, `scouttech-ui/Checkbox`, `scouttech-ui/Radio`.
 

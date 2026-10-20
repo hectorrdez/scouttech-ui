@@ -58,3 +58,5 @@ export { RowInverted } from "./RowInverted.js";
 export type { RowInvertedProps } from "./RowInverted.js";
 export { ColumnInverted } from "./ColumnInverted.js";
 export type { ColumnInvertedProps } from "./ColumnInverted.js";
+export { Modal } from "./Modal.js";
+export type { ModalProps, ModalSize } from "./Modal.js";
