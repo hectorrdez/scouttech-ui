@@ -6,6 +6,9 @@ import {
   Badge,
   DropdownFloating,
   EmptyState,
+  LegalLayout,
+  PublicFooter,
+  PublicHeader,
   FileInput,
   Skeleton,
   Table,
@@ -150,6 +153,12 @@ const sizes: ButtonSize[] = ["sm", "md"];
 const cardVariants: CardVariant[] = ["elevated", "tonal", "outlined"];
 const markSizes = [16, 24, 32, 64];
 const loginProducts: Product[] = ["scouttech", "scoutgroup", "scoutlog", "scoutpulse"];
+const publicNav = [
+  { label: "Productos", to: "/productos" },
+  { label: "Precios", to: "/precios" },
+  { label: "Sobre nosotros", to: "/nosotros", secondary: true },
+  { label: "ScoutTech", to: "https://scouttech.example/", external: true },
+];
 
 const cookieSections = [
   {
@@ -772,6 +781,76 @@ function Demo() {
               />
             </Card>
           ))}
+        </div>
+      </Section>
+
+      <Section title="PublicHeader" e2eText>
+        <div data-testid="public-header-demo" className="flex flex-col gap-6">
+          <PublicHeader
+            product="scoutpulse"
+            nav={publicNav}
+            actions={
+              <ButtonLink to="https://scouttech.example/entrar" external variant="outline" size="sm">
+                Entrar
+              </ButtonLink>
+            }
+          />
+          <PublicHeader product="scoutpulse" nav={publicNav} themeToggle={false} />
+        </div>
+      </Section>
+
+      <Section title="PublicFooter" e2eText>
+        <div data-testid="public-footer-demo">
+          <PublicFooter
+            product="scoutpulse"
+            description="Inteligencia de mercado para equipos de ventas."
+            columns={[
+              {
+                title: "Producto",
+                links: [
+                  { label: "Funciones", to: "/productos" },
+                  { label: "Precios", to: "/precios" },
+                ],
+              },
+              {
+                title: "Ayuda",
+                links: [
+                  { label: "Centro de ayuda", to: "https://scouttech.example/ayuda", external: true },
+                  { label: "Contacto", to: "/contacto" },
+                ],
+              },
+            ]}
+            legalLinks={[
+              { label: "Privacidad", to: "/legal/privacidad" },
+              { label: "Cookies", to: "/legal/cookies" },
+            ]}
+          >
+            <p className="text-xs text-ui-on-surface-muted">hola@scoutpulse.example</p>
+          </PublicFooter>
+        </div>
+      </Section>
+
+      <Section title="LegalLayout" e2eText>
+        <div data-testid="legal-layout-demo" className="border border-ui-outline">
+          <LegalLayout
+            title="Política de privacidad"
+            updated="Última actualización: 1 de octubre de 2026"
+            links={[
+              { label: "Privacidad", to: "/legal/privacidad" },
+              { label: "Cookies", to: "/legal/cookies" },
+              { label: "Términos", to: "/legal/terminos" },
+            ]}
+          >
+            <h2>Datos que recogemos</h2>
+            <p>
+              Tratamos los datos que nos facilitas al crear tu cuenta y al usar el servicio. Consulta también la{" "}
+              <a href="#legal-demo">política de cookies</a>.
+            </p>
+            <ul>
+              <li>Datos de contacto y de facturación.</li>
+              <li>Actividad dentro de la plataforma.</li>
+            </ul>
+          </LegalLayout>
         </div>
       </Section>
 
