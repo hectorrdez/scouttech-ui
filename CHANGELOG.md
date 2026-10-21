@@ -5,6 +5,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+- `PublicHeader`: public-site header extracted from scoutgroup `layouts/Header`. Product-agnostic via `product` prop (brand + `ProductMark`), data-driven `nav` (`label`, `to`, `external`, `secondary` hidden below `lg`), `actions` slot, `themeToggle` (default on), mobile disclosure menu (`aria-expanded`/`aria-controls`, closes on navigate), `labels` for all strings. External links open in a new tab with an sr-only hint. Uses `ui-*` tokens only. Subpath `scouttech-ui/PublicHeader`.
+- `PublicFooter`: public-site footer extracted from scoutgroup `layouts/Footer`. Data-driven `columns` (empty ones skipped), `legalLinks`, `children` slot under the blurb, `copyright` override. scoutgroup's fixed navy footer becomes `ui-surface-tonal`, so it follows light/dark. Subpath `scouttech-ui/PublicFooter`.
+- `LegalLayout`: page shell for legal documents: title, `updated` line, optional sibling-document nav (`links`, current route marked), readable prose column for children. Subpath `scouttech-ui/LegalLayout`.
+- `scouttechUrl(base, path, params)` + `SCOUTTECH_PATHS`: pure version of scoutgroup `utils/scouttechUrl`. The app passes its own base URL (e.g. `import.meta.env.VITE_SCOUTTECH_URL`). Subpath `scouttech-ui/scouttechUrl`.
+
 ## [0.5.0] - 2026-10-20
 
 ### Added

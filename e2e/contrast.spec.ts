@@ -66,6 +66,8 @@ test.describe("focus outline contrast on the demo", () => {
         let i = 0;
         for (const el of Array.from(document.querySelectorAll<HTMLElement>(sel))) {
           if (el.getAttribute("aria-disabled") === "true") continue;
+          // Responsive controls hidden at this viewport (e.g. md:hidden menu buttons) are not Tab stops.
+          if (el.getClientRects().length === 0) continue;
           // A native radio group is a single Tab stop: the checked radio, else the first enabled one.
           if (el instanceof HTMLInputElement && el.type === "radio") {
             const group = Array.from(

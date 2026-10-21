@@ -135,6 +135,22 @@
     "./DropdownFloating": {
       "types": "./dist/DropdownFloating.d.ts",
       "default": "./dist/DropdownFloating.js"
+    },
+    "./PublicHeader": {
+      "types": "./dist/PublicHeader.d.ts",
+      "default": "./dist/PublicHeader.js"
+    },
+    "./PublicFooter": {
+      "types": "./dist/PublicFooter.d.ts",
+      "default": "./dist/PublicFooter.js"
+    },
+    "./LegalLayout": {
+      "types": "./dist/LegalLayout.d.ts",
+      "default": "./dist/LegalLayout.js"
+    },
+    "./scouttechUrl": {
+      "types": "./dist/scouttechUrl.d.ts",
+      "default": "./dist/scouttechUrl.js"
     }
   },
   "scripts": {

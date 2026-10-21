@@ -13,6 +13,11 @@ import {
   controlClassName,
   controlErrorClassName,
   controlMandatoryClassName,
+  PublicHeader,
+  PublicFooter,
+  LegalLayout,
+  scouttechUrl,
+  SCOUTTECH_PATHS,
 } from "./index.js";
 
 describe("root barrel exports the cards", () => {
@@ -57,5 +62,15 @@ describe("public control class helpers", () => {
     expect(controlMandatoryClassName).toBe(field.controlMandatoryClassName);
     expect(controlErrorClassName).toContain("border-ui-danger");
     expect(controlMandatoryClassName).toContain("border-l-ui-warning");
+  });
+});
+
+describe("root barrel exports the public shell", () => {
+  it("exports PublicHeader, PublicFooter, LegalLayout, scouttechUrl and SCOUTTECH_PATHS", () => {
+    expect(typeof PublicHeader).toBe("function");
+    expect(typeof PublicFooter).toBe("function");
+    expect(typeof LegalLayout).toBe("function");
+    expect(typeof scouttechUrl).toBe("function");
+    expect(SCOUTTECH_PATHS.home).toBe("/");
   });
 });
