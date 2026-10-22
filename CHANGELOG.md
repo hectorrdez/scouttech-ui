@@ -5,6 +5,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-10-22
+
+### Added
+- `NoLicensePage`: full-page "no licence / no access" screen for scoutlog, scoutgroup and scoutpulse, with `reason`, text overrides and a CTA link (feature 018).
+- `SCOUTTECH_PATHS.profile`, `.apps` and `.orgLicenses` (`/perfil`, `/aplicaciones`, `/organizacion/licencias`).
+
 ## [0.9.0] - 2026-10-22
 
 ### Added

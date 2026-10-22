@@ -72,5 +72,8 @@ describe("root barrel exports the public shell", () => {
     expect(typeof LegalLayout).toBe("function");
     expect(typeof scouttechUrl).toBe("function");
     expect(SCOUTTECH_PATHS.home).toBe("/");
+    expect(SCOUTTECH_PATHS.profile).toBe("/perfil");
+    expect(SCOUTTECH_PATHS.apps).toBe("/aplicaciones");
+    expect(SCOUTTECH_PATHS.orgLicenses).toBe("/organizacion/licencias");
   });
 });
