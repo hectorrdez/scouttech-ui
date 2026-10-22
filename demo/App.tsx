@@ -208,6 +208,84 @@ function CompareView() {
   );
 }
 
+const headerOptions = [
+  ["banner", "Banner"],
+  ["brand", "Marca propia"],
+  ["session", "Sesión (Entrar + CTA)"],
+  ["actions", "Acciones libres"],
+  ["external", "Enlace externo"],
+  ["secondary", "Enlace secundario"],
+  ["themeToggle", "Selector de tema"],
+  ["sticky", "Fija al hacer scroll"],
+] as const;
+type HeaderOption = (typeof headerOptions)[number][0];
+
+/** One PublicHeader driven by toggles: the component arranges the content, it does not own it. */
+function PublicHeaderPlayground() {
+  const [product, setProduct] = useState<Product>("scoutgroup");
+  const [on, setOn] = useState<Record<HeaderOption, boolean>>({
+    banner: false,
+    brand: false,
+    session: true,
+    actions: false,
+    external: true,
+    secondary: true,
+    themeToggle: true,
+    sticky: true,
+  });
+  const nav = [
+    { label: "Productos", to: "/productos" },
+    { label: "Planes y precios", to: "/planes" },
+    ...(on.secondary ? [{ label: "Sobre nosotros", to: "/nosotros", secondary: true }] : []),
+    ...(on.external ? [{ label: "ScoutTech", to: "https://scouttech.example/", external: true }] : []),
+  ];
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
+        <Select label="Producto" value={product} onChange={(event) => setProduct(event.target.value as Product)}>
+          {products.map((item) => (
+            <option key={item} value={item}>
+              {productNames[item]}
+            </option>
+          ))}
+        </Select>
+        {headerOptions.map(([key, label]) => (
+          <Checkbox
+            key={key}
+            label={label}
+            checked={on[key]}
+            onChange={(event) => setOn((prev) => ({ ...prev, [key]: event.target.checked }))}
+          />
+        ))}
+      </div>
+      <div data-testid="public-header-demo" className="flex flex-col">
+        <PublicHeader
+          product={product}
+          nav={nav}
+          banner={on.banner ? <span>{productNames[product]} forma parte del ecosistema ScoutTech.</span> : undefined}
+          brand={
+            on.brand ? (
+              <span className="text-xl font-semibold">
+                {productNames[product]} <span className="text-sm font-normal text-ui-on-surface-muted">by ScoutTech</span>
+              </span>
+            ) : undefined
+          }
+          session={on.session ? { login: { label: "Entrar", to: "/entrar" }, cta: { label: "Probar gratis", to: "/registro" } } : undefined}
+          actions={
+            on.actions ? (
+              <ButtonLink to="/cuenta" variant="outline" size="sm">
+                Ir a mi cuenta
+              </ButtonLink>
+            ) : undefined
+          }
+          themeToggle={on.themeToggle}
+          sticky={on.sticky}
+        />
+      </div>
+    </div>
+  );
+}
+
 function Demo() {
   const [palette, setPalette] = useState<Palette>(() => embedConfig?.palette ?? readInitialPalette());
   const [compare, setCompare] = useState(false);
@@ -785,35 +863,7 @@ function Demo() {
       </Section>
 
       <Section title="PublicHeader" e2eText>
-        <div data-testid="public-header-demo" className="flex flex-col gap-6">
-          <PublicHeader
-            product="scoutpulse"
-            nav={publicNav}
-            actions={
-              <ButtonLink to="https://scouttech.example/entrar" external variant="outline" size="sm">
-                Entrar
-              </ButtonLink>
-            }
-          />
-          <PublicHeader product="scoutpulse" nav={publicNav} themeToggle={false} />
-          <PublicHeader
-            product="scoutlog"
-            nav={publicNav}
-            banner={<span>ScoutLog forma parte del ecosistema ScoutTech.</span>}
-            brand={<span className="text-xl font-semibold">ScoutLog <span className="text-sm font-normal text-ui-on-surface-muted">by ScoutTech</span></span>}
-            actions={
-              <ButtonLink to="/cuenta" variant="outline" size="sm">
-                Ir a mi cuenta
-              </ButtonLink>
-            }
-          />
-          <PublicHeader product="scoutgroup" nav={publicNav} sticky={false} />
-          <PublicHeader
-            product="scoutgroup"
-            nav={[{ label: "Productos", to: "/productos" }, { label: "Planes y precios", to: "/planes" }, { label: "ScoutTech", to: "https://scouttech.example/", external: true }]}
-            session={{ login: { label: "Entrar", to: "/entrar" }, cta: { label: "Probar gratis", to: "/registro" } }}
-          />
-        </div>
+        <PublicHeaderPlayground />
       </Section>
 
       <Section title="PublicFooter" e2eText>

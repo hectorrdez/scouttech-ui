@@ -80,7 +80,7 @@ for (const viewport of [
   test(`public header: nav links and session buttons stay on one line at ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize(viewport);
     await open(page, "scouttech", "light");
-    const scope = header(page).nth(4);
+    const scope = header(page).first();
     await scope.scrollIntoViewIfNeeded();
     const links = scope.getByRole("link");
     const count = await links.count();
@@ -96,7 +96,7 @@ for (const viewport of [
 test("public header: session links in the bar at 1280px, in the mobile menu at 390px", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await open(page, "scouttech", "light");
-  const desktop = header(page).nth(4);
+  const desktop = header(page).first();
   await expect(desktop.getByRole("link", { name: "Entrar" })).toBeVisible();
   await expect(desktop.getByRole("link", { name: "Probar gratis" })).toBeVisible();
 
@@ -106,4 +106,18 @@ test("public header: session links in the bar at 1280px, in the mobile menu at 3
   const mobile = desktop.getByRole("navigation", { name: "Principal móvil" });
   await expect(mobile.getByRole("link", { name: "Entrar" })).toBeVisible();
   await expect(mobile.getByRole("link", { name: "Probar gratis" })).toBeVisible();
+});
+
+test("public header playground: toggles banner, custom brand and session", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await open(page, "scouttech", "light");
+  const bar = header(page).first();
+  const banner = bar.getByText("forma parte del ecosistema ScoutTech");
+  await expect(banner).toHaveCount(0);
+  await page.getByRole("checkbox", { name: "Banner" }).check();
+  await expect(banner).toBeVisible();
+  await page.getByRole("checkbox", { name: "Marca propia" }).check();
+  await expect(bar.getByText("by ScoutTech")).toBeVisible();
+  await page.getByRole("checkbox", { name: "Sesión (Entrar + CTA)" }).uncheck();
+  await expect(bar.getByRole("link", { name: "Entrar" })).toHaveCount(0);
 });
