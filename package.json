@@ -1,6 +1,6 @@
 {
   "name": "scouttech-ui",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Shared design tokens and React controls for the ScoutTech apps",
   "type": "module",
   "license": "UNLICENSED",
