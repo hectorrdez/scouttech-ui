@@ -12,13 +12,15 @@ export type ButtonProps = ComponentProps<"button"> & {
   loading?: boolean;
   /** Rendered before the label. */
   icon?: ReactNode;
+  /** Lets a long label wrap. Default keeps it on one line. */
+  wrap?: boolean;
 };
 
 export const buttonFocusClassName =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-focus";
 
 const baseClassName =
-  "inline-flex items-center justify-center rounded-ui-control whitespace-nowrap font-medium transition-colors";
+  "inline-flex items-center justify-center rounded-ui-control font-medium transition-colors";
 
 const variantClassNames: Record<ButtonVariant, string> = {
   primary:
@@ -44,6 +46,7 @@ export function buttonClassName({
   size = "md",
   blocked = false,
   loading = false,
+  wrap = false,
   className,
 }: {
   variant?: ButtonVariant;
@@ -51,10 +54,12 @@ export function buttonClassName({
   /** Disabled or loading: drops the variant colours. */
   blocked?: boolean;
   loading?: boolean;
+  wrap?: boolean;
   className?: string;
 }): string {
   return cx(
     baseClassName,
+    !wrap && "whitespace-nowrap",
     sizeClassNames[size],
     blocked ? "bg-ui-disabled text-ui-on-disabled" : variantClassNames[variant],
     blocked ? (loading ? "cursor-wait" : "cursor-not-allowed") : "cursor-pointer",
@@ -68,6 +73,7 @@ export function Button({
   size = "md",
   loading = false,
   icon,
+  wrap = false,
   disabled,
   children,
   className,
@@ -79,7 +85,7 @@ export function Button({
   return (
     <button
       type={type}
-      className={buttonClassName({ variant, size, blocked, loading, className })}
+      className={buttonClassName({ variant, size, blocked, loading, wrap, className })}
       disabled={blocked}
       aria-busy={loading || undefined}
       {...args}

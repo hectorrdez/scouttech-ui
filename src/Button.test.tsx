@@ -4,6 +4,17 @@ import { describe, expect, it, vi } from "vitest";
 import Button, { type ButtonVariant } from "./Button.js";
 
 describe("Button", () => {
+  it("is whitespace-nowrap by default and wraps with `wrap`", () => {
+    render(
+      <>
+        <Button>Uno</Button>
+        <Button wrap>Dos</Button>
+      </>,
+    );
+    expect(screen.getByRole("button", { name: "Uno" })).toHaveClass("whitespace-nowrap");
+    expect(screen.getByRole("button", { name: "Dos" })).not.toHaveClass("whitespace-nowrap");
+  });
+
   it("renders type=button by default", () => {
     render(<Button>Guardar</Button>);
     expect(screen.getByRole("button", { name: "Guardar" })).toHaveAttribute("type", "button");

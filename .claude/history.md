@@ -19,3 +19,4 @@ id|slug|state|role|commit|commit_url
 014|public-header-unify|ENDED|frontend|ecc01e5|https://github.com/hectorrdez/scouttech-ui/commit/ecc01e5
 015|public-header-polish|ENDED|frontend|6e15ddc|https://github.com/hectorrdez/scouttech-ui/commit/6e15ddc
 016|public-header-demo-playground|ENDED|frontend|a0975f0|https://github.com/hectorrdez/scouttech-ui/commit/a0975f0
+017|button-wrap-optout|ENDED|frontend|d51d230|https://github.com/hectorrdez/scouttech-ui/commit/d51d230

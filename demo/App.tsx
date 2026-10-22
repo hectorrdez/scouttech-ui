@@ -364,6 +364,17 @@ function Demo() {
             Eliminar suave
           </Button>
         </div>
+        <div className="flex flex-wrap items-start gap-3">
+          <div className="flex w-40 flex-col gap-2">
+            <Button variant="outline">Etiqueta larga sin wrap</Button>
+            <Button variant="outline" wrap>
+              Etiqueta larga con wrap
+            </Button>
+            <ButtonLink to="/cuenta" variant="outline" wrap>
+              Enlace largo con wrap
+            </ButtonLink>
+          </div>
+        </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-6">
           {variants.map((variant) => (
             <Button key={`${variant}-loading`} variant={variant} size="sm" loading>
