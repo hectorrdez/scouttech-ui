@@ -50,3 +50,24 @@ test("public header: desktop nav visible and menu button hidden at 1280px", asyn
   await expect(scope.getByRole("navigation", { name: "Principal", exact: true })).toBeVisible();
   await expect(scope.getByRole("button", { name: "Abrir menú" })).toBeHidden();
 });
+
+test("public header: hovering a nav link does not move the layout", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await open(page, "scouttech", "light");
+  const scope = header(page).first();
+  const link = scope.getByRole("navigation", { name: "Principal", exact: true }).getByRole("link", { name: "Productos" });
+  const before = await link.boundingBox();
+  await link.hover();
+  const after = await link.boundingBox();
+  // y depends on scroll position (hover scrolls the demo into view); size and x must not change
+  expect(after?.width).toBe(before?.width);
+  expect(after?.height).toBe(before?.height);
+  expect(after?.x).toBe(before?.x);
+});
+
+test("public header: sticky bar stays at the top after scrolling", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await open(page, "scouttech", "light");
+  const bar = page.locator('[data-testid="public-header-demo"] > header').first();
+  await expect(bar).toHaveCSS("position", "sticky");
+});

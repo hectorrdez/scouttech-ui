@@ -796,6 +796,18 @@ function Demo() {
             }
           />
           <PublicHeader product="scoutpulse" nav={publicNav} themeToggle={false} />
+          <PublicHeader
+            product="scoutlog"
+            nav={publicNav}
+            banner={<span>ScoutLog forma parte del ecosistema ScoutTech.</span>}
+            brand={<span className="text-xl font-semibold">ScoutLog <span className="text-sm font-normal text-ui-on-surface-muted">by ScoutTech</span></span>}
+            actions={
+              <ButtonLink to="/cuenta" variant="outline" size="sm">
+                Ir a mi cuenta
+              </ButtonLink>
+            }
+          />
+          <PublicHeader product="scoutgroup" nav={publicNav} sticky={false} />
         </div>
       </Section>
 

@@ -143,3 +143,43 @@ describe("scouttechUrl", () => {
     expect(scouttechUrl("https://scouttech.example", "legal")).toBe("https://scouttech.example/legal");
   });
 });
+
+describe("PublicHeader unified styling", () => {
+  it("nav links rest muted, grow the underline on hover and mark the current route in primary ink", () => {
+    wrap(<PublicHeader product="scoutgroup" nav={nav} />, "/precios");
+    const current = screen.getAllByRole("link", { name: "Precios", hidden: true })[0];
+    const other = screen.getAllByRole("link", { name: "Productos", hidden: true })[0];
+    expect(current).toHaveClass("text-ui-primary-ink", "font-medium", "after:scale-x-100");
+    expect(other).toHaveClass("text-ui-on-surface-muted", "hover:text-ui-on-surface", "hover:after:scale-x-100");
+    expect(other).toHaveClass("after:scale-x-0", "after:origin-left", "motion-reduce:transition-none");
+    expect(other).not.toHaveClass("text-ui-primary-ink");
+  });
+
+  it("sticky is on by default and can be turned off", () => {
+    const { container, unmount } = wrap(<PublicHeader product="scoutgroup" nav={nav} />);
+    expect(container.querySelector("header")).toHaveClass("sticky", "top-0", "z-40");
+    unmount();
+    const off = wrap(<PublicHeader product="scoutgroup" nav={nav} sticky={false} />);
+    expect(off.container.querySelector("header")).not.toHaveClass("sticky");
+  });
+
+  it("renders the banner above the bar and a custom brand instead of the default logo", () => {
+    wrap(
+      <PublicHeader
+        product="scoutlog"
+        nav={nav}
+        banner={<span>ScoutLog forma parte del ecosistema ScoutTech</span>}
+        brand={<span>ScoutLog by ScoutTech</span>}
+      />,
+    );
+    expect(screen.getByText("ScoutLog forma parte del ecosistema ScoutTech")).toBeInTheDocument();
+    const brandLink = screen.getByRole("link", { name: "ScoutLog, inicio" });
+    expect(within(brandLink).getByText("ScoutLog by ScoutTech")).toBeInTheDocument();
+    expect(within(brandLink).queryByText("ScoutLog", { exact: true })).not.toBeInTheDocument();
+  });
+
+  it("omits the banner strip when no banner is given", () => {
+    const { container } = wrap(<PublicHeader product="scoutgroup" nav={nav} />);
+    expect(container.querySelector("header > div")).toHaveClass("h-16");
+  });
+});

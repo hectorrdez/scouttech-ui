@@ -23,11 +23,17 @@ export type PublicHeaderProps = {
   product: Product;
   /** Route of the brand link. Default "/". */
   brandHref?: string;
+  /** Replaces the default logo block (chip + product name), e.g. a "by ScoutTech" lockup. */
+  brand?: ReactNode;
   nav: Array<PublicHeaderNavItem>;
   /** Right-hand slot (session link, call to action). Shown in the bar at every width. */
   actions?: ReactNode;
+  /** Optional strip above the bar, e.g. "ScoutLog forma parte del ecosistema ScoutTech". */
+  banner?: ReactNode;
   /** Renders the ThemeToggle (bar on desktop, menu on mobile). Default true. */
   themeToggle?: boolean;
+  /** Keeps the bar at the top of the viewport while scrolling. Default true. */
+  sticky?: boolean;
   labels?: PublicHeaderLabels;
   className?: string;
 };
@@ -36,9 +42,12 @@ export type PublicHeaderProps = {
 export function PublicHeader({
   product,
   brandHref = "/",
+  brand,
   nav,
   actions,
+  banner,
   themeToggle = true,
+  sticky = true,
   labels,
   className,
 }: PublicHeaderProps) {
@@ -55,16 +64,33 @@ export function PublicHeader({
   const menuId = useId();
 
   return (
-    <header className={cx("w-full border-b border-ui-outline bg-ui-surface text-ui-on-surface", className)}>
+    <header
+      className={cx(
+        "w-full border-b border-ui-outline bg-ui-surface text-ui-on-surface",
+        sticky && "sticky top-0 z-40",
+        className,
+      )}
+    >
+      {banner && (
+        <div className="border-b border-ui-outline bg-ui-surface-tonal px-4 py-2 text-center text-sm text-ui-on-surface-muted md:px-8">
+          {banner}
+        </div>
+      )}
       <div className="flex h-16 w-full items-center justify-between gap-3 px-4 md:px-8">
         <div className="flex min-w-0 items-center gap-4 lg:gap-8">
           <Link
             to={brandHref}
             aria-label={text.brand}
-            className="flex items-center gap-2 rounded-ui-control focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-focus"
+            className="flex items-center gap-3 rounded-ui-control focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-focus"
           >
-            <ProductMark product={product} size={28} />
-            <span className="text-2xl font-semibold">{name}</span>
+            {brand ?? (
+              <>
+                <span className="flex h-8 w-8 items-center justify-center rounded-ui-control bg-ui-primary text-ui-on-primary">
+                  <ProductMark product={product} size={20} tone="inherit" />
+                </span>
+                <span className="text-xl font-semibold">{name}</span>
+              </>
+            )}
           </Link>
           <nav aria-label={text.nav} className="hidden md:block">
             <ul className="flex gap-4 lg:gap-6">
@@ -93,10 +119,15 @@ export function PublicHeader({
       </div>
       {open && (
         <nav id={menuId} aria-label={text.mobileNav} className="border-t border-ui-outline px-4 py-3 md:hidden">
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-1">
             {nav.map((item) => (
               <li key={item.to}>
-                <ShellLink link={item} active onNavigate={() => setOpen(false)} />
+                <ShellLink
+                  link={item}
+                  active
+                  onNavigate={() => setOpen(false)}
+                  className="block rounded-ui-control px-2 py-2 hover:bg-ui-surface-hover"
+                />
               </li>
             ))}
           </ul>

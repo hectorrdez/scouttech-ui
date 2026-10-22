@@ -13,6 +13,16 @@ export type ShellLinkDef = {
 const focusClassName =
   "rounded-ui-control focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-focus";
 
+/** Rest, hover and underline animation for the header nav. The underline grows on hover and never shifts the layout. */
+const navClassName = [
+  "relative inline-block py-1 text-ui-on-surface-muted transition-colors duration-200 hover:text-ui-on-surface",
+  "after:absolute after:-bottom-0.5 after:left-0 after:right-0 after:h-0.5 after:rounded-full",
+  "after:origin-left after:scale-x-0 after:bg-ui-primary after:transition-transform after:duration-200",
+  "hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:after:transition-none",
+].join(" ");
+
+const navActiveClassName = "text-ui-primary-ink font-medium after:scale-x-100";
+
 /** Internal-or-external link shared by PublicHeader, PublicFooter and LegalLayout. Not exported from the package. */
 export function ShellLink({
   link,
@@ -23,7 +33,7 @@ export function ShellLink({
 }: {
   link: ShellLinkDef;
   className?: string;
-  /** Uses NavLink and adds the active style on the current route. */
+  /** Header nav style (underline, hover, current route). Uses NavLink so the current route gets `aria-current`. */
   active?: boolean;
   onNavigate?: () => void;
   children?: ReactNode;
@@ -36,7 +46,12 @@ export function ShellLink({
         target="_blank"
         rel="noopener noreferrer"
         onClick={onNavigate}
-        className={cx("inline-flex items-center gap-1", focusClassName, className)}
+        className={cx(
+          "inline-flex items-center gap-1",
+          focusClassName,
+          active && navClassName,
+          className,
+        )}
       >
         {content}
         <ExternalLink size={12} aria-hidden />
@@ -50,12 +65,7 @@ export function ShellLink({
         to={link.to}
         onClick={onNavigate}
         className={({ isActive }) =>
-          cx(
-            focusClassName,
-            "border-b-2",
-            isActive ? "border-ui-primary font-semibold" : "border-transparent hover:border-ui-outline-strong",
-            className,
-          )
+          cx(focusClassName, navClassName, isActive && navActiveClassName, className)
         }
       >
         {content}

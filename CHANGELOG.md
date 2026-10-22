@@ -5,6 +5,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+- `PublicHeader`: `brand` (replaces the default logo block), `banner` (optional strip above the bar) and `sticky` (default true). Retro-compatible with 0.6.0.
+
+### Changed
+- `PublicHeader` / `ShellLink` nav style follows scouttech-frontend: muted rest color, hover to on-surface with a 2px underline growing from the left (no layout shift, off under `prefers-reduced-motion`), current route in `ui-primary-ink` with the underline. Logo block is a primary chip with the product mark. Only `ui-*` tokens. `LegalLayout` sibling links use the same nav style (`ShellLink` active mode).
+
 ## [0.6.0] - 2026-10-21
 
 ### Added
