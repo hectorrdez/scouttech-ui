@@ -71,3 +71,39 @@ test("public header: sticky bar stays at the top after scrolling", async ({ page
   const bar = page.locator('[data-testid="public-header-demo"] > header').first();
   await expect(bar).toHaveCSS("position", "sticky");
 });
+
+for (const viewport of [
+  { width: 390, height: 800 },
+  { width: 800, height: 900 },
+  { width: 1280, height: 900 },
+]) {
+  test(`public header: nav links and session buttons stay on one line at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    await open(page, "scouttech", "light");
+    const scope = header(page).nth(4);
+    await scope.scrollIntoViewIfNeeded();
+    const links = scope.getByRole("link");
+    const count = await links.count();
+    for (let i = 0; i < count; i++) {
+      const link = links.nth(i);
+      if (!(await link.isVisible())) continue;
+      const box = await link.boundingBox();
+      expect(box!.height, await link.innerText()).toBeLessThanOrEqual(40);
+    }
+  });
+}
+
+test("public header: session links in the bar at 1280px, in the mobile menu at 390px", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await open(page, "scouttech", "light");
+  const desktop = header(page).nth(4);
+  await expect(desktop.getByRole("link", { name: "Entrar" })).toBeVisible();
+  await expect(desktop.getByRole("link", { name: "Probar gratis" })).toBeVisible();
+
+  await page.setViewportSize({ width: 390, height: 800 });
+  await expect(desktop.getByRole("link", { name: "Entrar" })).toBeHidden();
+  await desktop.getByRole("button", { name: "Abrir menú" }).click();
+  const mobile = desktop.getByRole("navigation", { name: "Principal móvil" });
+  await expect(mobile.getByRole("link", { name: "Entrar" })).toBeVisible();
+  await expect(mobile.getByRole("link", { name: "Probar gratis" })).toBeVisible();
+});

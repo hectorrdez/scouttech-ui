@@ -808,6 +808,11 @@ function Demo() {
             }
           />
           <PublicHeader product="scoutgroup" nav={publicNav} sticky={false} />
+          <PublicHeader
+            product="scoutgroup"
+            nav={[{ label: "Productos", to: "/productos" }, { label: "Planes y precios", to: "/planes" }, { label: "ScoutTech", to: "https://scouttech.example/", external: true }]}
+            session={{ login: { label: "Entrar", to: "/entrar" }, cta: { label: "Probar gratis", to: "/registro" } }}
+          />
         </div>
       </Section>
 

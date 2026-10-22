@@ -183,3 +183,40 @@ describe("PublicHeader unified styling", () => {
     expect(container.querySelector("header > div")).toHaveClass("h-16");
   });
 });
+
+describe("PublicHeader session slot", () => {
+  const session = { login: { label: "Entrar", to: "/entrar" }, cta: { label: "Probar gratis", to: "/registro" } };
+
+  it("renders a ghost login link and a primary CTA, no wrapping", () => {
+    wrap(<PublicHeader product="scoutgroup" nav={nav} session={session} />);
+    const login = screen.getAllByRole("link", { name: "Entrar", hidden: true })[0];
+    const cta = screen.getAllByRole("link", { name: "Probar gratis", hidden: true })[0];
+    expect(login).toHaveAttribute("href", "/entrar");
+    expect(cta).toHaveAttribute("href", "/registro");
+    expect(login).toHaveClass("whitespace-nowrap");
+    expect(cta).toHaveClass("whitespace-nowrap");
+    expect(login).not.toHaveClass("bg-ui-primary");
+    expect(cta).toHaveClass("bg-ui-primary");
+  });
+
+  it("keeps actions working and renders it before session", () => {
+    wrap(<PublicHeader product="scoutgroup" nav={nav} actions={<a href="/x">Extra</a>} session={session} />);
+    const extra = screen.getByRole("link", { name: "Extra" });
+    const login = screen.getAllByRole("link", { name: "Entrar", hidden: true })[0];
+    expect(extra.compareDocumentPosition(login) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it("shows the session links in the mobile menu and closes it on navigate", async () => {
+    const user = userEvent.setup();
+    wrap(<PublicHeader product="scoutgroup" nav={nav} session={session} />);
+    await user.click(screen.getByRole("button", { name: "Abrir menú" }));
+    const mobile = screen.getByRole("navigation", { name: "Principal móvil" });
+    await user.click(within(mobile).getByRole("link", { name: "Entrar" }));
+    expect(screen.queryByRole("navigation", { name: "Principal móvil" })).not.toBeInTheDocument();
+  });
+
+  it("omits the session block when there is none", () => {
+    wrap(<PublicHeader product="scoutgroup" nav={nav} />);
+    expect(screen.queryByRole("link", { name: "Entrar", hidden: true })).not.toBeInTheDocument();
+  });
+});

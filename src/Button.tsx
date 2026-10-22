@@ -18,7 +18,7 @@ export const buttonFocusClassName =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-focus";
 
 const baseClassName =
-  "inline-flex items-center justify-center rounded-ui-control font-medium transition-colors";
+  "inline-flex items-center justify-center rounded-ui-control whitespace-nowrap font-medium transition-colors";
 
 const variantClassNames: Record<ButtonVariant, string> = {
   primary:

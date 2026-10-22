@@ -15,7 +15,7 @@ const focusClassName =
 
 /** Rest, hover and underline animation for the header nav. The underline grows on hover and never shifts the layout. */
 const navClassName = [
-  "relative inline-block py-1 text-ui-on-surface-muted transition-colors duration-200 hover:text-ui-on-surface",
+  "relative inline-block whitespace-nowrap py-1 text-ui-on-surface-muted transition-colors duration-200 hover:text-ui-on-surface",
   "after:absolute after:-bottom-0.5 after:left-0 after:right-0 after:h-0.5 after:rounded-full",
   "after:origin-left after:scale-x-0 after:bg-ui-primary after:transition-transform after:duration-200",
   "hover:after:scale-x-100 motion-reduce:transition-none motion-reduce:after:transition-none",

@@ -1,13 +1,14 @@
 import { Menu, X } from "lucide-react";
 import { useId, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { ButtonLink } from "./ButtonLink.js";
 import { ProductMark, productNames, type Product } from "./ProductMark.js";
 import { ShellLink, type ShellLinkDef } from "./ShellLink.js";
 import { ThemeToggle } from "./ThemeToggle.js";
 import { cx } from "./cx.js";
 
 export type PublicHeaderNavItem = ShellLinkDef & {
-  /** Hidden from the desktop bar below `lg` (still in the mobile menu). */
+  /** Hidden from the desktop bar below `xl` (still in the mobile menu). */
   secondary?: boolean;
 };
 
@@ -19,6 +20,13 @@ export type PublicHeaderLabels = {
   closeMenu?: string;
 };
 
+export type PublicHeaderSession = {
+  /** Ghost link, e.g. "Entrar". */
+  login?: ShellLinkDef;
+  /** Primary call to action, e.g. "Probar gratis". */
+  cta?: ShellLinkDef;
+};
+
 export type PublicHeaderProps = {
   product: Product;
   /** Route of the brand link. Default "/". */
@@ -28,6 +36,8 @@ export type PublicHeaderProps = {
   nav: Array<PublicHeaderNavItem>;
   /** Right-hand slot (session link, call to action). Shown in the bar at every width. */
   actions?: ReactNode;
+  /** Standard session links: ghost login + primary CTA. In the bar from `sm` up, in the mobile menu below. Rendered after `actions`. */
+  session?: PublicHeaderSession;
   /** Optional strip above the bar, e.g. "ScoutLog forma parte del ecosistema ScoutTech". */
   banner?: ReactNode;
   /** Renders the ThemeToggle (bar on desktop, menu on mobile). Default true. */
@@ -45,6 +55,7 @@ export function PublicHeader({
   brand,
   nav,
   actions,
+  session,
   banner,
   themeToggle = true,
   sticky = true,
@@ -77,7 +88,7 @@ export function PublicHeader({
         </div>
       )}
       <div className="flex h-16 w-full items-center justify-between gap-3 px-4 md:px-8">
-        <div className="flex min-w-0 items-center gap-4 lg:gap-8">
+        <div className="flex min-w-0 items-center gap-4 xl:gap-8">
           <Link
             to={brandHref}
             aria-label={text.brand}
@@ -93,18 +104,24 @@ export function PublicHeader({
             )}
           </Link>
           <nav aria-label={text.nav} className="hidden md:block">
-            <ul className="flex gap-4 lg:gap-6">
+            <ul className="flex gap-4 xl:gap-6">
               {nav.map((item) => (
-                <li key={item.to} className={item.secondary ? "max-lg:hidden" : undefined}>
+                <li key={item.to} className={item.secondary ? "max-xl:hidden" : undefined}>
                   <ShellLink link={item} active />
                 </li>
               ))}
             </ul>
           </nav>
         </div>
-        <div className="flex items-center gap-3 lg:gap-6">
+        <div className="flex items-center gap-3 xl:gap-4">
           {themeToggle && <ThemeToggle className="max-md:hidden" />}
           {actions}
+          {session && (
+            <div className="flex items-center gap-2 max-sm:hidden">
+              {session.login && <SessionLink link={session.login} variant="ghost" />}
+              {session.cta && <SessionLink link={session.cta} variant="primary" />}
+            </div>
+          )}
           <button
             type="button"
             className="rounded-ui-control p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ui-focus md:hidden"
@@ -131,10 +148,34 @@ export function PublicHeader({
               </li>
             ))}
           </ul>
+          {session && (
+            <div className="mt-3 flex flex-col gap-2 sm:hidden">
+              {session.login && <SessionLink link={session.login} variant="ghost" full onNavigate={() => setOpen(false)} />}
+              {session.cta && <SessionLink link={session.cta} variant="primary" full onNavigate={() => setOpen(false)} />}
+            </div>
+          )}
           {themeToggle && <ThemeToggle className="mt-3" />}
         </nav>
       )}
     </header>
+  );
+}
+
+function SessionLink({
+  link,
+  variant,
+  full,
+  onNavigate,
+}: {
+  link: ShellLinkDef;
+  variant: "ghost" | "primary";
+  full?: boolean;
+  onNavigate?: () => void;
+}) {
+  return (
+    <ButtonLink to={link.to} external={link.external} variant={variant} size="sm" className={full ? "w-full" : undefined} onClick={onNavigate}>
+      {link.label}
+    </ButtonLink>
   );
 }
 

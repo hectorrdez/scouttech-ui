@@ -5,6 +5,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+- `PublicHeader`: `session` prop (`{ login?, cta? }`): ghost `ButtonLink` login (e.g. "Entrar") + primary CTA, so apps stop repeating `actions`. In the bar from `sm` up, in the mobile menu below. Rendered after `actions`, which keeps working. Type `PublicHeaderSession` exported.
+
+### Fixed
+- No text wrap: `whitespace-nowrap` on nav links and in `buttonClassName` (all buttons). `PublicHeader` gaps tighten below `xl` and `secondary` items now hide below `xl` (was `lg`).
+
 ## [0.7.0] - 2026-10-22
 
 ### Added

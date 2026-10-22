@@ -17,3 +17,4 @@ id|slug|state|role|commit|commit_url
 012|table-fileinput-dropdown|ENDED|frontend|fd1f665|https://github.com/hectorrdez/scouttech-ui/commit/fd1f665
 013|public-shell-layouts|ENDED|frontend|b0fc36f|https://github.com/hectorrdez/scouttech-ui/commit/b0fc36f
 014|public-header-unify|ENDED|frontend|ecc01e5|https://github.com/hectorrdez/scouttech-ui/commit/ecc01e5
+015|public-header-polish|ENDED|frontend
