@@ -6,6 +6,9 @@ import {
   Badge,
   DropdownFloating,
   EmptyState,
+  NoLicensePage,
+  SCOUTTECH_PATHS,
+  scouttechUrl,
   LegalLayout,
   PublicFooter,
   PublicHeader,
@@ -751,6 +754,31 @@ function Demo() {
             action={<Button>Crear evento</Button>}
           />
           <EmptyState title="Sin resultados" />
+        </div>
+      </Section>
+
+      <Section title="NoLicensePage" e2eText>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {loginProducts.map((product) => (
+            <NoLicensePage
+              key={product}
+              product={product}
+              reason={product === "scoutpulse" ? "not_granted" : "no_license"}
+              ctaHref={scouttechUrl("https://scouttech.es", SCOUTTECH_PATHS.profile)}
+              as="div"
+              className="min-h-0 rounded-ui-card border border-ui-outline-strong"
+            />
+          ))}
+          <NoLicensePage
+            product="scoutlog"
+            title="Plan caducado"
+            message="Renueva tu plan para seguir usando ScoutLog."
+            ctaLabel="Ver planes"
+            ctaHref={scouttechUrl("https://scouttech.es", SCOUTTECH_PATHS.products)}
+            as="div"
+            manageBy="Ana López"
+            className="min-h-0 rounded-ui-card border border-ui-outline-strong"
+          />
         </div>
       </Section>
 

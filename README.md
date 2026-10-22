@@ -188,8 +188,15 @@ with one ink (`currentColor`). Its default colour is the brand token `text-ui-br
 For the other products it shows ScoutTech › › › product marks, "Inicia sesión en {Name}" and "con tu cuenta de ScoutTech".
 The chevrons animate with `motion-safe:animate-ui-chevron` and stay still under `prefers-reduced-motion`.
 
+`NoLicensePage` is the full-page "valid login but no licence/access" screen: product mark, title, message and a
+`ButtonLink` (`ctaHref`, plain `<a>` unless `external={false}`). `reason` (`no_license` default | `not_granted`) varies the
+text; `title`, `message` and `ctaLabel` override it. No network and no redirects: the gate lives in each app.
+
 ```tsx
-import { AuthBrandHeader, ProductMark } from "scouttech-ui";
+import { AuthBrandHeader, NoLicensePage, ProductMark } from "scouttech-ui";
+
+<NoLicensePage product="scoutlog" ctaHref={scouttechUrl(base, "/perfil")} />
+<NoLicensePage product="scoutgroup" reason="not_granted" ctaHref="https://scouttech.es/perfil" />
 
 <ProductMark product="scoutlog" size={32} />               // decorative
 <ProductMark product="scoutpulse" title="ScoutPulse" />    // role="img"

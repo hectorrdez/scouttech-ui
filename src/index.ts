@@ -64,6 +64,8 @@ export { Badge, badgeClassName } from "./Badge.js";
 export type { BadgeProps, BadgeTone } from "./Badge.js";
 export { Skeleton } from "./Skeleton.js";
 export type { SkeletonProps } from "./Skeleton.js";
+export { NoLicensePage } from "./NoLicensePage.js";
+export type { NoLicensePageProps, NoLicenseReason } from "./NoLicensePage.js";
 export { EmptyState } from "./EmptyState.js";
 export type { EmptyStateProps } from "./EmptyState.js";
 export { Tabs, TabPanel, tabId, panelId } from "./Tabs.js";
