@@ -75,7 +75,7 @@ export type { FileInputProps } from "./FileInput.js";
 export { DropdownFloating } from "./DropdownFloating.js";
 export type { DropdownFloatingProps, DropdownItemDef } from "./DropdownFloating.js";
 export { PublicHeader } from "./PublicHeader.js";
-export type { PublicHeaderProps, PublicHeaderNavItem, PublicHeaderLabels } from "./PublicHeader.js";
+export type { PublicHeaderProps, PublicHeaderNavItem, PublicHeaderLabels, PublicHeaderSession } from "./PublicHeader.js";
 export { PublicFooter } from "./PublicFooter.js";
 export type { PublicFooterProps, PublicFooterColumn } from "./PublicFooter.js";
 export { LegalLayout } from "./LegalLayout.js";
