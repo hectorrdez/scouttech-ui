@@ -262,8 +262,8 @@ node -e 'import("scouttech-ui/theme").then(m=>console.log(m.themeInitScript("sco
 
 | Export | Props | Notes |
 | --- | --- | --- |
-| `Button` | `variant` (`primary` \| `secondary` \| `outline` \| `ghost` \| `danger` \| `danger-soft`), `size` (`sm` \| `md`), `loading`, `icon`, plus `<button>` props | `type="button"` by default. `loading` shows a spinner, sets `aria-busy` and blocks clicks. Disabled and loading use `ui-disabled`. |
-| `ButtonLink` | `to`, `variant`, `size`, `icon`, `external`, `target`, plus router `Link` props | The `<Link>` itself is styled. `external` renders a plain `<a>` with `rel="noopener noreferrer"`. `to` is passed through unchanged. |
+| `Button` | `variant` (`primary` \| `secondary` \| `outline` \| `ghost` \| `danger` \| `danger-soft`), `size` (`sm` \| `md`), `loading`, `icon`, `wrap`, plus `<button>` props | `type="button"` by default. `loading` shows a spinner, sets `aria-busy` and blocks clicks. Disabled and loading use `ui-disabled`. Labels are `whitespace-nowrap` unless `wrap` is set. |
+| `ButtonLink` | `to`, `variant`, `size`, `icon`, `wrap`, `external`, `target`, plus router `Link` props | The `<Link>` itself is styled. `external` renders a plain `<a>` with `rel="noopener noreferrer"`. `to` is passed through unchanged. |
 | `ButtonToogle` (alias `ButtonToggle`) | `value: boolean`, `onChange?(value)`, `cantInteract?`, plus `<button>` props | `role="switch"`, `aria-checked`. `cantInteract` locks the value and sets `aria-disabled`. |
 | `Input` | `label`, `hint`, `error`, `required`, `mandatory`, `mandatoryLabel`, `icon`, `fieldClassName`, plus `<input>` props | `id` from `useId()` if not given. `aria-invalid` on error. `aria-describedby` lists the rendered hint and error. |
 | `Select` | `label`, `hint`, `error`, `required`, `mandatory`, `mandatoryLabel`, `fieldClassName`, plus `<select>` props | Same field behaviour as `Input`. |

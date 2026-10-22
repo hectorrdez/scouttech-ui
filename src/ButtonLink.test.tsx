@@ -4,6 +4,19 @@ import { describe, expect, it } from "vitest";
 import ButtonLink from "./ButtonLink.js";
 
 describe("ButtonLink", () => {
+  it("is whitespace-nowrap by default and wraps with `wrap`", () => {
+    render(
+      <MemoryRouter>
+        <ButtonLink to="/a">Uno</ButtonLink>
+        <ButtonLink to="/b" wrap>
+          Dos
+        </ButtonLink>
+      </MemoryRouter>,
+    );
+    expect(screen.getByRole("link", { name: "Uno" })).toHaveClass("whitespace-nowrap");
+    expect(screen.getByRole("link", { name: "Dos" })).not.toHaveClass("whitespace-nowrap");
+  });
+
   it("renders an <a> with the href inside a router", () => {
     render(
       <MemoryRouter>

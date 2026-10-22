@@ -8,6 +8,8 @@ export type ButtonLinkProps = Omit<LinkProps, "to" | "className"> & {
   variant?: ButtonVariant;
   size?: ButtonSize;
   icon?: ReactNode;
+  /** Lets a long label wrap. Default keeps it on one line. */
+  wrap?: boolean;
   className?: string;
   /** Renders a plain <a> instead of the router Link. */
   external?: boolean;
@@ -20,13 +22,14 @@ export function ButtonLink({
   variant = "primary",
   size = "md",
   icon,
+  wrap = false,
   className,
   external = false,
   target,
   children,
   ...args
 }: ButtonLinkProps) {
-  const classes = buttonClassName({ variant, size, className });
+  const classes = buttonClassName({ variant, size, wrap, className });
   const content = (
     <>
       {icon}

@@ -5,6 +5,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-22
+
+### Added
+- `wrap` prop on `Button`, `ButtonLink` and `buttonClassName`: lets a long label wrap. Default stays `whitespace-nowrap` (feature 017).
+
 ## [0.8.0] - 2026-10-22
 
 ### Added
