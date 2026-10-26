@@ -280,6 +280,7 @@ node -e 'import("scouttech-ui/theme").then(m=>console.log(m.themeInitScript("sco
 | `StatCard` | `label`, `value`, `description`, `delta`, `icon`, `footer`, `footerMeta`, `testId`, plus `Card` props | KPI tile. `icon` is decorative (`aria-hidden`). `testId` goes on the card; the figure gets `${testId}-value`. |
 | `ProductMark` | `product` (`scouttech` \| `scoutgroup` \| `scoutlog` \| `scoutpulse`), `size` (default 24), `tone` (`brand` default \| `inherit`), `className` (merged), `title` | Inline SVG mark. Decorative without `title`; with `title` it is `role="img"`. `products` and `productNames` are exported. |
 | `AuthBrandHeader` | `product`, `title`, `subtitle`, `accountInfoHref`, `accountInfoLabel`, `className` | Login heading (`h1`) with the marks row (single `aria-label`). Chevrons are animated only under `motion-safe:`. |
+| `Aside` | `header`, `items`, `sections`, `footer`, `footerItems`, `aria-label`, `collapsed`, `defaultCollapsed`, `onToggle`, `collapseLabel`, `expandLabel`, `mobileOpen`, `onCloseMobile`, `topOffset`, `className` | Sidebar nav on `ui-*` tokens. Items are `NavLink`s (`label`, `to`, `icon`, `end`, `badge`, `disabled`, `disabledReason`). Expanded `w-64`, icon rail `w-16`. Below `md` an off-canvas drawer closes on backdrop, Escape and navigation. Sticky full height by default. Must render inside a router. |
 | `CookieConsent` | `title`, `description`, `sections`, `initial`, `onSubmit`, `moreInfo`, `rejectOptionalLabel`, labels, `className` | Modal dialog with one switch per section. Focuses itself on mount. Required sections are locked on. Persisting the choice is the app's job (`onSubmit`). |
 | `ThemeProvider` | `storageKey`, `defaultMode`, `children` | See Theme. |
 | `useTheme` | — | `{ mode, resolved, setMode }`. |
@@ -287,7 +288,7 @@ node -e 'import("scouttech-ui/theme").then(m=>console.log(m.themeInitScript("sco
 
 Subpaths `scouttech-ui/Button`, `scouttech-ui/ButtonLink`, `scouttech-ui/ButtonToogle`, `scouttech-ui/Card`,
 `scouttech-ui/StatCard`, `scouttech-ui/CookieConsent`, `scouttech-ui/Input`, `scouttech-ui/Select`, `scouttech-ui/Field`,
-`scouttech-ui/ThemeToggle`, `scouttech-ui/theme`, `scouttech-ui/ProductMark` and `scouttech-ui/AuthBrandHeader` are also exported,
+`scouttech-ui/ThemeToggle`, `scouttech-ui/theme`, `scouttech-ui/ProductMark`, `scouttech-ui/AuthBrandHeader` and `scouttech-ui/Aside` are also exported,
 and `scouttech-ui/brand/<name>-mark.svg` is the standalone SVG file. The root barrel
 re-exports everything, and each component file also has a default export. Types (`ButtonProps`, `ButtonVariant`,
 `ButtonSize`, `InputProps`, `SelectProps`, `ThemeMode`, `ResolvedTheme`, and others) are exported from the root.

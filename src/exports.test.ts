@@ -18,6 +18,7 @@ import {
   LegalLayout,
   scouttechUrl,
   SCOUTTECH_PATHS,
+  Aside,
 } from "./index.js";
 
 describe("root barrel exports the cards", () => {
@@ -75,5 +76,11 @@ describe("root barrel exports the public shell", () => {
     expect(SCOUTTECH_PATHS.profile).toBe("/perfil");
     expect(SCOUTTECH_PATHS.apps).toBe("/aplicaciones");
     expect(SCOUTTECH_PATHS.orgLicenses).toBe("/organizacion/licencias");
+  });
+});
+
+describe("root barrel exports the aside", () => {
+  it("exports Aside as a component", () => {
+    expect(typeof Aside).toBe("function");
   });
 });
