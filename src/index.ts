@@ -60,6 +60,8 @@ export { ColumnInverted } from "./ColumnInverted.js";
 export type { ColumnInvertedProps } from "./ColumnInverted.js";
 export { Modal } from "./Modal.js";
 export type { ModalProps, ModalSize } from "./Modal.js";
+export { Aside } from "./Aside.js";
+export type { AsideProps, AsideItem, AsideSection } from "./Aside.js";
 export { Badge, badgeClassName } from "./Badge.js";
 export type { BadgeProps, BadgeTone } from "./Badge.js";
 export { Skeleton } from "./Skeleton.js";

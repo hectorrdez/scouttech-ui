@@ -5,6 +5,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-10-26
+
+### Added
+- `Aside`, with `AsideItem` and `AsideSection` types: themeable sidebar with `header`, `items` or `sections`, `footer`, `footerItems` and `aria-label`. Items are react-router `NavLink`s (active gets `aria-current="page"`, `end` supported), with `badge`, and `disabled` + `disabledReason` (non-link span with `aria-disabled`). Collapses to an icon rail (`w-16`, expanded `w-64`): controlled `collapsed` + `onToggle` or uncontrolled `defaultCollapsed`; toggle labels `collapseLabel`/`expandLabel` (default "Contraer"/"Expandir") with `aria-expanded`. Below `md` it is an off-canvas drawer when `mobileOpen` is controlled, with `onCloseMobile` on backdrop, Escape and navigation. Sticky full-height by default; `topOffset` sets top and height; `className` overrides placement (feature 019). Subpath `scouttech-ui/Aside`.
+
 ## [0.10.0] - 2026-10-22
 
 ### Added

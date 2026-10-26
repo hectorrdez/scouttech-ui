@@ -1,8 +1,9 @@
-import { Mail, Search, Trash2, Plus, Users } from "lucide-react";
+import { CalendarDays, LayoutDashboard, Mail, Search, Settings, Trash2, Plus, Users, Wallet } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 import {
   AuthBrandHeader,
+  Aside,
   Badge,
   DropdownFloating,
   EmptyState,
@@ -284,6 +285,99 @@ function PublicHeaderPlayground() {
           themeToggle={on.themeToggle}
           sticky={on.sticky}
         />
+      </div>
+    </div>
+  );
+}
+
+/** Aside variants: expanded, rail, active, disabled, badge, sections and the mobile drawer (simulated). */
+const asideItems = [
+  { label: "Inicio", to: "/", end: true, icon: <LayoutDashboard size={18} /> },
+  { label: "Eventos", to: "/eventos", icon: <CalendarDays size={18} /> },
+  { label: "Socios", to: "/socios", icon: <Users size={18} />, badge: <Badge tone="primary">12</Badge> },
+  {
+    label: "Cuotas",
+    to: "/cuotas",
+    icon: <Wallet size={18} />,
+    disabled: true,
+    disabledReason: "Disponible con el plan Pro",
+  },
+];
+const asideSections = [
+  {
+    title: "Gestión",
+    items: [
+      { label: "Socios", to: "/socios", icon: <Users size={18} /> },
+      { label: "Eventos", to: "/eventos", icon: <CalendarDays size={18} /> },
+    ],
+  },
+  {
+    title: "Finanzas",
+    items: [{ label: "Cuotas", to: "/cuotas", icon: <Wallet size={18} />, disabled: true, disabledReason: "Plan Pro" }],
+  },
+];
+const asideFooterItems = [{ label: "Ajustes", to: "/ajustes", icon: <Settings size={18} /> }];
+
+/** Preview box: the Aside is static inside a fixed-height frame, not fixed over the page. */
+const asidePreview = "relative transform-gpu h-80 overflow-hidden rounded-ui-card border border-ui-outline bg-ui-surface-tonal";
+
+function AsideDemo() {
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(true);
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <p className="text-sm text-ui-on-surface-muted">Expandida, con badge, item deshabilitado y "Inicio" activo</p>
+          <div className={asidePreview}>
+            <Aside
+              className="!static !h-full"
+              header={<span className="px-2 text-base font-semibold">Club Scout</span>}
+              items={asideItems}
+              footer={<span className="text-xs text-ui-on-surface-muted">Plan Pro</span>}
+              footerItems={asideFooterItems}
+              aria-label="Demo expandida"
+            />
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <p className="text-sm text-ui-on-surface-muted">Controlada: colapsa a rail con iconos y title</p>
+          <div className={asidePreview}>
+            <Aside
+              className="!static !h-full"
+              items={asideItems}
+              collapsed={collapsed}
+              onToggle={setCollapsed}
+              aria-label="Demo colapsable"
+            />
+          </div>
+          <Button variant="outline" size="sm" className="self-start" onClick={() => setCollapsed((value) => !value)}>
+            {collapsed ? "Expandir (botón externo)" : "Colapsar (botón externo)"}
+          </Button>
+        </div>
+      </div>
+      <div className="flex flex-col gap-2">
+        <p className="text-sm text-ui-on-surface-muted">Secciones con título</p>
+        <div className={asidePreview}>
+          <Aside className="!static !h-full" sections={asideSections} aria-label="Demo secciones" />
+        </div>
+      </div>
+      <div className="flex flex-col gap-2">
+        <p className="text-sm text-ui-on-surface-muted">
+          Drawer móvil simulado. Solo bajo md: Escape, el fondo o navegar lo cierran. En escritorio siempre se ve.
+        </p>
+        <div className={asidePreview}>
+          <Aside
+            className="!absolute !inset-y-0 !left-0 !h-full"
+            items={asideItems}
+            mobileOpen={mobileOpen}
+            onCloseMobile={() => setMobileOpen(false)}
+            aria-label="Demo drawer"
+          />
+        </div>
+        <Button variant="outline" size="sm" className="self-start" onClick={() => setMobileOpen(true)}>
+          Abrir drawer
+        </Button>
       </div>
     </div>
   );
@@ -744,6 +838,10 @@ function Demo() {
         <TabPanel id={tab} className="mt-3 text-sm">
           Contenido de la pestaña {tab}
         </TabPanel>
+      </Section>
+
+      <Section title="Aside">
+        <AsideDemo />
       </Section>
 
       <Section title="EmptyState" e2eText>

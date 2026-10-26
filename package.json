@@ -1,6 +1,6 @@
 {
   "name": "scouttech-ui",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Shared design tokens and React controls for the ScoutTech apps",
   "type": "module",
   "license": "UNLICENSED",
@@ -107,6 +107,10 @@
     "./Modal": {
       "types": "./dist/Modal.d.ts",
       "default": "./dist/Modal.js"
+    },
+    "./Aside": {
+      "types": "./dist/Aside.d.ts",
+      "default": "./dist/Aside.js"
     },
     "./Badge": {
       "types": "./dist/Badge.d.ts",
