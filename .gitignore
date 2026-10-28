@@ -14,6 +14,7 @@ dist-demo
 .claude/relay.log
 .claude/relay.prompt.txt
 .claude/relay.launch.*
+.claude/sonar.token
 
 # RTK agent tooling
 .agents/

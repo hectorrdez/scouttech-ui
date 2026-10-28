@@ -1,0 +1,7 @@
+{
+  "hostUrl": "http://192.168.50.200:9000",
+  "projectKey": "05-scouttech-ui",
+  "sources": [
+    "src"
+  ]
+}

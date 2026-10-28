@@ -11,7 +11,7 @@ if (!id) {
 }
 
 console.log('Running tests before allowing ENDED...');
-const code = run('node', [path.join(__dirname, 'test.cjs')]);
+const code = run('node', [path.join(__dirname, 'verify.cjs')]);
 if (code !== 0) {
   console.log(`REFUSED: tests failed. ${id} stays unchanged. Fix the code and retry.`);
   process.exit(1);
