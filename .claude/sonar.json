@@ -3,5 +3,18 @@
   "projectKey": "05-scouttech-ui",
   "sources": [
     "src"
+  ],
+  "coverageReports": {
+    "sonar.javascript.lcov.reportPaths": [
+      "coverage/lcov.info"
+    ]
+  },
+  "tests": [
+    "src"
+  ],
+  "testInclusions": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/test/**"
   ]
 }
