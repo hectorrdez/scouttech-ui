@@ -6,9 +6,9 @@
   and dark values live in `@layer theme` (`:root` and `html[data-theme="dark"]`). Radius/shadow/spacing tokens
   (`--radius-ui-control`, `--shadow-ui-control`, `--radius-ui-card`, `--spacing-ui-card`, `--shadow-ui-card`,
   `--shadow-ui-card-hover`) stay literal.
-- Product brand tokens: `--color-ui-brand-scouttech|scoutgroup|scoutlog|scoutpulse` (base, not per theme; light/dark values
+- Product brand tokens: `--color-ui-brand-scouttech|scoutgroup|scoutlog|scoutpulse|scoutconnect` (base, not per theme; light/dark values
   in `tokens.css`). Use them only through `ProductMark` / `AuthBrandHeader` or `text-ui-brand-<product>` for brand graphics.
-  Graphics need 3:1 on `ui-surface`; ScoutLog light uses its ink (`#b45309`), not `#f59e0b`.
+  Graphics need 3:1 on `ui-surface`; ScoutLog light uses its ink (`#b45309`), not `#f59e0b`. ScoutConnect (`#6d28d9` / `#a78bfa`) is the ecosystem messaging mark.
 - Brand themes: `themes/{scouttech,scoutgroup,scoutlog,scoutpulse}.css`. They set only the brand scale
   (`--ui-primary`, `-on-primary`, `-primary-hover`, `-primary-active`, `-primary-ink`, `-primary-soft`), unlayered, for
   light and dark. Apps import `tokens.css`, then one theme.

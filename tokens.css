@@ -43,6 +43,7 @@
   --color-ui-brand-scoutgroup: var(--ui-brand-scoutgroup);
   --color-ui-brand-scoutlog: var(--ui-brand-scoutlog);
   --color-ui-brand-scoutpulse: var(--ui-brand-scoutpulse);
+  --color-ui-brand-scoutconnect: var(--ui-brand-scoutconnect);
 
   --animate-ui-chevron: ui-chevron 1.4s ease-in-out infinite;
   @keyframes ui-chevron {
@@ -99,6 +100,7 @@
     --ui-brand-scoutgroup: #0369a1;
     --ui-brand-scoutlog: #b45309;
     --ui-brand-scoutpulse: #c8102e;
+    --ui-brand-scoutconnect: #6d28d9;
   }
 
   html[data-theme="dark"] {
@@ -133,5 +135,6 @@
     --ui-brand-scoutgroup: #7dd3fc;
     --ui-brand-scoutlog: #fbbf24;
     --ui-brand-scoutpulse: #ff6b81;
+    --ui-brand-scoutconnect: #a78bfa;
   }
 }

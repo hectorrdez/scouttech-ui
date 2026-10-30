@@ -22,3 +22,4 @@ id|slug|state|role|commit|commit_url
 017|button-wrap-optout|ENDED|frontend|d51d230|https://github.com/hectorrdez/scouttech-ui/commit/d51d230
 018|no-license-page|ENDED|frontend|e38c78c|https://github.com/hectorrdez/scouttech-ui/commit/e38c78c
 019|aside|ENDED|frontend|35887ef|https://github.com/hectorrdez/scouttech-ui/commit/35887ef
+022|scoutconnect-product-mark|IN_PROCESS|frontend|||

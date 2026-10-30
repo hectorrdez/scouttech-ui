@@ -52,7 +52,24 @@ describe("ProductMark", () => {
       scoutgroup: "ScoutGroup",
       scoutlog: "ScoutLog",
       scoutpulse: "ScoutPulse",
+      scoutconnect: "ScoutConnect",
     });
+  });
+
+  it("renders the scoutconnect glyph as one ink with no mask", () => {
+    const { container } = render(<ProductMark product="scoutconnect" tone="inherit" className="text-ui-primary" />);
+    const svg = container.querySelector("svg");
+    expect(svg).toHaveAttribute("data-product", "scoutconnect");
+    expect(svg).toHaveClass("text-ui-primary");
+    expect(svg).not.toHaveClass("text-ui-brand-scoutconnect");
+    expect(container.querySelectorAll("mask")).toHaveLength(0);
+    expect(container.querySelectorAll("path")).toHaveLength(2);
+    for (const path of container.querySelectorAll("path")) expect(path).toHaveAttribute("stroke", "currentColor");
+  });
+
+  it("gives the scoutconnect mark the brand colour by default", () => {
+    const { container } = render(<ProductMark product="scoutconnect" />);
+    expect(container.querySelector("svg")).toHaveClass("text-ui-brand-scoutconnect");
   });
 
   it("gives two scoutpulse instances different mask ids that the rect references", () => {

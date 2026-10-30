@@ -34,7 +34,7 @@ describe("root barrel exports the product marks", () => {
   it("exports ProductMark, AuthBrandHeader and the product lists", () => {
     expect(typeof ProductMark).toBe("function");
     expect(typeof AuthBrandHeader).toBe("function");
-    expect(products).toEqual(["scouttech", "scoutgroup", "scoutlog", "scoutpulse"]);
+    expect(products).toEqual(["scouttech", "scoutgroup", "scoutlog", "scoutpulse", "scoutconnect"]);
     expect(Object.keys(productNames)).toEqual([...products]);
   });
 });
