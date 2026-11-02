@@ -6,7 +6,8 @@ const steps = [
   ['Typecheck (lib + demo + tests)', 'npm', ['run', 'typecheck']],
   ['Lint', 'npm', ['run', 'lint']],
   ['Build (tsc -> dist)', 'npm', ['run', 'build']],
-  ['Unit tests (Vitest)', 'npm', ['test']],
+  ['Unit tests (Vitest, coverage/lcov.info)', 'npm', ['run', 'test:coverage']],
+  ['Coverage paths (lcov SF posix)', 'node', ['.claude/scripts/lcov-posix.cjs']],
   ['Playwright E2E (contrast on demo)', 'npx', ['playwright', 'test']],
 ];
 

@@ -1,6 +1,7 @@
 node_modules
 dist
 dist-demo
+coverage
 *.log
 *.tgz
 .DS_Store
@@ -14,6 +15,7 @@ dist-demo
 .claude/relay.log
 .claude/relay.prompt.txt
 .claude/relay.launch.*
+.claude/sonar.token
 
 # RTK agent tooling
 .agents/

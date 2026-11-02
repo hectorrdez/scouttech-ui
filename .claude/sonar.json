@@ -1,0 +1,20 @@
+{
+  "hostUrl": "http://192.168.50.200:9000",
+  "projectKey": "05-scouttech-ui",
+  "sources": [
+    "src"
+  ],
+  "coverageReports": {
+    "sonar.javascript.lcov.reportPaths": [
+      "coverage/lcov.info"
+    ]
+  },
+  "tests": [
+    "src"
+  ],
+  "testInclusions": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/test/**"
+  ]
+}
