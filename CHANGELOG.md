@@ -5,6 +5,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-10-30
+
+### Added
+- ScoutConnect product mark (feature 022, SCOUT-493): `brand/scoutconnect-mark.svg` (speech bubble holding the ScoutTech tent, one ink, viewBox 0 0 32 32). `ProductMark product="scoutconnect"` (`ScoutConnect` name, `text-ui-brand-scoutconnect`, `tone="inherit"` supported) and `AuthBrandHeader product="scoutconnect"` ("Inicia sesión en ScoutConnect"). `products` now lists five entries.
+- Brand token `--color-ui-brand-scoutconnect` / `--ui-brand-scoutconnect` in `tokens.css` (light `#6d28d9`, dark `#a78bfa`, both >= 3:1 on surface). Contrast test covers it.
+
 ## [0.11.0] - 2026-10-26
 
 ### Added

@@ -15,6 +15,15 @@ describe("AuthBrandHeader", () => {
     expect(screen.getByText("con tu cuenta de ScoutTech")).toBeInTheDocument();
   });
 
+  it("scoutconnect shows the ScoutConnect heading, ecosystem subtitle and the ScoutConnect mark", () => {
+    const { container } = render(<AuthBrandHeader product="scoutconnect" />);
+    expect(screen.getByRole("heading", { level: 1, name: "Inicia sesión en ScoutConnect" })).toBeInTheDocument();
+    expect(screen.getByText("con tu cuenta de ScoutTech")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Acceso a ScoutConnect con tu cuenta de ScoutTech" })).toBeInTheDocument();
+    const marks = [...container.querySelectorAll("[data-product]")].map((m) => m.getAttribute("data-product"));
+    expect(marks).toEqual(["scouttech", "scoutconnect"]);
+  });
+
   it("title and subtitle override the defaults", () => {
     render(<AuthBrandHeader product="scoutpulse" title="Entra" subtitle="Hola" />);
     expect(screen.getByRole("heading", { level: 1, name: "Entra" })).toBeInTheDocument();

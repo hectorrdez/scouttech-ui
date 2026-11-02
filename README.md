@@ -180,7 +180,7 @@ import { Card, StatCard, cardClassName } from "scouttech-ui";
 
 ## Product marks and login header
 
-`ProductMark` is the logo of an ecosystem product (`scouttech`, `scoutgroup`, `scoutlog`, `scoutpulse`) as inline SVG
+`ProductMark` is the logo of an ecosystem product (`scouttech`, `scoutgroup`, `scoutlog`, `scoutpulse`, `scoutconnect`) as inline SVG
 with one ink (`currentColor`). Its default colour is the brand token `text-ui-brand-<product>`. Brand tokens
 `--color-ui-brand-<product>` live in `tokens.css` (light and dark) and are always present, whatever theme the app imports.
 
@@ -278,7 +278,7 @@ node -e 'import("scouttech-ui/theme").then(m=>console.log(m.themeInitScript("sco
 | `ThemeToggle` | `className`, `labels?: { group?, light?, dark?, system? }` | `radiogroup` with three `radio` buttons and `aria-checked`. Spanish defaults. |
 | `Card` | `variant` (`elevated` | `tonal` | `outlined`), `interactive`, plus `<div>` props | Forwards `ref`, `className`, `style` and `data-*`. `cardClassName()` returns the same classes for app elements (e.g. a link). |
 | `StatCard` | `label`, `value`, `description`, `delta`, `icon`, `footer`, `footerMeta`, `testId`, plus `Card` props | KPI tile. `icon` is decorative (`aria-hidden`). `testId` goes on the card; the figure gets `${testId}-value`. |
-| `ProductMark` | `product` (`scouttech` \| `scoutgroup` \| `scoutlog` \| `scoutpulse`), `size` (default 24), `tone` (`brand` default \| `inherit`), `className` (merged), `title` | Inline SVG mark. Decorative without `title`; with `title` it is `role="img"`. `products` and `productNames` are exported. |
+| `ProductMark` | `product` (`scouttech` \| `scoutgroup` \| `scoutlog` \| `scoutpulse` \| `scoutconnect`), `size` (default 24), `tone` (`brand` default \| `inherit`), `className` (merged), `title` | Inline SVG mark. Decorative without `title`; with `title` it is `role="img"`. `products` and `productNames` are exported. |
 | `AuthBrandHeader` | `product`, `title`, `subtitle`, `accountInfoHref`, `accountInfoLabel`, `className` | Login heading (`h1`) with the marks row (single `aria-label`). Chevrons are animated only under `motion-safe:`. |
 | `Aside` | `header`, `items`, `sections`, `footer`, `footerItems`, `aria-label`, `collapsed`, `defaultCollapsed`, `onToggle`, `collapseLabel`, `expandLabel`, `mobileOpen`, `onCloseMobile`, `topOffset`, `className` | Sidebar nav on `ui-*` tokens. Items are `NavLink`s (`label`, `to`, `icon`, `end`, `badge`, `disabled`, `disabledReason`). Expanded `w-64`, icon rail `w-16`. Below `md` an off-canvas drawer closes on backdrop, Escape and navigation. Sticky full height by default. Must render inside a router. |
 | `CookieConsent` | `title`, `description`, `sections`, `initial`, `onSubmit`, `moreInfo`, `rejectOptionalLabel`, labels, `className` | Modal dialog with one switch per section. Focuses itself on mount. Required sections are locked on. Persisting the choice is the app's job (`onSubmit`). |
