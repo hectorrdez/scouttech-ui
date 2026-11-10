@@ -1,4 +1,8 @@
+> **Ecosystem workflow override:** `../OTRAS-SESIONES.md` is authoritative for Orchestrator ownership, model selection/escalation, reporting, commits, and push approval. In particular, Orchestrator (Strata) assigns all work; Opus refines Ideas (ask the user if unavailable); implementation/testing start with the cheapest suitable model and escalate on failure; completed work is committed; merge/push to `master`/`main` requires explicit user approval, pushing your own per-card feature branch does not, and `dev` (PRE) is merged/pushed after the Sonar gate and tests pass (see New card flow in OTRAS-SESIONES.md); flow ends at Review in PRE. Ignore any conflicting legacy role/model/push directions below.
+
 # Harness — Workflow
+
+For OpenCode: read `../OTRAS-SESIONES.md` and `../CLAUDE.md` for the ecosystem role and shared deployment rules. The workflow below applies here in full; use the available OpenCode tools in place of Claude-only session commands.
 
 **Repo type:** `frontend`  ← init fills this. Apply only lines tagged with your type. `testing` repos match neither `[frontend]` nor `[backend]` lines (run the generic flow; a "feature" is a test scenario, `test.cjs` runs the suite).
 
