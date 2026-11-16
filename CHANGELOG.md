@@ -5,6 +5,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-11-16
+
+### Added
+- ScoutMap brand theme (feature 023, SCOUT-569): `themes/scoutmap.css` (light `#c2410c` / `#ffffff`, dark `#fb923c` / `#431407`), same structure as the other brand themes.
+- ScoutMap-only map accents `--ui-map-campsite`, `--ui-map-route`, `--ui-map-hostel`, `--ui-map-verified` (defined only in `themes/scoutmap.css`, light and dark). Each needs 3:1 on `ui-surface` (contrast test).
+- Contrast test covers `scoutmap` (same text pairs as the other brands) and the map accents. Demo brand switcher and compare view include ScoutMap.
+
 ## [0.12.0] - 2026-10-30
 
 ### Added

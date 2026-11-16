@@ -9,7 +9,10 @@ import { describe, expect, it } from "vitest";
 const repoRoot = process.cwd();
 const read = (relative: string) => readFileSync(resolve(repoRoot, relative), "utf8");
 
-const BRANDS = ["scoutgroup", "scoutlog", "scoutpulse", "scouttech"] as const;
+const BRANDS = ["scoutgroup", "scoutlog", "scoutpulse", "scouttech", "scoutmap"] as const;
+
+// ScoutMap-only map accents (WCAG 1.4.11: each needs 3:1 against the base surface in both modes).
+const MAP_ACCENTS = ["map-campsite", "map-route", "map-hostel", "map-verified"] as const;
 const MODES = ["light", "dark"] as const;
 type Mode = (typeof MODES)[number];
 type Vars = Record<string, string>;
@@ -98,7 +101,18 @@ describe("theme files", () => {
   it.each(BRANDS.map((brand) => ({ brand })))("$brand exposes exactly the 6 brand vars in both modes", ({ brand }) => {
     const expected = ["primary", "on-primary", "primary-hover", "primary-active", "primary-ink", "primary-soft"].sort();
     for (const mode of MODES) {
-      expect(Object.keys(brandVars[brand][mode]).sort(), `${brand} ${mode}`).toEqual(expected);
+      const keys = Object.keys(brandVars[brand][mode]).filter((key) => !key.startsWith("map-"));
+      expect(keys.sort(), `${brand} ${mode}`).toEqual(expected);
+    }
+  });
+
+  it("only the scoutmap theme defines the map accents, in both modes", () => {
+    for (const brand of BRANDS) {
+      for (const mode of MODES) {
+        const keys = Object.keys(brandVars[brand][mode]).filter((key) => key.startsWith("map-")).sort();
+        const expected = brand === "scoutmap" ? [...MAP_ACCENTS].sort() : [];
+        expect(keys, `${brand} ${mode}`).toEqual(expected);
+      }
     }
   });
 
@@ -114,7 +128,7 @@ describe("theme files", () => {
 
   it("@theme maps the 4 product brand tokens and base defines them in both modes", () => {
     const theme = themeBlockMatch![1];
-    for (const product of BRANDS) {
+    for (const product of ["scouttech", "scoutgroup", "scoutlog", "scoutpulse"]) {
       expect(theme, `--color-ui-brand-${product}`).toContain(`--color-ui-brand-${product}: var(--ui-brand-${product});`);
       for (const mode of MODES) {
         expect(base[mode], `${mode} brand-${product}`).toHaveProperty(`brand-${product}`);
@@ -140,6 +154,16 @@ describe("theme files", () => {
   it("the theme folder ships exactly the 4 brands", () => {
     const files = readdirSync(resolve(repoRoot, "themes")).filter((f) => f.endsWith(".css")).sort();
     expect(files).toEqual(BRANDS.map((b) => `${b}.css`).sort());
+  });
+});
+
+describe("scoutmap map accents", () => {
+  it.each(MODES.map((mode) => ({ mode })))("$mode: each accent is >= 3:1 on the base surface", ({ mode }) => {
+    const vars = merged("scoutmap", mode);
+    for (const accent of MAP_ACCENTS) {
+      const ratio = contrast(vars[accent], vars.surface);
+      expect(ratio, `${accent} ${vars[accent]} on surface ${vars.surface}`).toBeGreaterThanOrEqual(3);
+    }
   });
 });
 

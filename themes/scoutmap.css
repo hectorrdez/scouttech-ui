@@ -1,0 +1,34 @@
+/*
+ * ScoutMap brand theme for scouttech-ui (v0.13.0).
+ * Import after the base tokens, in your app CSS:
+ *   @import "scouttech-ui/tokens.css";
+ *   @import "scouttech-ui/themes/scoutmap.css";
+ * Brand scale plus the ScoutMap-only map accents (--ui-map-*). Unlayered on purpose: it beats the base in @layer theme.
+ */
+:root {
+  --ui-primary: #c2410c;
+  --ui-on-primary: #ffffff;
+  --ui-primary-hover: #9a3412;
+  --ui-primary-active: #7c2d12;
+  --ui-primary-ink: #c2410c;
+  --ui-primary-soft: #ffedd5;
+
+  --ui-map-campsite: #15803d;
+  --ui-map-route: #4f46e5;
+  --ui-map-hostel: #d97706;
+  --ui-map-verified: #047857;
+}
+
+html[data-theme="dark"] {
+  --ui-primary: #fb923c;
+  --ui-on-primary: #431407;
+  --ui-primary-hover: #fdba74;
+  --ui-primary-active: #f97316;
+  --ui-primary-ink: #fb923c;
+  --ui-primary-soft: #3b1a0e;
+
+  --ui-map-campsite: #4ade80;
+  --ui-map-route: #818cf8;
+  --ui-map-hostel: #fbbf24;
+  --ui-map-verified: #10b981;
+}

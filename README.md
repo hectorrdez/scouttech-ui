@@ -150,9 +150,14 @@ The theme files are plain CSS and unlayered, so they win over the base. Import o
 | `scoutgroup` | `#0369a1` / `#ffffff` | `#7dd3fc` / `#082f49` |
 | `scoutlog` | `#f59e0b` / `#1c1917` | `#fbbf24` / `#1c1917` |
 | `scoutpulse` | `#c8102e` / `#ffffff` | `#ff6b81` / `#2a0510` |
+| `scoutmap` | `#c2410c` / `#ffffff` | `#fb923c` / `#431407` |
 
 Each theme also sets `primary-hover`, `primary-active`, `primary-ink` and `primary-soft` for light and dark. The contrast
 test (`src/themes.test.tsx`) checks every theme and mode against the same pairs as the base.
+
+`themes/scoutmap.css` also defines map accents, **ScoutMap-only** (they are not in the base tokens and no other theme sets them):
+`--ui-map-campsite`, `--ui-map-route`, `--ui-map-hostel`, `--ui-map-verified`. Light and dark variants; each is at least 3:1 on
+`ui-surface` in both modes (WCAG 1.4.11).
 
 ## Cards
 
@@ -311,7 +316,7 @@ re-exports everything, and each component file also has a default export. Types 
 
 ```bash
 npm install
-npm run dev          # demo at http://127.0.0.1:5180 (brands scoutgroup / scoutlog / scoutpulse / scouttech, light / dark; "Comparar 4 marcas" shows all 8)
+npm run dev          # demo at http://127.0.0.1:5180 (brands scoutgroup / scoutlog / scoutpulse / scouttech / scoutmap, light / dark; "Comparar" shows all 10)
 npm run build        # tsc -> dist/
 npm run typecheck    # library + demo + tests
 npm run lint         # oxlint

@@ -24,3 +24,4 @@ id|slug|state|role|commit|commit_url
 019|aside|ENDED|frontend|35887ef|https://github.com/hectorrdez/scouttech-ui/commit/35887ef
 022|scoutconnect-product-mark|ENDED|frontend|99bc737|https://github.com/hectorrdez/scouttech-ui/commit/99bc737|
 020|coverage-pipeline|ENDED|frontend|f945ccc|https://github.com/hectorrdez/scouttech-ui/commit/f945ccc
+023|scoutmap-theme|PENDING|frontend|

@@ -61,23 +61,26 @@ import scoutgroupTheme from "../themes/scoutgroup.css?raw";
 import scoutlogTheme from "../themes/scoutlog.css?raw";
 import scoutpulseTheme from "../themes/scoutpulse.css?raw";
 import scouttechTheme from "../themes/scouttech.css?raw";
+import scoutmapTheme from "../themes/scoutmap.css?raw";
 
 const PALETTE_KEY = "scouttech-ui-demo-palette";
 const THEME_KEY = "scouttech-ui-demo-theme";
 const EMBED_KEY_PREFIX = "scouttech-ui-demo-embed-";
-type Palette = "scoutgroup" | "scoutlog" | "scoutpulse" | "scouttech";
-const palettes: Palette[] = ["scoutgroup", "scoutlog", "scoutpulse", "scouttech"];
+type Palette = "scoutgroup" | "scoutlog" | "scoutpulse" | "scouttech" | "scoutmap";
+const palettes: Palette[] = ["scoutgroup", "scoutlog", "scoutpulse", "scouttech", "scoutmap"];
 const paletteNames: Record<Palette, string> = {
   scoutgroup: "ScoutGroup",
   scoutlog: "ScoutLog",
   scoutpulse: "ScoutPulse",
   scouttech: "ScoutTech",
+  scoutmap: "ScoutMap",
 };
 const brandThemes: Record<Palette, string> = {
   scoutgroup: scoutgroupTheme,
   scoutlog: scoutlogTheme,
   scoutpulse: scoutpulseTheme,
   scouttech: scouttechTheme,
+  scoutmap: scoutmapTheme,
 };
 const isPalette = (value: string | null): value is Palette =>
   palettes.includes(value as Palette);
