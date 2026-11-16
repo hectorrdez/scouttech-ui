@@ -9,11 +9,12 @@
 - Product brand tokens: `--color-ui-brand-scouttech|scoutgroup|scoutlog|scoutpulse|scoutconnect` (base, not per theme; light/dark values
   in `tokens.css`). Use them only through `ProductMark` / `AuthBrandHeader` or `text-ui-brand-<product>` for brand graphics.
   Graphics need 3:1 on `ui-surface`; ScoutLog light uses its ink (`#b45309`), not `#f59e0b`. ScoutConnect (`#6d28d9` / `#a78bfa`) is the ecosystem messaging mark.
-- Brand themes: `themes/{scouttech,scoutgroup,scoutlog,scoutpulse}.css`. They set only the brand scale
+- Brand themes: `themes/{scouttech,scoutgroup,scoutlog,scoutpulse,scoutmap}.css`. They set only the brand scale
   (`--ui-primary`, `-on-primary`, `-primary-hover`, `-primary-active`, `-primary-ink`, `-primary-soft`), unlayered, for
   light and dark. Apps import `tokens.css`, then one theme.
+  `scoutmap` also defines the map accents `--ui-map-campsite|route|hostel|verified` (ScoutMap-only, not in base tokens): each needs 3:1 on `ui-surface` in both modes.
 - Demo (`demo/App.tsx`) loads the shipped `themes/*.css` raw and swaps one brand at a time; `demo/demo.css` holds no
-  brand values. `?embed=1&demo=<brand>&theme=light|dark` renders one embed; the compare view shows 8 of them.
+  brand values. `?embed=1&demo=<brand>&theme=light|dark` renders one embed; the compare view shows 10 of them.
 - Apps that still override `--color-ui-*` in their own `@theme` keep working.
 
 ## Colors - usage
