@@ -54,6 +54,9 @@ try {
     optionalArgs.push(`-Dsonar.test.inclusions=${list(config.testInclusions, 'test inclusion')}`);
   }
 
+  // In a git worktree `.git` is a file pointing into the main checkout, which the scanner container cannot resolve: skip SCM there.
+  if (fs.statSync(path.join(root, '.git')).isFile()) optionalArgs.push('-Dsonar.scm.disabled=true');
+
   const tokenFile = path.join(root, '.claude', 'sonar.token');
   const token = process.env.SONAR_TOKEN || fs.readFileSync(tokenFile, 'utf8').trim();
   if (!token) throw new Error('Missing SonarQube token');
