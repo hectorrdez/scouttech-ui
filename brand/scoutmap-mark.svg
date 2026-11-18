@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor">
+  <!-- ScoutMap: a map pin holding the ScoutTech tent. One ink (currentColor). -->
+  <path d="M16 30L7.69 17.56A10 10 0 1 1 24.31 17.56Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+  <path d="M16 7 10 17h12L16 7Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+</svg>

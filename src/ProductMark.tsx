@@ -1,7 +1,7 @@
 import { useId } from "react";
 import { cx } from "./cx.js";
 
-export const products = ["scouttech", "scoutgroup", "scoutlog", "scoutpulse", "scoutconnect"] as const;
+export const products = ["scouttech", "scoutgroup", "scoutlog", "scoutpulse", "scoutconnect", "scoutmap"] as const;
 export type Product = (typeof products)[number];
 
 export const productNames: Record<Product, string> = {
@@ -10,6 +10,7 @@ export const productNames: Record<Product, string> = {
   scoutlog: "ScoutLog",
   scoutpulse: "ScoutPulse",
   scoutconnect: "ScoutConnect",
+  scoutmap: "ScoutMap",
 };
 
 export type ProductMarkProps = {
@@ -31,6 +32,7 @@ const brandClassNames: Record<Product, string> = {
   scoutlog: "text-ui-brand-scoutlog",
   scoutpulse: "text-ui-brand-scoutpulse",
   scoutconnect: "text-ui-brand-scoutconnect",
+  scoutmap: "text-ui-brand-scoutmap",
 };
 
 /** Geometry copied from brand/<product>-mark.svg (viewBox 0 0 32 32, one ink = currentColor). */
@@ -99,6 +101,19 @@ function MarkGlyph({ product, maskId }: { product: Product; maskId: string }) {
             strokeLinejoin="round"
           />
           <path d="M16 8.5 10.5 17h11L16 8.5Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+        </>
+      );
+    case "scoutmap":
+      return (
+        <>
+          <path
+            d="M16 30L7.69 17.56A10 10 0 1 1 24.31 17.56Z"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+          <path d="M16 7 10 17h12L16 7Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
         </>
       );
   }

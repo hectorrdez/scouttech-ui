@@ -24,6 +24,15 @@ describe("AuthBrandHeader", () => {
     expect(marks).toEqual(["scouttech", "scoutconnect"]);
   });
 
+  it("scoutmap shows the ScoutMap heading, ecosystem subtitle and the ScoutMap mark", () => {
+    const { container } = render(<AuthBrandHeader product="scoutmap" />);
+    expect(screen.getByRole("heading", { level: 1, name: "Inicia sesión en ScoutMap" })).toBeInTheDocument();
+    expect(screen.getByText("con tu cuenta de ScoutTech")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Acceso a ScoutMap con tu cuenta de ScoutTech" })).toBeInTheDocument();
+    const marks = [...container.querySelectorAll("[data-product]")].map((m) => m.getAttribute("data-product"));
+    expect(marks).toEqual(["scouttech", "scoutmap"]);
+  });
+
   it("title and subtitle override the defaults", () => {
     render(<AuthBrandHeader product="scoutpulse" title="Entra" subtitle="Hola" />);
     expect(screen.getByRole("heading", { level: 1, name: "Entra" })).toBeInTheDocument();

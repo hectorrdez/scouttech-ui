@@ -159,7 +159,7 @@ const variants: ButtonVariant[] = ["primary", "secondary", "outline", "ghost", "
 const sizes: ButtonSize[] = ["sm", "md"];
 const cardVariants: CardVariant[] = ["elevated", "tonal", "outlined"];
 const markSizes = [16, 24, 32, 64];
-const loginProducts: Product[] = ["scouttech", "scoutgroup", "scoutlog", "scoutpulse", "scoutconnect"];
+const loginProducts: Product[] = ["scouttech", "scoutgroup", "scoutlog", "scoutpulse", "scoutconnect", "scoutmap"];
 const publicNav = [
   { label: "Productos", to: "/productos" },
   { label: "Precios", to: "/precios" },

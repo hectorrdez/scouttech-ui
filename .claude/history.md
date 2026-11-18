@@ -25,3 +25,4 @@ id|slug|state|role|commit|commit_url
 022|scoutconnect-product-mark|ENDED|frontend|99bc737|https://github.com/hectorrdez/scouttech-ui/commit/99bc737|
 020|coverage-pipeline|ENDED|frontend|f945ccc|https://github.com/hectorrdez/scouttech-ui/commit/f945ccc
 023|scoutmap-theme|ENDED|frontend|
+024|scoutmap-product-mark|IN_PROCESS|frontend

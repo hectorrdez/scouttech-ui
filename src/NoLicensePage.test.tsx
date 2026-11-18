@@ -23,6 +23,11 @@ describe("NoLicensePage", () => {
     expect(container.querySelector("main")).toBeNull();
   });
 
+  it("names ScoutMap in the no_license text", () => {
+    render(<NoLicensePage product="scoutmap" ctaHref="/p" />);
+    expect(screen.getByRole("heading", { level: 1, name: "No tienes licencia de ScoutMap" })).toBeInTheDocument();
+  });
+
   it("accepts title, message and ctaLabel overrides", () => {
     render(
       <NoLicensePage product="scoutpulse" title="Sin plan" message="Contacta con ventas" ctaHref="/p" ctaLabel="Ver planes" />,

@@ -90,6 +90,7 @@ const pairs: Array<{ fg: string; bg: string; min: number }> = [
   { fg: "brand-scoutlog", bg: "surface", min: 3 },
   { fg: "brand-scoutpulse", bg: "surface", min: 3 },
   { fg: "brand-scoutconnect", bg: "surface", min: 3 },
+  { fg: "brand-scoutmap", bg: "surface", min: 3 },
 ];
 
 const scenarios = [

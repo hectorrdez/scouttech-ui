@@ -24,6 +24,11 @@ function wrap(ui: React.ReactNode, route = "/") {
 }
 
 describe("PublicHeader", () => {
+  it("scoutmap renders the ScoutMap brand link", () => {
+    wrap(<PublicHeader product="scoutmap" nav={nav} />);
+    expect(screen.getByRole("link", { name: "ScoutMap, inicio" })).toHaveAttribute("href", "/");
+  });
+
   it("renders brand link, nav and actions", () => {
     wrap(<PublicHeader product="scoutpulse" nav={nav} actions={<a href="/entrar">Entrar</a>} />);
     expect(screen.getByRole("link", { name: "ScoutPulse, inicio" })).toHaveAttribute("href", "/");
@@ -78,6 +83,11 @@ describe("PublicFooter", () => {
     { title: "Vacía", links: [] },
     { title: "Ecosistema", links: [{ label: "ScoutTech", to: "https://scouttech.example/", external: true }] },
   ];
+
+  it("scoutmap renders the ScoutMap copyright", () => {
+    wrap(<PublicFooter product="scoutmap" columns={[]} year={2026} />);
+    expect(screen.getByText("© 2026 ScoutMap. Todos los derechos reservados.")).toBeInTheDocument();
+  });
 
   it("renders columns (skipping empty), legal nav and default copyright", () => {
     wrap(

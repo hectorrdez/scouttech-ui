@@ -5,6 +5,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-11-18
+
+### Added
+- ScoutMap product mark (feature 024, SCOUT-588): `brand/scoutmap-mark.svg` (map pin holding the ScoutTech tent, one ink, viewBox 0 0 32 32). `ProductMark product="scoutmap"` (`ScoutMap` name, `text-ui-brand-scoutmap`, `tone="inherit"` supported) and `AuthBrandHeader product="scoutmap"` ("Inicia sesión en ScoutMap"). `PublicHeader`, `PublicFooter` and `NoLicensePage` accept `product="scoutmap"`. `products` now lists six entries.
+- Brand token `--color-ui-brand-scoutmap` / `--ui-brand-scoutmap` in `tokens.css` (light `#c2410c`, dark `#fb923c`, both >= 3:1 on surface). Contrast test covers it. Demo login headers and marks section include ScoutMap.
+
 ## [0.13.0] - 2026-11-16
 
 ### Added
