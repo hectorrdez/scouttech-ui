@@ -211,8 +211,7 @@ import { AuthBrandHeader, NoLicensePage, ProductMark } from "scouttech-ui";
 ```
 
 The standalone SVG files `brand/{scouttech,scoutgroup,scoutlog,scoutpulse,scoutconnect,scoutmap}-mark.svg` (viewBox 0 0 32 32, `currentColor`)
-ship with the package: `import mark from "scouttech-ui/brand/scoutlog-mark.svg"`, or copy them. The ScoutPulse mark is new
-in 0.4.0 and pending user validation.
+ship with the package: `import mark from "scouttech-ui/brand/scoutlog-mark.svg"`, or copy them. The ScoutPulse mark was added in 0.4.0.
 
 ## Cookie consent
 
