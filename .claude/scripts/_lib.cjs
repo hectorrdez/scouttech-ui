@@ -74,6 +74,16 @@ function writeCommit(id, hash, url) {
   return hit;
 }
 
+// Private temp dir for everything the harness launches (tests, Playwright, ts-node-dev, ...).
+// Child processes read TEMP/TMP/TMPDIR, so their scratch (browser profiles, compile caches) lands
+// in .claude/tmp instead of the shared OS temp. cleanup.cjs then deletes ONLY this dir and never
+// touches temp files that belong to other apps. Gitignore `.claude/tmp/`.
+const TMP_DIR = path.join(CLAUDE_DIR, 'tmp');
+function scopedEnv(base = process.env) {
+  try { fs.mkdirSync(TMP_DIR, { recursive: true }); } catch { return base; }
+  return { ...base, TEMP: TMP_DIR, TMP: TMP_DIR, TMPDIR: TMP_DIR };
+}
+
 // Run a command with inherited stdio, cwd defaults to repo root. shell:true resolves
 // npm/npx/.cmd shims on Windows and plain PATH lookups on macOS/Linux. Returns exit code.
 function run(cmd, args = [], opts = {}) {
@@ -81,7 +91,7 @@ function run(cmd, args = [], opts = {}) {
     stdio: 'inherit',
     shell: true,
     cwd: opts.cwd || REPO_ROOT,
-    env: opts.env || process.env,
+    env: scopedEnv(opts.env || process.env),
   });
   if (res.error) return 1;
   return res.status === null ? 1 : res.status;
@@ -160,7 +170,19 @@ function commitUrl(hash) {
   return `${base}/commit/${hash}`; // GitHub, Gitea/Forgejo/Codeberg, and most self-hosted UIs
 }
 
+// Sweep harness residue (tmp compile caches, browser profiles, ...). Age-based so it never kills a
+// live dev server's files. Never throws, never changes the caller's exit code.
+// full=true also removes git-ignored repo reports (only when a feature is ENDED); default keeps them for debugging.
+function sweep(full = false) {
+  try {
+    spawnSync(process.execPath, [path.join(SCRIPTS_DIR, 'cleanup.cjs'), '--quiet', ...(full ? [] : ['--tmp-only'])], { stdio: 'inherit', cwd: REPO_ROOT });
+  } catch {}
+}
+
 module.exports = {
+  sweep,
+  TMP_DIR,
+  scopedEnv,
   CLAUDE_DIR,
   REPO_ROOT,
   historyPath,
