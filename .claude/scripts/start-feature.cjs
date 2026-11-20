@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-const { writeState } = require('./_lib.cjs');
+const { writeState, sweep } = require('./_lib.cjs');
 
 const id = process.argv[2];
 if (!id) {
@@ -9,5 +9,6 @@ if (!id) {
 }
 
 const hit = writeState(id, 'IN_PROCESS');
+sweep();
 console.log(hit ? `OK: ${id} -> IN_PROCESS` : `ERROR: id ${id} not found. No change.`);
 process.exit(hit ? 0 : 1);

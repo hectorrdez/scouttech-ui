@@ -11,7 +11,7 @@
 // "antigravity"); falls back to "unknown".
 const fs = require('fs');
 const path = require('path');
-const { CLAUDE_DIR, readHistory } = require('./_lib.cjs');
+const { CLAUDE_DIR, readHistory, sweep } = require('./_lib.cjs');
 
 const REASONS = ['near-limit', 'budget', 'manual', 'blocked', 'error'];
 const reason = process.argv[2];
@@ -69,4 +69,5 @@ if (fs.existsSync(HANDOFF)) {
 
 fs.writeFileSync(HANDOFF, header + body);
 console.log(`OK: handoff.md stamped (agent=${agent}, feature=${feature}, reason=${reason}).`);
+sweep();
 console.log('Now fill the sections below the header before you stop.');
